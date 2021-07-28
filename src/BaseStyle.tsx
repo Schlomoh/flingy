@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const StBasePage = styled.div`
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Raleway:wght@900&family=Unna:wght@700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Raleway:wght@900&family=Unna:wght@700&display=swap");
   font-family: "Mula", sans-serif;
   text-align: left;
   padding: 48px 30px;
   background-color: #f3c5a1;
+  
 
   h1 {
     font-family: "Raleway", monospace;

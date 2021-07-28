@@ -4,3 +4,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #272727;
 }
+md-content {
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: auto;
+}

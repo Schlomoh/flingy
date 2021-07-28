@@ -80,7 +80,6 @@ const Overlay: any = styled.div`
   transition: all 0.5s ease-in-out;
 `;
 
-
 interface SelBoxProps {
   title: String;
   content: String;
@@ -89,29 +88,27 @@ interface SelBoxProps {
 }
 
 const Starter = () => {
-  return <div>starter</div>;
+  return <h1>Starter</h1>;
 };
 const Reply = () => {
-  return <div>reply</div>;
+  return <h1>Reply</h1>;
 };
 
 export function Home() {
   const [overlay, setShowOL] = useState(false);
   const [btnDiabled, setDisabled] = useState(false);
-  const [overlayContent, setOLContent]: any = useState();
+  const [overlayContent, setOLContent]: any = useState('');
 
   const toggleOverlay: any = (version: any) => {
     setShowOL(!overlay);
     setDisabled(true);
     console.log(version);
-    version === "starter"
-      ? setOLContent(Starter)
-      : version === "reply"
-      ? setOLContent(Reply)
-      : setOLContent(null);
+    //check which box the button was clicked from to set the right overlay content
+    setOLContent(version);
+    //shortly disable the buttons when clicked to prevent spamming
     setTimeout(() => {
       setDisabled(false);
-    }, 1000);
+    }, 800);
   };
   let vis = overlay ? 1 : 0;
 
@@ -175,66 +172,74 @@ export function Home() {
             </Col>
           </Row>
           <Row>
-            <Col>{overlayContent}</Col>
+            <Col>
+              <StTextWrapper>
+                {overlayContent === "starter"
+                  ? <Starter />
+                  : overlayContent === "reply"
+                  ? <Reply />
+                  : null}
+              </StTextWrapper>
+            </Col>
           </Row>
         </Container>
       </Overlay>
-        <Container>
-          <Row>
-            <Col xl={2} />
-            <Col>
-              <Row>
-                <Col>
-                  <StTextWrapper color="#272727">
-                    <h1 style={{ margin: 0 }}>Boost your texting game</h1>
-                    <h2 style={{ margin: 0, marginTop: "10px" }}>
-                      with the help of AI.
-                      {String.fromCodePoint(0x1f913)}
-                    </h2>
-                  </StTextWrapper>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <SelectorBox
-                    title="Starter"
-                    imgEl={starter}
-                    version="starter"
-                    content="The algorithm analyses a screenshot of the profile you 
+      <Container>
+        <Row>
+          <Col xl={2} />
+          <Col>
+            <Row>
+              <Col>
+                <StTextWrapper color="#272727">
+                  <h1 style={{ margin: 0 }}>Boost your texting game</h1>
+                  <h2 style={{ margin: 0, marginTop: "10px" }}>
+                    with the help of AI.
+                    {String.fromCodePoint(0x1f913)}
+                  </h2>
+                </StTextWrapper>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <SelectorBox
+                  title="Starter"
+                  imgEl={starter}
+                  version="starter"
+                  content="The algorithm analyses a screenshot of the profile you 
                   are trying to message. It then gives you a starter line that will 
                   most likely score."
-                  />
-                </Col>
-                <Col md={6}>
-                  <SelectorBox
-                    title="Reply Generator"
-                    imgEl={reply}
-                    version="reply"
-                    content="Supply the AI with the last few lines of your conversation 
+                />
+              </Col>
+              <Col md={6}>
+                <SelectorBox
+                  title="Reply Generator"
+                  imgEl={reply}
+                  version="reply"
+                  content="Supply the AI with the last few lines of your conversation 
                   and receive suggestions for your next message."
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <StTextWrapper>
-                    <h2>
-                      <br />
-                      Do you sometimes struggle to find the right words?
-                    </h2>
-                    <p>
-                      That's normal, but now you can use this handy tool to
-                      either start or get help continuing a conversation. <br />
-                      Send replies and starter lines suggested by an AI that
-                      will most likely score.
-                    </p>
-                  </StTextWrapper>
-                </Col>
-              </Row>
-            </Col>
-            <Col xl={2} />
-          </Row>
-        </Container>
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <StTextWrapper>
+                  <h2>
+                    <br />
+                    Do you sometimes struggle to find the right words?
+                  </h2>
+                  <p>
+                    That's normal, but now you can use this handy tool to either
+                    start or get help continuing a conversation. <br />
+                    Send replies and starter lines suggested by an AI that will
+                    most likely score.
+                  </p>
+                </StTextWrapper>
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={2} />
+        </Row>
+      </Container>
     </StBasePage>
   );
 }
