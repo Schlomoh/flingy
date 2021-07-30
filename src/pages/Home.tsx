@@ -38,6 +38,7 @@ const StImage = styled.div`
 
 export const StTextWrapper = styled.div`
   max-width: 500px;
+  text-align: left;
   h1 {
     color: #020202;
   }
@@ -47,6 +48,7 @@ export const StTextWrapper = styled.div`
   }
   p,
   h3 {
+
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
   }
 `;
@@ -70,8 +72,10 @@ const StButton: any = styled.button`
 `;
 
 const Overlay: any = styled.div`
-  width: 100vw;
+  overflow-x: hidden;
+  text-align: right;
   height: 100vh;
+  width: 100%;
   background-color: white;
   position: fixed;
   left: 0;
@@ -79,7 +83,7 @@ const Overlay: any = styled.div`
   z-index: 10;
   opacity: ${(props: any) => props.show};
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
-  transition: opacity 0.5s ease-in-out, visibility .5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 `;
 
 interface SelBoxProps {
@@ -96,7 +100,7 @@ const Reply = () => {
 export function Home() {
   const [overlay, setShowOL] = useState(false);
   const [btnDiabled, setDisabled] = useState(false);
-  const [overlayContent, setOLContent]: any = useState('');
+  const [overlayContent, setOLContent]: any = useState("");
 
   const toggleOverlay: any = (version: any) => {
     setShowOL(!overlay);
@@ -158,30 +162,22 @@ export function Home() {
   return (
     <StBasePage>
       <Overlay show={vis}>
-        <Container >
-          <Row>
-            <Col style={{ textAlign: "right" }}>
-              <StButton
-                disabled={btnDiabled}
-                size="small"
-                onClick={toggleOverlay}
-              >
-                Close
-              </StButton>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <StTextWrapper>
-                {overlayContent === "starter"
-                  ? <Starter />
-                  : overlayContent === "reply"
-                  ? <Reply />
-                  : null}
-              </StTextWrapper>
-            </Col>
-          </Row>
-        </Container>
+        <StButton
+          style={{ margin: "20px" }}
+          disabled={btnDiabled}
+          size="small"
+          onClick={toggleOverlay}
+        >
+          Close
+        </StButton>
+
+        <StTextWrapper>
+          {overlayContent === "starter" ? (
+            <Starter />
+          ) : overlayContent === "reply" ? (
+            <Reply />
+          ) : null}
+        </StTextWrapper>
       </Overlay>
       <Container>
         <Row>

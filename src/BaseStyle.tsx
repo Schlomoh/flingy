@@ -6,7 +6,6 @@ export const StBasePage = styled.div`
   text-align: left;
   padding: 48px 30px;
   background-color: #f3c5a1;
-  
 
   h1 {
     font-family: "Raleway", monospace;
