@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { StBasePage } from "../BaseStyle";
 import { Row, Col, Container } from "react-grid-system";
 import starter from "../assets/starter.png";
 import reply from "../assets/reply.png";
-import { useState } from "react";
+
+import { Starter } from "../components/starter";
 
 const StCard = styled.div`
   background-color: #62bcec;
@@ -34,7 +36,7 @@ const StImage = styled.div`
 //   }
 // `;
 
-const StTextWrapper = styled.div`
+export const StTextWrapper = styled.div`
   max-width: 500px;
   h1 {
     color: #020202;
@@ -52,7 +54,7 @@ const StTextWrapper = styled.div`
 const StButton: any = styled.button`
   margin-top: 15px;
   min-width: 100px;
-  width: ${(props: any) => (props.size === "small" ? "25%" : "100%")};
+  width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -77,7 +79,7 @@ const Overlay: any = styled.div`
   z-index: 10;
   opacity: ${(props: any) => props.show};
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
-  transition: all 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, visibility .5s ease-in-out;
 `;
 
 interface SelBoxProps {
@@ -87,9 +89,6 @@ interface SelBoxProps {
   imgEl: any;
 }
 
-const Starter = () => {
-  return <h1>Starter</h1>;
-};
 const Reply = () => {
   return <h1>Reply</h1>;
 };
@@ -159,7 +158,7 @@ export function Home() {
   return (
     <StBasePage>
       <Overlay show={vis}>
-        <Container>
+        <Container >
           <Row>
             <Col style={{ textAlign: "right" }}>
               <StButton
