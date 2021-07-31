@@ -1,9 +1,9 @@
-import { Col, Container, Row } from "react-grid-system";
 import { StTextWrapper } from "../pages/Home";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useState } from "react";
 import { FiUploadCloud } from "react-icons/fi";
+import { BaseOLStruct } from "./baseStruct";
 
 const StImageUploadField = styled.div`
   #input-button {
@@ -48,75 +48,59 @@ export const Starter = () => {
   }, []);
 
   const handleFileInput: any = (event: any) => {};
-  return (
-    <div style={{ padding: "0 30px 48px 30px" }}>
-      <Container>
-        <Row>
-          <Col xl={3} />
+  const UploadField = () => (
+    <StImageUploadField>
+      {
+        // hidden input element which calls the handle function on input
+        // gets activated through click on Button linked by its id
+      }
+      <StTextWrapper color="light">
+        <input
+          accept=".png, .jpg, .jpeg, .tiff"
+          id="file-input"
+          type="file"
+          style={{ display: "none" }}
+          onInput={(e) => handleFileInput(e)}
+        />
+        {
+          // sort of a huge button which should display the image on input
+          // activates the input element on click
+        }
+        <div
+          id="input-button"
+          onClick={() => {
+            inputElement.click();
+          }}
+        >
+          <StIcon>
+            <FiUploadCloud />
+          </StIcon>
+          <h2 style={{ margin: 0 }}>Click here to upload</h2>
+        </div>
+      </StTextWrapper>
+    </StImageUploadField>
+  );
 
-          <Col xl={6}>
-            <h2 style={{ marginTop: "100px" }}>
-              Starter
-              <br />
-            </h2>
-            <StTextWrapper color={"grey"}>
-              <p>
-                Upload a <strong>screenshot of the persons profile</strong> and
-                wait a few seconds to let the algorithm do its magic. Thats it!{" "}
-              </p>
-              <p>
-                If you upload a a profile picture with multiple people, you will
-                have to <strong> select the person you want analysed.</strong>
-              </p>
-              <p>
-                After that,{" "}
-                <strong>
-                  {" "}
-                  the Ai will present you the recommended starting message{" "}
-                </strong>{" "}
-                based on the person selected. {String.fromCodePoint(0x1f9e0)}
-              </p>
-            </StTextWrapper>
-          </Col>
-          <Col xl={3} />
-        </Row>
-        <Row>
-          <Col xl={3} />
-          <Col>
-            <StImageUploadField>
-              {
-                // hidden input element which calls the handle function on input
-                // gets activated through click on Button linked by its id
-              }
-              <StTextWrapper color="light">
-                <input
-                  accept=".png, .jpg, .jpeg, .tiff"
-                  id="file-input"
-                  type="file"
-                  style={{ display: "none" }}
-                  onInput={(e) => handleFileInput(e)}
-                />
-                {
-                  // sort of a huge button which should display the image on input
-                  // activates the input element on click
-                }
-                <div
-                  id="input-button"
-                  onClick={() => {
-                    inputElement.click();
-                  }}
-                >
-                  <StIcon>
-                    <FiUploadCloud />
-                  </StIcon>
-                  <h2 style={{ margin: 0 }}>Click here to upload</h2>
-                </div>
-              </StTextWrapper>
-            </StImageUploadField>
-          </Col>
-          <Col xl={3} />
-        </Row>
-      </Container>
-    </div>
+  return (
+    <BaseOLStruct title="Starter" magicElement={<UploadField />}>
+      <StTextWrapper color={"grey"}>
+        <p>
+          Upload a <strong>screenshot of the persons profile</strong> and wait a
+          few seconds to let the algorithm do its magic. Thats it!{" "}
+        </p>
+        <p>
+          If you upload a a profile picture with multiple people, you will have
+          to <strong> select the person you want analysed.</strong>
+        </p>
+        <p>
+          After that,{" "}
+          <strong>
+            {" "}
+            the Ai will present you the recommended starting message{" "}
+          </strong>{" "}
+          based on the person selected. {String.fromCodePoint(0x1f9e0)}
+        </p>
+      </StTextWrapper>
+    </BaseOLStruct>
   );
 };
