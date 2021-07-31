@@ -1,11 +1,17 @@
-import styled from "styled-components";
 import { useState } from "react";
-import { StBasePage } from "../BaseStyle";
 import { Row, Col, Container } from "react-grid-system";
+import styled from "styled-components";
+import { StBasePage } from "../BaseStyle";
+
+// blues illustrations as react component import
 import starter from "../assets/starter.png";
 import reply from "../assets/reply.png";
 
+// overlay modules
 import { Starter } from "../components/starter";
+import { Reply } from "../components/reply";
+
+// Declaring the needed styled components
 
 const StCard = styled.div`
   background-color: #62bcec;
@@ -25,17 +31,6 @@ const StImage = styled.div`
   }
 `;
 
-// const StIcon = styled.div`
-//   svg,
-//   path,
-//   line,
-//   polyline {
-//     color: white;
-//     height: 32px;
-//     width: 32px;
-//   }
-// `;
-
 export const StTextWrapper = styled.div`
   text-align: left;
   h1 {
@@ -50,14 +45,13 @@ export const StTextWrapper = styled.div`
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
     opacity: ${(props) => (props.color === "light" ? 0.75 : 1)};
     font-weight: ${(props) => (props.color === "light" ? 600 : 400)};
-
   }
 `;
 
 const StButton: any = styled.button`
-right: 0;
-z-index: 11;
-  position: ${(props :any) => (props.fixed ? "fixed" : "relative")};
+  right: 0;
+  z-index: 11;
+  position: ${(props: any) => (props.fixed ? "fixed" : "relative")};
   margin-top: 15px;
   min-width: 100px;
   width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
@@ -71,7 +65,6 @@ z-index: 11;
     props.color === "light" ? "white" : "lightgrey"};
   transition: background-color 0.3s ease;
   filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.1));
-
   :active {
     background-color: grey;
   }
@@ -92,6 +85,7 @@ const Overlay: any = styled.div`
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 `;
 
+// small props interface for the category selection card
 interface SelBoxProps {
   title: String;
   content: String;
@@ -99,9 +93,8 @@ interface SelBoxProps {
   imgEl: any;
 }
 
-const Reply = () => {
-  return <h1>Reply</h1>;
-};
+
+// Home component and other smaller functional components
 
 export function Home() {
   const [overlay, setShowOL] = useState(false);
@@ -111,7 +104,6 @@ export function Home() {
   const toggleOverlay: any = (version: any) => {
     setShowOL(!overlay);
     setDisabled(true);
-    console.log(version);
     //check which box the button was clicked from to set the right overlay content
     setOLContent(version);
     //shortly disable the buttons when clicked to prevent spamming
@@ -121,6 +113,8 @@ export function Home() {
   };
   let vis = overlay ? 1 : 0;
 
+
+  // category box card
   const SelectorBox: React.FC<SelBoxProps> = (props) => {
     return (
       <StCard>
@@ -165,11 +159,13 @@ export function Home() {
     );
   };
 
+
+  // Actual home component
   return (
     <StBasePage>
       <Overlay show={vis}>
         <StButton
-        fixed
+          fixed
           style={{ margin: "20px" }}
           disabled={btnDiabled}
           size="small"
@@ -195,7 +191,7 @@ export function Home() {
                 <StTextWrapper color="#272727">
                   <h1 style={{ margin: 0 }}>Boost your texting game</h1>
                   <h2 style={{ margin: 0, marginTop: "10px" }}>
-                    with the help of AI.
+                    with the help of AI.{"  "}
                     {String.fromCodePoint(0x1f913)}
                   </h2>
                 </StTextWrapper>
