@@ -11,14 +11,18 @@ const StImageUploadField = styled.div`
     flex-direction: column;
     justify-content: center;
     width: auto;
-    height: 30vh;
-    border-radius: 10px;
+    height: 50vh;
+    border-radius: 20px;
     padding: 30px;
     margin-top: 50px;
     text-align: center;
     background-color: #62bcec;
     cursor: pointer;
     filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
+    transition: background-color ease-in-out 0.2s;
+    :active {
+      background-color: grey;
+    }
   }
 `;
 
@@ -46,17 +50,38 @@ export const Starter = () => {
   const handleFileInput: any = (event: any) => {};
   return (
     <div style={{ padding: "0 30px 48px 30px" }}>
-      <Container fluid>
+      <Container>
         <Row>
-          <Col>
-            <h2>
+          <Col xl={3} />
+
+          <Col xl={6}>
+            <h2 style={{ marginTop: "100px" }}>
               Starter
               <br />
             </h2>
-            <p>Uplod your screenshot and let it get analysed.</p>
+            <StTextWrapper color={"grey"}>
+              <p>
+                Upload a <strong>screenshot of the persons profile</strong> and
+                wait a few seconds to let the algorithm do its magic. Thats it!{" "}
+              </p>
+              <p>
+                If you upload a a profile picture with multiple people, you will
+                have to <strong> select the person you want analysed.</strong>
+              </p>
+              <p>
+                After that,{" "}
+                <strong>
+                  {" "}
+                  the Ai will present you the recommended starting message{" "}
+                </strong>{" "}
+                based on the person selected. {String.fromCodePoint(0x1f9e0)}
+              </p>
+            </StTextWrapper>
           </Col>
+          <Col xl={3} />
         </Row>
         <Row>
+          <Col xl={3} />
           <Col>
             <StImageUploadField>
               {
@@ -89,6 +114,7 @@ export const Starter = () => {
               </StTextWrapper>
             </StImageUploadField>
           </Col>
+          <Col xl={3} />
         </Row>
       </Container>
     </div>

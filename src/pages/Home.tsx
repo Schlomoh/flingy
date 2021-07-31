@@ -37,7 +37,6 @@ const StImage = styled.div`
 // `;
 
 export const StTextWrapper = styled.div`
-  max-width: 500px;
   text-align: left;
   h1 {
     color: #020202;
@@ -48,12 +47,17 @@ export const StTextWrapper = styled.div`
   }
   p,
   h3 {
-
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
+    opacity: ${(props) => (props.color === "light" ? 0.75 : 1)};
+    font-weight: ${(props) => (props.color === "light" ? 600 : 400)};
+
   }
 `;
 
 const StButton: any = styled.button`
+right: 0;
+z-index: 11;
+  position: ${(props :any) => (props.fixed ? "fixed" : "relative")};
   margin-top: 15px;
   min-width: 100px;
   width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
@@ -64,10 +68,12 @@ const StButton: any = styled.button`
   font-weight: bold;
   color: ${(props: any) => (props.color === "light" ? "#62bcec" : "white")};
   background-color: ${(props: any) =>
-    props.color === "light" ? "white" : "grey"};
-  transition: background-color 0.2s ease;
+    props.color === "light" ? "white" : "lightgrey"};
+  transition: background-color 0.3s ease;
+  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.1));
+
   :active {
-    background-color: lightgray;
+    background-color: grey;
   }
 `;
 
@@ -163,6 +169,7 @@ export function Home() {
     <StBasePage>
       <Overlay show={vis}>
         <StButton
+        fixed
           style={{ margin: "20px" }}
           disabled={btnDiabled}
           size="small"
