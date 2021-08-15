@@ -8,82 +8,18 @@ import starter from "../assets/starter.png";
 import reply from "../assets/reply.png";
 
 // overlay modules
-import { Starter } from "../components/starter";
-import { Reply } from "../components/reply";
+import { Starter } from "../overlays/starter";
+import { Reply } from "../overlays/reply";
 
 // Declaring the needed styled components
 
-const StCard = styled.div`
-  background-color: #62bcec;
-  border-radius: 20px;
-  padding: 30px;
-  margin-top: 50px;
-  transition: filter ease 0.5s;
-  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
-`;
-
-const StImage = styled.div`
-  img {
-    width: 40vw;
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
-  }
-`;
-
-export const StTextWrapper = styled.div`
-  text-align: left;
-  h1 {
-    color: #020202;
-  }
-  h2 {
-    margin-bottom: unset;
-    color: ${(props) => (props.color === "light" ? "white" : props.color)};
-  }
-  p,
-  h3 {
-    color: ${(props) => (props.color === "light" ? "white" : props.color)};
-    opacity: ${(props) => (props.color === "light" ? 0.75 : 1)};
-    font-weight: ${(props) => (props.color === "light" ? 600 : 400)};
-  }
-`;
-
-const StButton: any = styled.button`
-  right: 0;
-  z-index: 11;
-  position: ${(props: any) => (props.fixed ? "fixed" : "relative")};
-  margin-top: 15px;
-  min-width: 100px;
-  width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 24px;
-  font-weight: bold;
-  color: ${(props: any) => (props.color === "light" ? "#62bcec" : "white")};
-  background-color: ${(props: any) =>
-    props.color === "light" ? "white" : "lightgrey"};
-  transition: background-color 0.3s ease;
-  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.1));
-  :active {
-    background-color: grey;
-  }
-`;
-
-const Overlay: any = styled.div`
-  overflow-x: hidden;
-  text-align: right;
-  height: 100vh;
-  width: 100%;
-  background-color: white;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
-  opacity: ${(props: any) => props.show};
-  visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-`;
+import {
+  StCard,
+  StImage,
+  StTextWrapper,
+  StButton,
+  Overlay,
+} from "../components/styledComps";
 
 // small props interface for the category selection card
 interface SelBoxProps {
@@ -92,7 +28,6 @@ interface SelBoxProps {
   version: String;
   imgEl: any;
 }
-
 
 // Home component and other smaller functional components
 
@@ -112,7 +47,6 @@ export function Home() {
     }, 800);
   };
   let vis = overlay ? 1 : 0;
-
 
   // category box card
   const SelectorBox: React.FC<SelBoxProps> = (props) => {
@@ -158,7 +92,6 @@ export function Home() {
       </StCard>
     );
   };
-
 
   // Actual home component
   return (

@@ -5,10 +5,10 @@ export const StBasePage = styled.div`
   font-family: "Mula", sans-serif;
   text-align: left;
   padding: 48px 30px;
-  background-color: #f3c5a1;
+  background-color: #fefefe;
 
   h1 {
-    font-family: "Raleway", monospace;
+    font-family: "Raleway", sans-serif;
     font-size: 42px;
     font-weight: 900;
     color: #272727;
@@ -18,6 +18,12 @@ export const StBasePage = styled.div`
     line-height: 1.2;
     font-size: 28px;
     font-weight: 600;
+  }
+  
+  h3{
+    font-size: 22px;
+    font-weight: 600;
+    
   }
 
   p {

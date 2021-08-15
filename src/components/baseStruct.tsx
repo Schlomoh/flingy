@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-grid-system";
-import { StTextWrapper } from "../pages/Home";
+import { StTextWrapper } from "../components/styledComps";
 
 interface overlayProps {
   children: any;
@@ -14,7 +14,7 @@ export const BaseOLStruct: React.FC<overlayProps> = (props) => {
       <Container>
         <Row>
           <Col xl={3} />
-          <Col xl={6}>
+          <Col>
             <h2 style={{ marginTop: "100px" }}>
               {props.title}
               <br />
@@ -24,9 +24,11 @@ export const BaseOLStruct: React.FC<overlayProps> = (props) => {
           <Col xl={3} />
         </Row>
         <Row>
-          <Col xl={3} />
-          <Col>{props.magicElement}</Col>
-          <Col xl={3} />
+          <Col xl={2} lg={1} />
+          <Col xl={8} lg={10}>
+            {props.magicElement}
+          </Col>
+          <Col xl={2} lg={1} />
         </Row>
       </Container>
     </div>
