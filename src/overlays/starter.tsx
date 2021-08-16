@@ -179,7 +179,15 @@ export const Starter = () => {
             </FadeIn>
           ) : (
             <FadeIn>
-              {select !== undefined ? <h3>{people[select].message}</h3> : null}
+              {select !== undefined ? (
+                <StTextWrapper color="grey" align="center">
+                  <p>{people[select].message}</p>
+                </StTextWrapper>
+              ) : (
+                <StTextWrapper fat color="grey" align="center">
+                  <h3>Select a face :)</h3>
+                </StTextWrapper>
+              )}
             </FadeIn>
           )}
         </StDetailData>
@@ -202,9 +210,13 @@ export const Starter = () => {
               justifyContent: "center",
             }}
           >
-            <StTextWrapper fat align="center" color="grey">
-              {img ? <DetailData /> : <p>Upload an image to get started.</p>}
-            </StTextWrapper>
+            {img ? (
+              <DetailData />
+            ) : (
+              <StTextWrapper fat align="center" color="grey">
+                <p>Upload an image to get started.</p>
+              </StTextWrapper>
+            )}
           </Col>
         </Row>
       </Container>
