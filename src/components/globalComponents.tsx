@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 
 // Fading in the child elements when the render

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Row, Col, Container } from "react-grid-system";
-import styled from "styled-components";
 import { StBasePage } from "../BaseStyle";
 
 // blues illustrations as react component import
@@ -38,21 +37,23 @@ export function Home() {
 
   const toggleOverlay: any = (version: any) => {
     setShowOL(!overlay);
+    //shortly disable the buttons when clicked to prevent spamming
     setDisabled(true);
     //check which box the button was clicked from to set the right overlay content
     setOLContent(version);
-    //shortly disable the buttons when clicked to prevent spamming
+    // then turn the buttons back on
     setTimeout(() => {
       setDisabled(false);
     }, 800);
   };
+  // opacity value from state
   let vis = overlay ? 1 : 0;
 
   // category box card
   const SelectorBox: React.FC<SelBoxProps> = (props) => {
     return (
       <StCard>
-        <StTextWrapper color="light">
+        <StTextWrapper fat color="light">
           <Container>
             <Row>
               <Col
@@ -153,11 +154,11 @@ export function Home() {
             </Row>
             <Row>
               <Col>
-                <StTextWrapper>
                   <h2>
                     <br />
                     Do you sometimes struggle to find the right words?
                   </h2>
+                <StTextWrapper fat color='grey'>
                   <p>
                     That's normal, but now you can use this handy tool to either
                     start or get help continuing a conversation. <br />

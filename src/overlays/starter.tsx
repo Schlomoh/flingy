@@ -9,8 +9,10 @@ import {
   StImageUploadField,
   StImagePreview,
   StIcon,
+  StDetailData,
   stdBlue,
   override,
+  FaceBox,
 } from "../components/styledComps";
 
 // structural components
@@ -23,6 +25,7 @@ import GridLoader from "react-spinners/GridLoader";
 import { FiUploadCloud } from "react-icons/fi";
 
 // functional components
+//
 import { analyseScreenshot } from "../components/tools/pictureScan";
 
 // the overlay component
@@ -34,8 +37,8 @@ export const Starter = () => {
 
   const UploadField = () => {
     const [img, setImg]: any = useState();
-
     //the blue button for uploading
+
     const UploadButton = () => {
       // state variable for the input element
       // the input field is not displayed and is queried to be accessed
@@ -57,7 +60,7 @@ export const Starter = () => {
           console.log("changing img to file");
           const url = URL.createObjectURL(file.fileObj);
           setImg(url);
-          //analyseScreenshot(url);
+
           //setFile({fileObj: file.fileObj, changed: false})
         }
       }, [inputElement]);
@@ -65,7 +68,7 @@ export const Starter = () => {
       // returning the blue button
       return (
         <StImageUploadField>
-          <StTextWrapper color="light">
+          <StTextWrapper fat color="light">
             <input
               accept=".png, .jpg, .jpeg, .tiff"
               id="file-input"
@@ -93,7 +96,33 @@ export const Starter = () => {
 
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
+
+    const [AIresult, setAIresult]: any = useState();
+    const [people, setPeople]: any = useState({});
+    const [select, setSelect]: any = useState(undefined);
     const ImagePreview = () => {
+      const getDots = () => {
+        let dots: any = [];
+        let new_p = people;
+        for (let i = 0; i < AIresult.length; i++) {
+          dots.push(
+            <FaceBox
+              onClick={(e: any) => {
+                setSelect(i);
+                console.log(select);
+                console.log(people[i]);
+              }}
+              key={i}
+              left={AIresult[i].landmarks[2][0]}
+              top={AIresult[i].landmarks[2][1]}
+            />
+          );
+
+          new_p[i] = { key: i, message: `you are so beautiful n${i + 1}` };
+          setPeople(new_p);
+        }
+        return dots;
+      };
       return (
         <FadeIn>
           <StButton
@@ -115,7 +144,10 @@ export const Starter = () => {
             Remove Image
           </StButton>
           <StImagePreview>
-            <img src={img} alt="" />
+            <div>
+              {AIresult ? getDots() : null}
+              <img id="uploadImage" src={img} alt=""></img>
+            </div>
           </StImagePreview>
         </FadeIn>
       );
@@ -123,20 +155,34 @@ export const Starter = () => {
 
     //text and data to be shown next to the uploaded image
     const DetailData = () => {
-      const loading = false;
+      async function getAIdata() {
+        setAIresult(await Promise.resolve(analyseScreenshot()));
+      }
+      useEffect(() => {
+        if (!AIresult) {
+          getAIdata();
+        } else {
+          console.log(AIresult);
+        }
+      });
+      const loading = AIresult === undefined ? true : false;
       return (
-        <FadeIn>
+        <StDetailData>
           {loading ? (
-            <GridLoader
-              color={stdBlue}
-              loading={loading}
-              css={override}
-              size={30}
-            />
+            <FadeIn>
+              <GridLoader
+                color={stdBlue}
+                loading={loading}
+                css={override}
+                size={20}
+              />
+            </FadeIn>
           ) : (
-            <h3>loaded</h3>
+            <FadeIn>
+              {select !== undefined ? <h3>{people[select].message}</h3> : null}
+            </FadeIn>
           )}
-        </FadeIn>
+        </StDetailData>
       );
     };
 
@@ -156,15 +202,14 @@ export const Starter = () => {
               justifyContent: "center",
             }}
           >
-            <StTextWrapper align="center" color="grey">
-              {img ? <DetailData /> : <h3>Upload an image to get started.</h3>}
+            <StTextWrapper fat align="center" color="grey">
+              {img ? <DetailData /> : <p>Upload an image to get started.</p>}
             </StTextWrapper>
           </Col>
         </Row>
       </Container>
     );
   };
-
 
   // returns the whole overlay page constructed by the Base-Overlay-Structure
   return (
@@ -175,14 +220,15 @@ export const Starter = () => {
           few seconds to let the algorithm do its magic. Thats it!{" "}
         </p>
         <p>
-          If you upload a a profile picture with multiple people, you will have
-          to <strong> select the person you want analysed.</strong>
+          After uploading the profile picture, an AI will scan the image and you
+          will have to <strong> select the person you want to analyse </strong>
+          further.
         </p>
         <p>
           After that,{" "}
           <strong>
             {" "}
-            the Ai will present you the recommended starting message{" "}
+            the algorithm will present you a recommended starting message{" "}
           </strong>{" "}
           based on the person selected. {String.fromCodePoint(0x1f9e0)}
         </p>
