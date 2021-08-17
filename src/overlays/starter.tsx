@@ -44,7 +44,6 @@ export const Starter = () => {
     // after the parent component is rendered in the browser
     const [inputElement, setInpEl]: any = useState();
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log("CALLED HANDLE INPUT");
       //setImg(undefined);
       if (event.target.files) {
         setFile({ fileObj: event.target.files[0], changed: true });
@@ -56,7 +55,6 @@ export const Starter = () => {
       // after rendering the component the file input gets queried to be clickable
       if (!inputElement) setInpEl(document.getElementById("file-input"));
       if (file.changed && !img) {
-        console.log("changing img to file");
         const url = URL.createObjectURL(file.fileObj);
         setImg(url);
 
@@ -73,16 +71,11 @@ export const Starter = () => {
             id="file-input"
             type="file"
             name="name"
-            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              console.log("on change");
-              handleFileInput(e);
-            }}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleFileInput(e)
+            }
           />
-          <button
-            onClick={() => {
-              inputElement.click();
-            }}
-          >
+          <button onClick={() => inputElement.click()}>
             <StIcon>
               <FiUploadCloud />
             </StIcon>
@@ -92,6 +85,7 @@ export const Starter = () => {
       </StImageUploadField>
     );
   };
+
   const UploadField = () => {
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
@@ -106,17 +100,12 @@ export const Starter = () => {
         for (let i = 0; i < AIresult.length; i++) {
           dots.push(
             <FaceBox
-              onClick={(e: any) => {
-                setSelect(i);
-                console.log(select);
-                console.log(people[i]);
-              }}
+              onClick={(e: any) => setSelect(i)}
               key={i}
               left={AIresult[i].landmarks[2][0]}
               top={AIresult[i].landmarks[2][1]}
             />
           );
-
           new_p[i] = { key: i, message: `you are so beautiful n${i + 1}` };
           setPeople(new_p);
         }
@@ -148,7 +137,11 @@ export const Starter = () => {
               {loading ? (
                 <FadeIn>
                   <div
-                    style={{ position: "absolute", left: "40%", top: "40%" }}
+                    style={{
+                      position: "absolute",
+                      left: "40%",
+                      top: "40%",
+                    }}
                   >
                     <GridLoader
                       color={stdBlue}
@@ -195,8 +188,8 @@ export const Starter = () => {
             <StTextWrapper align="center" color="grey">
               <h3>Wait just a little bit...</h3>
               <p>
-                if it takes longer than 20 seconds try another picture or crop
-                the current.
+                If this takes longer than 20 seconds try another picture or crop
+                the current one.
               </p>
             </StTextWrapper>
           )}
