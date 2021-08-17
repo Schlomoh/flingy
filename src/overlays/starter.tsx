@@ -35,71 +35,70 @@ export const Starter = () => {
     changed: false,
   });
 
-  const UploadField = () => {
-    const [img, setImg]: any = useState();
-    //the blue button for uploading
+  const [img, setImg]: any = useState();
+  //the blue button for uploading
 
-    const UploadButton = () => {
-      // state variable for the input element
-      // the input field is not displayed and is queried to be accessed
-      // after the parent component is rendered in the browser
-      const [inputElement, setInpEl]: any = useState();
-      const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("CALLED HANDLE INPUT");
-        //setImg(undefined);
-        if (event.target.files) {
-          setFile({ fileObj: event.target.files[0], changed: true });
-        }
-      };
-
-      // load img with generated url from selected image
-      useEffect(() => {
-        // after rendering the component the file input gets queried to be clickable
-        if (!inputElement) setInpEl(document.getElementById("file-input"));
-        if (file.changed && !img) {
-          console.log("changing img to file");
-          const url = URL.createObjectURL(file.fileObj);
-          setImg(url);
-
-          //setFile({fileObj: file.fileObj, changed: false})
-        }
-      }, [inputElement]);
-
-      // returning the blue button
-      return (
-        <StImageUploadField>
-          <StTextWrapper fat color="light">
-            <input
-              accept=".png, .jpg, .jpeg, .tiff"
-              id="file-input"
-              type="file"
-              name="name"
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log("on change");
-                handleFileInput(e);
-              }}
-            />
-            <button
-              onClick={() => {
-                inputElement.click();
-              }}
-            >
-              <StIcon>
-                <FiUploadCloud />
-              </StIcon>
-              <h2 style={{ margin: 0 }}>Click here to upload</h2>
-            </button>
-          </StTextWrapper>
-        </StImageUploadField>
-      );
+  const UploadButton = () => {
+    // state variable for the input element
+    // the input field is not displayed and is queried to be accessed
+    // after the parent component is rendered in the browser
+    const [inputElement, setInpEl]: any = useState();
+    const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log("CALLED HANDLE INPUT");
+      //setImg(undefined);
+      if (event.target.files) {
+        setFile({ fileObj: event.target.files[0], changed: true });
+      }
     };
 
+    // load img with generated url from selected image
+    useEffect(() => {
+      // after rendering the component the file input gets queried to be clickable
+      if (!inputElement) setInpEl(document.getElementById("file-input"));
+      if (file.changed && !img) {
+        console.log("changing img to file");
+        const url = URL.createObjectURL(file.fileObj);
+        setImg(url);
+
+        //setFile({fileObj: file.fileObj, changed: false})
+      }
+    }, [inputElement]);
+
+    // returning the blue button
+    return (
+      <StImageUploadField>
+        <StTextWrapper fat color="light">
+          <input
+            accept=".png, .jpg, .jpeg, .tiff"
+            id="file-input"
+            type="file"
+            name="name"
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              console.log("on change");
+              handleFileInput(e);
+            }}
+          />
+          <button
+            onClick={() => {
+              inputElement.click();
+            }}
+          >
+            <StIcon>
+              <FiUploadCloud />
+            </StIcon>
+            <h2 style={{ margin: 0 }}>Click here to upload</h2>
+          </button>
+        </StTextWrapper>
+      </StImageUploadField>
+    );
+  };
+  const UploadField = () => {
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
 
-    const [AIresult, setAIresult]: any = useState();
-    const [people, setPeople]: any = useState({});
     const [select, setSelect]: any = useState(undefined);
+    const [people, setPeople]: any = useState({});
+    const [AIresult, setAIresult]: any = useState();
     const ImagePreview = () => {
       const getDots = () => {
         let dots: any = [];
@@ -123,6 +122,7 @@ export const Starter = () => {
         }
         return dots;
       };
+      const loading = AIresult === undefined ? true : false;
       return (
         <FadeIn>
           <StButton
@@ -145,7 +145,22 @@ export const Starter = () => {
           </StButton>
           <StImagePreview>
             <div>
-              {AIresult ? getDots() : null}
+              {loading ? (
+                <FadeIn>
+                  <div
+                    style={{ position: "absolute", left: "40%", top: "40%" }}
+                  >
+                    <GridLoader
+                      color={stdBlue}
+                      loading={loading}
+                      css={override}
+                      size={20}
+                    />
+                  </div>
+                </FadeIn>
+              ) : (
+                getDots()
+              )}
               <img id="uploadImage" src={img} alt=""></img>
             </div>
           </StImagePreview>
@@ -155,40 +170,35 @@ export const Starter = () => {
 
     //text and data to be shown next to the uploaded image
     const DetailData = () => {
+      const loading = AIresult === undefined ? true : false;
       async function getAIdata() {
         setAIresult(await Promise.resolve(analyseScreenshot()));
       }
       useEffect(() => {
         if (!AIresult) {
           getAIdata();
-        } else {
-          console.log(AIresult);
         }
       });
-      const loading = AIresult === undefined ? true : false;
       return (
         <StDetailData>
-          {loading ? (
-            <FadeIn>
-              <GridLoader
-                color={stdBlue}
-                loading={loading}
-                css={override}
-                size={20}
-              />
+          {select !== undefined ? (
+            <FadeIn duration="slow">
+              <StTextWrapper color="grey" align="center">
+                <p>{people[select].message}</p>
+              </StTextWrapper>
             </FadeIn>
+          ) : !loading ? (
+            <StTextWrapper fat color="grey" align="center">
+              <h3>Select a face :)</h3>
+            </StTextWrapper>
           ) : (
-            <FadeIn>
-              {select !== undefined ? (
-                <StTextWrapper color="grey" align="center">
-                  <p>{people[select].message}</p>
-                </StTextWrapper>
-              ) : (
-                <StTextWrapper fat color="grey" align="center">
-                  <h3>Select a face :)</h3>
-                </StTextWrapper>
-              )}
-            </FadeIn>
+            <StTextWrapper align="center" color="grey">
+              <h3>Wait just a little bit...</h3>
+              <p>
+                if it takes longer than 20 seconds try another picture or crop
+                the current.
+              </p>
+            </StTextWrapper>
           )}
         </StDetailData>
       );
@@ -214,7 +224,7 @@ export const Starter = () => {
               <DetailData />
             ) : (
               <StTextWrapper fat align="center" color="grey">
-                <p>Upload an image to get started.</p>
+                <h3>Upload an image to get started.</h3>
               </StTextWrapper>
             )}
           </Col>

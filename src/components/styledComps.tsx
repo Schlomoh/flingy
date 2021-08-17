@@ -126,17 +126,17 @@ export const FaceBox: any = styled.div`
   //width: ${(props: any) => `${props.width}px`};
   //height: ${(props: any) => `${props.height}px`};
 
-  width: 15px;
-  height: 15px;
-  left: ${(props: any) => `${props.left }px`};
-  top: ${(props: any) => `${props.top}px`};
+  width: 18px;
+  height: 18px;
+  left: ${(props: any) => `${props.left - 9}px`};
+  top: ${(props: any) => `${props.top - 9}px`};
   cursor: pointer;
   position: absolute;
-  border-radius: 35px;
-  background-color: white;
+  border-radius: 100px;
+  background-color: rgba(255, 255, 255, 0.5);
   z-index: 100;
-  :hover {
-    background-color: grey;
+  :hover{
+    background-color: ${stdBlue};
   }
 `;
 
