@@ -132,9 +132,12 @@ export const StFaceBox: any = styled.div`
   cursor: pointer;
   position: absolute;
   border-radius: 100px;
-  background-color:${(props: any)=>props.clicked ? stdBlue : 'rgba(255, 255, 255, 0.5)' };
+  background-color: ${(props: any) =>
+    props.clicked ? stdBlue : "rgba(255, 255, 255, 0.5)"};
   z-index: 12;
-  :hover, :active, :focus {
+  :hover,
+  :active,
+  :focus {
     background-color: ${stdBlue};
   }
 `;

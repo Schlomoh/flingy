@@ -13,12 +13,12 @@ import {
   stdBlue,
   override,
   StFaceBox,
-} from "../components/styledComps";
+} from "../../components/styledComps";
 
 // structural components
 import { Col, Row, Container } from "react-grid-system";
-import { BaseOLStruct } from "../components/baseStruct";
-import { FadeIn, PopIn } from "../components/globalComponents";
+import { BaseOLStruct } from "../../components/baseStruct";
+import { FadeIn, PopIn } from "../../components/globalComponents";
 
 // graphical elements
 import GridLoader from "react-spinners/GridLoader";
@@ -27,7 +27,7 @@ import { BsPerson } from "react-icons/bs";
 
 // functional components
 //
-import { analyseScreenshot } from "../components/tools/pictureScan";
+import { analyseScreenshot } from "../../components/tools/pictureScan";
 
 // the overlay component
 export const Starter = () => {
@@ -118,13 +118,23 @@ export const Starter = () => {
         );
       };
 
+      const getMessage: any = (categories:any) => {
+        return categories[0];
+      };
+
       const getDots = () => {
+        let categories = ["happy"];
         let dots: any = [];
         let new_p = people;
-        for (let i = 0; i < AIresult.length; i++) {
-          dots.push(<FaceBox i={i} />);
-          new_p[i] = { key: i, message: `you are so beautiful n${i + 1}` };
-          setPeople(new_p);
+        if (AIresult.length > 1) {
+          for (let i = 0; i < AIresult.length; i++) {
+            dots.push(<FaceBox i={i} />);
+            new_p[i] = { key: i, message: getMessage(categories) };
+            setPeople(new_p);
+          }
+        } else {
+          dots.push(<FaceBox i={0} />);
+          new_p[0] = { key: 0, message: getMessage(categories) };
         }
         return dots;
       };

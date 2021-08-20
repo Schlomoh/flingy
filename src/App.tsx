@@ -1,8 +1,8 @@
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Reply } from "./overlays/reply";
-import { Starter } from "./overlays/starter";
+import { Reply } from "./pages/overlays/reply";
+import { Starter } from "./pages/overlays/starter";
 import { OL } from "./components/globalComponents";
 
 function App() {

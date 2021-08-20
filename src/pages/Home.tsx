@@ -12,6 +12,7 @@ import {
   StTextWrapper,
   StButton,
 } from "../components/styledComps";
+
 import { Link } from "react-router-dom";
 import { FadeIn } from "../components/globalComponents";
 

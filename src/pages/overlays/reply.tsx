@@ -1,5 +1,5 @@
-import { StTextWrapper } from "../components/styledComps";
-import { BaseOLStruct } from "../components/baseStruct";
+import { StTextWrapper } from "../../components/styledComps";
+import { BaseOLStruct } from "../../components/baseStruct";
 
 export const Reply = () => {
   return (
