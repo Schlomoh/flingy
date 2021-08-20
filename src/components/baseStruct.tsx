@@ -23,7 +23,7 @@ export const BaseOLStruct: React.FC<overlayProps> = (props) => {
           </Col>
           <Col xl={3} />
         </Row>
-        <Row>
+        <Row style={{marginTop: '50px'}}>
           <Col xl={2} lg={1} />
           <Col xl={8} lg={10}>
             {props.magicElement}

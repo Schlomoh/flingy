@@ -12,17 +12,18 @@ import {
   StDetailData,
   stdBlue,
   override,
-  FaceBox,
+  StFaceBox,
 } from "../components/styledComps";
 
 // structural components
 import { Col, Row, Container } from "react-grid-system";
 import { BaseOLStruct } from "../components/baseStruct";
-import { FadeIn } from "../components/globalComponents";
+import { FadeIn, PopIn } from "../components/globalComponents";
 
 // graphical elements
 import GridLoader from "react-spinners/GridLoader";
 import { FiUploadCloud } from "react-icons/fi";
+import { BsPerson } from "react-icons/bs";
 
 // functional components
 //
@@ -36,8 +37,8 @@ export const Starter = () => {
   });
 
   const [img, setImg]: any = useState();
-  //the blue button for uploading
 
+  //the blue button for uploading
   const UploadButton = () => {
     // state variable for the input element
     // the input field is not displayed and is queried to be accessed
@@ -89,29 +90,44 @@ export const Starter = () => {
   const UploadField = () => {
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
-
     const [select, setSelect]: any = useState(undefined);
-    const [people, setPeople]: any = useState({});
     const [AIresult, setAIresult]: any = useState();
+    const [people, setPeople]: any = useState({});
+    const loading = AIresult === undefined ? true : false;
+
     const ImagePreview = () => {
+      async function getAIdata() {
+        setAIresult(await Promise.resolve(analyseScreenshot()));
+      }
+      useEffect(() => {
+        if (!AIresult) {
+          getAIdata();
+        }
+      });
+      const FaceBox: any = ({ i }: any) => {
+        return (
+          <StFaceBox
+            onClick={(e: any) => {
+              setSelect(i);
+            }}
+            clicked={select === i}
+            key={i}
+            left={AIresult[i].landmarks[2][0]}
+            top={AIresult[i].landmarks[2][1]}
+          />
+        );
+      };
+
       const getDots = () => {
         let dots: any = [];
         let new_p = people;
         for (let i = 0; i < AIresult.length; i++) {
-          dots.push(
-            <FaceBox
-              onClick={(e: any) => setSelect(i)}
-              key={i}
-              left={AIresult[i].landmarks[2][0]}
-              top={AIresult[i].landmarks[2][1]}
-            />
-          );
+          dots.push(<FaceBox i={i} />);
           new_p[i] = { key: i, message: `you are so beautiful n${i + 1}` };
           setPeople(new_p);
         }
         return dots;
       };
-      const loading = AIresult === undefined ? true : false;
       return (
         <FadeIn>
           <StButton
@@ -163,23 +179,35 @@ export const Starter = () => {
 
     //text and data to be shown next to the uploaded image
     const DetailData = () => {
-      const loading = AIresult === undefined ? true : false;
-      async function getAIdata() {
-        setAIresult(await Promise.resolve(analyseScreenshot()));
-      }
-      useEffect(() => {
-        if (!AIresult) {
-          getAIdata();
-        }
-      });
+      const [showPopIn, setShowPopIn] = useState(false);
+      const togglePopIn = () => setShowPopIn(!showPopIn);
+
       return (
         <StDetailData>
+          <PopIn
+            show={showPopIn}
+            toggle={togglePopIn}
+            heading={<h2>Results</h2>}
+          />
           {select !== undefined ? (
-            <FadeIn duration="slow">
-              <StTextWrapper color="grey" align="center">
-                <p>{people[select].message}</p>
-              </StTextWrapper>
-            </FadeIn>
+            <StTextWrapper color="grey" align="center">
+              <StButton
+                color="light"
+                style={{
+                  height: "200px",
+                  width: "100%",
+                  borderRadius: "20px",
+                }}
+                onClick={() => {
+                  togglePopIn();
+                }}
+              >
+                <StIcon color="#62bcec">
+                  <BsPerson />
+                </StIcon>
+                Details
+              </StButton>
+            </StTextWrapper>
           ) : !loading ? (
             <StTextWrapper fat color="grey" align="center">
               <h3>Select a face :)</h3>
@@ -216,7 +244,12 @@ export const Starter = () => {
             {img ? (
               <DetailData />
             ) : (
-              <StTextWrapper fat align="center" color="grey">
+              <StTextWrapper
+                fat
+                align="center"
+                color="grey"
+                style={{ paddingTop: "20px" }}
+              >
                 <h3>Upload an image to get started.</h3>
               </StTextWrapper>
             )}
@@ -228,26 +261,29 @@ export const Starter = () => {
 
   // returns the whole overlay page constructed by the Base-Overlay-Structure
   return (
-    <BaseOLStruct title="Starter" magicElement={<UploadField />}>
-      <StTextWrapper color={"grey"}>
-        <p>
-          Upload a <strong>screenshot of the persons profile</strong> and wait a
-          few seconds to let the algorithm do its magic. Thats it!{" "}
-        </p>
-        <p>
-          After uploading the profile picture, an AI will scan the image and you
-          will have to <strong> select the person you want to analyse </strong>
-          further.
-        </p>
-        <p>
-          After that,{" "}
-          <strong>
-            {" "}
-            the algorithm will present you a recommended starting message{" "}
-          </strong>{" "}
-          based on the person selected. {String.fromCodePoint(0x1f9e0)}
-        </p>
-      </StTextWrapper>
-    </BaseOLStruct>
+    <FadeIn>
+      <BaseOLStruct title="Starter" magicElement={<UploadField />}>
+        <StTextWrapper color={"grey"}>
+          <p>
+            Upload a <strong>screenshot of the persons profile</strong> and wait
+            a few seconds to let the algorithm do its magic. Thats it!{" "}
+          </p>
+          <p>
+            After uploading the profile picture, an AI will scan the image and
+            you will have to{" "}
+            <strong> select the person you want to analyse </strong>
+            further.
+          </p>
+          <p>
+            After that,{" "}
+            <strong>
+              {" "}
+              the algorithm will present you a recommended starting message{" "}
+            </strong>{" "}
+            based on the person selected. {String.fromCodePoint(0x1f9e0)}
+          </p>
+        </StTextWrapper>
+      </BaseOLStruct>
+    </FadeIn>
   );
 };

@@ -39,7 +39,7 @@ export const StTextWrapper: any = styled.div`
   }
 `;
 
-export const Overlay: any = styled.div`
+export const StOverlay: any = styled.div`
   overflow-x: hidden;
   text-align: right;
   height: 100vh;
@@ -88,7 +88,6 @@ export const StImageUploadField: any = styled.div`
     width: 100%;
     border-radius: 20px;
     padding: 30px;
-    margin-top: 50px;
     background-color: ${stdBlue};
     cursor: pointer;
     filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
@@ -122,7 +121,7 @@ export const StImagePreview: any = styled.div`
   }
 `;
 
-export const FaceBox: any = styled.div`
+export const StFaceBox: any = styled.div`
   //width: ${(props: any) => `${props.width}px`};
   //height: ${(props: any) => `${props.height}px`};
 
@@ -133,9 +132,9 @@ export const FaceBox: any = styled.div`
   cursor: pointer;
   position: absolute;
   border-radius: 100px;
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 100;
-  :hover{
+  background-color:${(props: any)=>props.clicked ? stdBlue : 'rgba(255, 255, 255, 0.5)' };
+  z-index: 12;
+  :hover, :active, :focus {
     background-color: ${stdBlue};
   }
 `;
@@ -145,7 +144,6 @@ export const StDetailData = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 300px;
 `;
 
 export const StIcon = styled.div`
@@ -153,10 +151,10 @@ export const StIcon = styled.div`
   path,
   line,
   polyline {
-    color: white;
+    color: ${(props: any) => (props.color ? props.color : "white")};
     height: 48px;
     width: 48px;
-    margin-bottom: 20px;
+    cursor: pointer;
   }
 `;
 
@@ -164,4 +162,21 @@ export const override = css`
   display: block;
   margin: 0 auto;
   border-color: ${stdBlue};
+`;
+
+export const StPopIn: any = styled.div`
+  position: fixed;
+  z-index: 20;
+  visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
+  transform: ${(props: any) =>
+    props.show ? "translateY(0)" : "translateY(500px)"};
+  width: 100vw;
+  right: 0;
+  height: 600px;
+  border-radius: 20px;
+  top: 40vh;
+  background-color: white;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    visibility 0.5s;
 `;
