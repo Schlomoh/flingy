@@ -111,14 +111,13 @@ export const Starter = () => {
               setSelect(i);
             }}
             clicked={select === i}
-            key={i}
             left={AIresult[i].landmarks[2][0]}
             top={AIresult[i].landmarks[2][1]}
           />
         );
       };
 
-      const getMessage: any = (categories:any) => {
+      const getMessage: any = (categories: any) => {
         return categories[0];
       };
 
@@ -127,15 +126,17 @@ export const Starter = () => {
         let dots: any = [];
         let new_p = people;
         if (AIresult.length > 1) {
+          console.log(AIresult.length);
           for (let i = 0; i < AIresult.length; i++) {
-            dots.push(<FaceBox i={i} />);
+            dots.push(<FaceBox key={i} i={i} />);
             new_p[i] = { key: i, message: getMessage(categories) };
-            setPeople(new_p);
           }
         } else {
-          dots.push(<FaceBox i={0} />);
+          dots.push(<FaceBox key={0} i={0} />);
           new_p[0] = { key: 0, message: getMessage(categories) };
+          setSelect(0)
         }
+        setPeople(new_p);
         return dots;
       };
       return (
