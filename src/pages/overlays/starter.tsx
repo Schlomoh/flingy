@@ -90,10 +90,10 @@ export const Starter = () => {
   const UploadField = () => {
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
-    const [select, setSelect]: any = useState(undefined);
     const [AIresult, setAIresult]: any = useState();
-    const [people, setPeople]: any = useState({});
     const loading = AIresult === undefined ? true : false;
+    const [people, setPeople]: any = useState({});
+    const [select, setSelect]: any = useState(undefined);
 
     const ImagePreview = () => {
       async function getAIdata() {
@@ -121,26 +121,27 @@ export const Starter = () => {
         return categories[0];
       };
 
-      const getDots = () => {
-        let categories = ["happy"];
+      const Dots = () => {
+        useEffect(() => {
+          if (AIresult.length === 1) setSelect(0);
+          setPeople(new_p);
+        });
+
+        const categories = ["happy"];
         let dots: any = [];
         let new_p = people;
-        if (AIresult.length > 1) {
-          console.log(AIresult.length);
-          for (let i = 0; i < AIresult.length; i++) {
-            dots.push(<FaceBox key={i} i={i} />);
-            new_p[i] = { key: i, message: getMessage(categories) };
-          }
-        } else {
-          dots.push(<FaceBox key={0} i={0} />);
-          new_p[0] = { key: 0, message: getMessage(categories) };
-          setSelect(0)
+
+        for (let i = 0; i < AIresult.length; i++) {
+          dots.push(<FaceBox key={i} i={i} />);
+          new_p[i] = { key: i, message: getMessage(categories) };
         }
-        setPeople(new_p);
         return dots;
       };
+
+      // Returns the Box that contains the uploaded image
+      // and the marking dots for each face
       return (
-        <FadeIn>
+        <div>
           <StButton
             color="warn"
             onClick={() => {
@@ -162,29 +163,29 @@ export const Starter = () => {
           <StImagePreview>
             <div>
               {loading ? (
-                <FadeIn>
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: "40%",
-                      top: "40%",
-                    }}
-                  >
-                    <GridLoader
-                      color={stdBlue}
-                      loading={loading}
-                      css={override}
-                      size={20}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "40%",
+                    top: "40%",
+                  }}
+                >
+                  <FadeIn>
+                  <GridLoader
+                    color={stdBlue}
+                    loading={loading}
+                    css={override}
+                    size={20}
                     />
-                  </div>
-                </FadeIn>
+                    </FadeIn>
+                </div>
               ) : (
-                getDots()
+                <Dots />
               )}
-              <img id="uploadImage" src={img} alt=""></img>
+                <img id="uploadImage" src={img} alt=""></img>
             </div>
           </StImagePreview>
-        </FadeIn>
+        </div>
       );
     };
 
@@ -218,6 +219,7 @@ export const Starter = () => {
                 </StIcon>
                 Details
               </StButton>
+
             </StTextWrapper>
           ) : !loading ? (
             <StTextWrapper fat color="grey" align="center">
@@ -236,10 +238,8 @@ export const Starter = () => {
       );
     };
 
-    // returns the button which turns into an the image
-    // preview when uploading an image
-    // And the 'analysis' part which displays the information
-    // about the profiles image
+    // returns the functional part of the page
+    //  So the Input Field and the detail data Button
     return (
       <Container fluid>
         <Row>
