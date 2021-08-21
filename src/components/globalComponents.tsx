@@ -15,7 +15,7 @@ import { BsChevronCompactDown } from "react-icons/bs";
 // Fading in the child elements when the render
 export const FadeIn = ({ children, slow }: any) => {
   const [vis, setVis] = useState(false);
-  let dur = slow ? "3s" : "1s";
+  let dur = slow ? "2s" : "1s";
   let detailStyle: any = vis
     ? { visibility: "visible", opacity: 1, transition: `all ${dur}` }
     : { visibility: "hidden", opacity: 0, transition: `all ${dur}` };
@@ -52,30 +52,42 @@ export const PopIn: any = (props: any) => {
         top: 0,
         position: "fixed",
         zIndex: 13,
-        transition: "background-color 1s, visibility 1s",
+        transition: "background-color .5s, visibility .5s",
         backgroundColor: props.show ? "rgba(0,0,0,0.2)" : "rgba(0,0,0,0)",
         visibility: props.show ? "visible" : "hidden",
       }}
     >
       <StPopIn show={props.show}>
-        <Container style={{ padding: "0 30px" }}>
+        <Container>
           <Row>
-            <Col>
-              <StTextWrapper align="center">
-                <StIcon onClick={() => props.toggle()} color="grey">
-                  <BsChevronCompactDown />
-                </StIcon>
-              </StTextWrapper>
+            <Col lg={2} sm={1} />
+            <Col lg={8} sm={10} id="DetailPopIn">
+              <Container style={{ padding: "0 30px" }}>
+                <Row>
+                  <Col>
+                    <StTextWrapper align="center">
+                      <StIcon onClick={() => props.toggle()} color="grey">
+                        <BsChevronCompactDown />
+                      </StIcon>
+                    </StTextWrapper>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <StTextWrapper
+                      color="grey"
+                      fat
+                      style={{ paddingTop: "25px" }}
+                    >
+                      {props.heading}
+                      {props.text}
+                      {props.result}
+                    </StTextWrapper>
+                  </Col>
+                </Row>
+              </Container>
             </Col>
-          </Row>
-          <Row>
-            <Col>
-              <StTextWrapper color="grey" fat style={{ paddingTop: "25px" }}>
-                {props.heading}
-                {props.text}
-                {props.result}
-              </StTextWrapper>
-            </Col>
+            <Col lg={2} sm={1} />
           </Row>
         </Container>
       </StPopIn>
