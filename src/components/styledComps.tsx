@@ -103,8 +103,7 @@ export const StImageUploadField: any = styled.div`
 
 export const StImagePreview: any = styled.div`
   width: 100%;
-  height: 60vh;
-  margin-top: 50px;
+  height: 55vh;
   overflow: hidden;
   border-radius: 20px;
   background-color: lightgrey;
@@ -112,7 +111,7 @@ export const StImagePreview: any = styled.div`
   flex-direction: column;
   justify-content: center; */
   filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
-  transition: opacity ease 1s;
+  //transition: opacity ease 1s;
 
   img {
     object-fit: contain;
@@ -175,11 +174,14 @@ export const StPopIn: any = styled.div`
     props.show ? "translateY(0)" : "translateY(500px)"};
   width: 100vw;
   right: 0;
-  height: 600px;
-  border-radius: 20px;
-  top: 40vh;
-  background-color: white;
-  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    visibility 0.5s;
+    visibility 0.3s;
+    
+  #DetailPopIn {
+    height: 600px;
+    border-radius: 20px;
+    top: 40vh;
+    background-color: white;
+    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
+  }
 `;
