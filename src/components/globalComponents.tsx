@@ -6,6 +6,7 @@ import {
   StOverlay,
   StButton,
   StIcon,
+  stdBlue,
 } from "./styledComps";
 import { StBasePage } from "../BaseStyle";
 import { Link } from "react-router-dom";
@@ -42,55 +43,60 @@ export const OL: any = (props: any) => {
 };
 
 export const PopIn: any = (props: any) => {
+  const MessageField = ({ children }: any) => {
+    return (
+      <div className="textField">
+        <p className="message">{children}</p>
+        <p className="littleText">Delivered</p>
+      </div>
+    );
+  };
+
   return (
-    <div
-      onClick={() => props.toggle()}
-      style={{
-        width: "100vw",
-        height: "100vh",
-        left: 0,
-        top: 0,
-        position: "fixed",
-        zIndex: 13,
-        transition: "background-color .5s, visibility .5s",
-        backgroundColor: props.show ? "rgba(0,0,0,0.2)" : "rgba(0,0,0,0)",
-        visibility: props.show ? "visible" : "hidden",
-      }}
-    >
-      <StPopIn show={props.show}>
-        <Container>
-          <Row>
-            <Col lg={2} sm={1} />
-            <Col lg={8} sm={10} id="DetailPopIn">
-              <Container style={{ padding: "0 30px" }}>
-                <Row>
-                  <Col>
-                    <StTextWrapper align="center">
-                      <StIcon onClick={() => props.toggle()} color="grey">
-                        <BsChevronCompactDown />
-                      </StIcon>
-                    </StTextWrapper>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <StTextWrapper
-                      color="grey"
-                      fat
-                      style={{ paddingTop: "25px" }}
-                    >
-                      {props.heading}
-                      {props.text}
-                      {props.result}
-                    </StTextWrapper>
-                  </Col>
-                </Row>
-              </Container>
-            </Col>
-            <Col lg={2} sm={1} />
-          </Row>
-        </Container>
-      </StPopIn>
-    </div>
+    <StPopIn show={props.show}>
+      <Container>
+        <Row>
+          <Col lg={2} sm={1} />
+          <Col lg={8} sm={10} id="DetailPopIn">
+            <Container style={{ padding: "0 30px" }}>
+              <Row>
+                <Col>
+                  <StTextWrapper align="center">
+                    <StIcon onClick={() => props.toggle()} color="grey">
+                      <BsChevronCompactDown />
+                    </StIcon>
+                  </StTextWrapper>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <StTextWrapper
+                    color="grey"
+                    fat
+                    style={{ paddingTop: "25px" }}
+                  >
+                    {props.heading}
+                  </StTextWrapper>
+                  <StTextWrapper color="grey">{props.text}</StTextWrapper>
+                  <FadeIn slow>
+                    <MessageField>{props.result.message}</MessageField>
+                  </FadeIn>
+                  <StTextWrapper fat color="grey">
+                    <p style={{ marginBottom: "20px" }}>
+                      This Person is{" "}
+                      <strong style={{ color: stdBlue }}>
+                        {props.result.rvalue}%{" "}
+                      </strong>
+                      likely to respond.
+                    </p>
+                  </StTextWrapper>
+                </Col>
+              </Row>
+            </Container>
+          </Col>
+          <Col lg={2} sm={1} />
+        </Row>
+      </Container>
+    </StPopIn>
   );
 };

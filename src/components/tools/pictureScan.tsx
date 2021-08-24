@@ -1,6 +1,8 @@
+const blazeface = require('@tensorflow-models/blazeface')
+const tf = require('@tensorflow/tfjs')
 export async function analyseScreenshot() {
-  const blazeface = require("@tensorflow-models/blazeface");
   // Load the model.
+  tf.getBackend()
   const model = await blazeface.load();
 
   // Pass in an image or video to the model. The model returns an array of
@@ -8,7 +10,7 @@ export async function analyseScreenshot() {
 
   const returnTensors = false; // Pass in `true` to get tensors back, rather than values.
   const predictions = await model.estimateFaces(
-    document.getElementById("uploadImage"),
+    (document.getElementById("uploadImage") as HTMLImageElement),
     returnTensors
   );
 

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { css } from "@emotion/react";
 
-export const stdBlue = "#62bcec";
+export const stdBlue = "#2a7ef6";
 
 export const StCard = styled.div`
-  background-color: #62bcec;
+  background-color: ${stdBlue};
   border-radius: 20px;
   padding: 30px;
   margin-top: 50px;
@@ -67,7 +67,7 @@ export const StButton: any = styled.button`
   border-radius: 5px;
   font-size: 24px;
   font-weight: bold;
-  color: ${(props: any) => (props.color === "light" ? "#62bcec" : "white")};
+  color: ${(props: any) => (props.color === "light" ? stdBlue : "white")};
   background-color: ${(props: any) =>
     props.color === "light"
       ? "white"
@@ -171,17 +171,53 @@ export const StPopIn: any = styled.div`
   z-index: 20;
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
   transform: ${(props: any) =>
-    props.show ? "translateY(0)" : "translateY(500px)"};
+    props.show ? "translateY(0)" : "translateY(800px)"};
   width: 100vw;
   right: 0;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     visibility 0.3s;
-    
+    top: 20vh;
   #DetailPopIn {
-    height: 600px;
+    height: 850px;
     border-radius: 20px;
-    top: 40vh;
     background-color: white;
     filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
+
+  }
+
+  .textField {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ececec;
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+  }
+
+  .message {
+    position: relative;
+    padding: 15px 30px;
+    max-width: 75%;
+    border-radius: 30px;
+    border-bottom-right-radius: 10px;
+    background-color: ${stdBlue};
+    height: fit-content;
+    color: white;
+    margin: 0;
+    margin-right: 15px;
+    margin-left: 40%;
+  }
+  .littleText {
+    margin: 10px 0;
+    font-size: small;
+    font-weight: bold;
+    margin-left: calc(100% - 5rem);
+    margin-bottom: 40px;
+    position: relative;
+    color: lightgrey;
+    width: max-content;
   }
 `;

@@ -5,6 +5,7 @@
   "proxy": "https://api.deepai.org/",
   "dependencies": {
     "@tensorflow-models/blazeface": "^0.0.7",
+    "@tensorflow/tfjs": "^3.8.0",
     "@tensorflow/tfjs-converter": "^3.8.0",
     "@tensorflow/tfjs-core": "^3.8.0",
     "@testing-library/jest-dom": "^5.11.4",

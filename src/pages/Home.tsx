@@ -114,12 +114,11 @@ export function Home() {
                     <br />
                     Do you sometimes struggle to find the right words?
                   </h2>
-                  <StTextWrapper fat color="grey">
+                  <StTextWrapper color="grey">
                     <p>
-                      That's normal, but now you can use this handy tool to
-                      either start or get help continuing a conversation. <br />
-                      Send replies and starter lines suggested by an AI that
-                      will most likely score.
+                      <strong>That's normal, </strong>
+                      but now you can use this handy tool to either start or get
+                      help continuing a conversation.
                     </p>
                   </StTextWrapper>
                 </Col>

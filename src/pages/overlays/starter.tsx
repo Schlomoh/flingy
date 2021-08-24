@@ -28,6 +28,7 @@ import { BsPerson } from "react-icons/bs";
 // functional components
 //
 import { analyseScreenshot } from "../../components/tools/pictureScan";
+import { getStarter } from "../../components/tools/get_starter";
 
 // the overlay component
 export const Starter = () => {
@@ -39,55 +40,55 @@ export const Starter = () => {
   const [img, setImg]: any = useState();
 
   //the blue button for uploading
-  const UploadButton = () => {
-    // state variable for the input element
-    // the input field is not displayed and is queried to be accessed
-    // after the parent component is rendered in the browser
-    const [inputElement, setInpEl]: any = useState();
-    const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-      //setImg(undefined);
-      if (event.target.files) {
-        setFile({ fileObj: event.target.files[0], changed: true });
-      }
-    };
-
-    // load img with generated url from selected image
-    useEffect(() => {
-      // after rendering the component the file input gets queried to be clickable
-      if (!inputElement) setInpEl(document.getElementById("file-input"));
-      if (file.changed && !img) {
-        const url = URL.createObjectURL(file.fileObj);
-        setImg(url);
-
-        //setFile({fileObj: file.fileObj, changed: false})
-      }
-    }, [inputElement]);
-
-    // returning the blue button
-    return (
-      <StImageUploadField>
-        <StTextWrapper fat color="light">
-          <input
-            accept=".png, .jpg, .jpeg, .tiff"
-            id="file-input"
-            type="file"
-            name="name"
-            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleFileInput(e)
-            }
-          />
-          <button onClick={() => inputElement.click()}>
-            <StIcon>
-              <FiUploadCloud />
-            </StIcon>
-            <h2 style={{ margin: 0 }}>Click here to upload</h2>
-          </button>
-        </StTextWrapper>
-      </StImageUploadField>
-    );
-  };
 
   const UploadField = () => {
+    const UploadButton = () => {
+      // state variable for the input element
+      // the input field is not displayed and is queried to be accessed
+      // after the parent component is rendered in the browser
+      const [inputElement, setInpEl]: any = useState();
+      const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        //setImg(undefined);
+        if (event.target.files) {
+          setFile({ fileObj: event.target.files[0], changed: true });
+        }
+      };
+
+      // load img with generated url from selected image
+      useEffect(() => {
+        // after rendering the component the file input gets queried to be clickable
+        if (!inputElement) setInpEl(document.getElementById("file-input"));
+        if (file.changed && !img) {
+          const url = URL.createObjectURL(file.fileObj);
+          setImg(url);
+
+          //setFile({fileObj: file.fileObj, changed: false})
+        }
+      }, [inputElement]);
+
+      // returning the blue button
+      return (
+        <StImageUploadField>
+          <StTextWrapper fat color="light">
+            <input
+              accept=".png, .jpg, .jpeg, .tiff"
+              id="file-input"
+              type="file"
+              name="name"
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFileInput(e)
+              }
+            />
+            <button onClick={() => inputElement.click()}>
+              <StIcon>
+                <FiUploadCloud />
+              </StIcon>
+              <h2 style={{ margin: 0 }}>Click here to upload</h2>
+            </button>
+          </StTextWrapper>
+        </StImageUploadField>
+      );
+    };
     // component for displaying the uploaded image
     // contains a button to remove the uploaded image
     const [AIresult, setAIresult]: any = useState();
@@ -105,10 +106,29 @@ export const Starter = () => {
         }
       });
       const FaceBox: any = ({ i }: any) => {
+        const categories = ["funny"];
+        const getMessage = () => {
+          let p = people;
+          if (!people[i]) {
+            p[i] = {
+              message: getStarter(categories[0]),
+              rvalue: Math.floor(50 + 50 * Math.random()),
+            };
+            console.log(p);
+            setPeople(p);
+          }
+        };
+        useEffect(() => {
+          if (AIresult.length === 1) {
+            setSelect(0);
+            getMessage();
+          }
+        });
         return (
           <StFaceBox
             onClick={(e: any) => {
               setSelect(i);
+              getMessage();
             }}
             clicked={select === i}
             left={AIresult[i].landmarks[2][0]}
@@ -117,23 +137,11 @@ export const Starter = () => {
         );
       };
 
-      const getMessage: any = (categories: any) => {
-        return categories[0];
-      };
-
       const Dots = () => {
-        useEffect(() => {
-          if (AIresult.length === 1) setSelect(0);
-          setPeople(new_p);
-        });
-
-        const categories = ["happy"];
         let dots: any = [];
-        let new_p = people;
 
         for (let i = 0; i < AIresult.length; i++) {
           dots.push(<FaceBox key={i} i={i} />);
-          new_p[i] = { key: i, message: getMessage(categories) };
         }
         return dots;
       };
@@ -171,18 +179,20 @@ export const Starter = () => {
                   }}
                 >
                   <FadeIn>
-                  <GridLoader
-                    color={stdBlue}
-                    loading={loading}
-                    css={override}
-                    size={20}
+                    <GridLoader
+                      color={stdBlue}
+                      loading={loading}
+                      css={override}
+                      size={20}
                     />
-                    </FadeIn>
+                  </FadeIn>
                 </div>
               ) : (
-                <Dots />
+                <FadeIn>
+                  <Dots />
+                </FadeIn>
               )}
-                <img id="uploadImage" src={img} alt=""></img>
+              <img id="uploadImage" src={img} alt="" />
             </div>
           </StImagePreview>
         </div>
@@ -196,30 +206,35 @@ export const Starter = () => {
 
       return (
         <StDetailData>
-          <PopIn
-            show={showPopIn}
-            toggle={togglePopIn}
-            heading={<h2>Results</h2>}
-          />
+          {people[select] ? (
+            <PopIn
+              show={showPopIn}
+              toggle={togglePopIn}
+              heading={<h2>Results</h2>}
+              text={<p>This is your recommended starter message:</p>}
+              result={people[select]}
+            />
+          ) : null}
           {select !== undefined ? (
             <StTextWrapper color="grey" align="center">
-              <StButton
-                color="light"
-                style={{
-                  height: "200px",
-                  width: "100%",
-                  borderRadius: "20px",
-                }}
-                onClick={() => {
-                  togglePopIn();
-                }}
-              >
-                <StIcon color="#62bcec">
-                  <BsPerson />
-                </StIcon>
-                Details
-              </StButton>
-
+              <FadeIn>
+                <StButton
+                  color="light"
+                  style={{
+                    height: "200px",
+                    width: "100%",
+                    borderRadius: "20px",
+                  }}
+                  onClick={() => {
+                    togglePopIn();
+                  }}
+                >
+                  <StIcon color={stdBlue}>
+                    <BsPerson />
+                  </StIcon>
+                  Details
+                </StButton>
+              </FadeIn>
             </StTextWrapper>
           ) : !loading ? (
             <StTextWrapper fat color="grey" align="center">
@@ -243,7 +258,17 @@ export const Starter = () => {
     return (
       <Container fluid>
         <Row>
-          <Col md={6}>{img ? <ImagePreview /> : <UploadButton />}</Col>
+          <Col md={6}>
+            {img ? (
+              <FadeIn>
+                <ImagePreview />
+              </FadeIn>
+            ) : (
+              <FadeIn>
+                <UploadButton />
+              </FadeIn>
+            )}
+          </Col>
           <Col
             md={6}
             style={{
@@ -276,7 +301,7 @@ export const Starter = () => {
       <BaseOLStruct title="Starter" magicElement={<UploadField />}>
         <StTextWrapper color={"grey"}>
           <p>
-            Upload a <strong>screenshot of the persons profile</strong> and wait
+            Upload a <strong>screenshot of a persons profile</strong> and wait
             a few seconds to let the algorithm do its magic. Thats it!{" "}
           </p>
           <p>
