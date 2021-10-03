@@ -1,36 +1,13 @@
-import React from "react";
-import { Container, Row, Col } from "react-grid-system";
-import { StTextWrapper } from "../components/styledComps";
+import { Row, Col } from "react-grid-system";
 
-interface overlayProps {
-  children: any;
-  magicElement: any;
-  title: String;
-}
-
-export const BaseOLStruct: React.FC<overlayProps> = (props) => {
+export const CenterPageRow: any = ({ children }: any) => {
   return (
-    <div style={{ padding: "0 30px 48px 30px" }}>
-      <Container>
-        <Row>
-          <Col xl={3} />
-          <Col>
-            <h2 style={{ marginTop: "100px" }}>
-              {props.title}
-              <br />
-            </h2>
-            <StTextWrapper color={"grey"}>{props.children}</StTextWrapper>
-          </Col>
-          <Col xl={3} />
-        </Row>
-        <Row style={{marginTop: '50px'}}>
-          <Col xl={2} lg={1} />
-          <Col xl={8} lg={10}>
-            {props.magicElement}
-          </Col>
-          <Col xl={2} lg={1} />
-        </Row>
-      </Container>
-    </div>
+    <Row>
+      <Col xl={4} md={3} sm={2} />
+      <Col xl={4} md={6} sm={8}>
+        {children}
+      </Col>
+      <Col xl={4} md={3} sm={2} />
+    </Row>
   );
 };
