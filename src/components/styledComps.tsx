@@ -3,19 +3,28 @@ import { css } from "@emotion/react";
 
 export const stdBlue = "#2a7ef6";
 
+export const StBaseStruct: any = styled.div`
+  background-image: ${(props: any) => `url(${props.bg})`};
+  background-repeat: repeat;
+  height: 100vh;
+`;
+
 export const StCard = styled.div`
   background-color: ${stdBlue};
   border-radius: 20px;
   padding: 30px;
   margin-top: 50px;
   transition: filter ease 0.5s;
-  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 `;
 
 export const StImage = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   img {
-    width: 40vw;
-    max-width: 100%;
+    max-width: 50vw;
+    width: 100%;
     height: auto;
     border-radius: 20px;
   }
@@ -40,18 +49,20 @@ export const StTextWrapper: any = styled.div`
 `;
 
 export const StOverlay: any = styled.div`
+  position: fixed;
+  background-image: ${(props: any) => `url(${props.bg})`};
+  background-repeat: repeat;
+  width: calc(100vw - 60px);
+  height: 100vh;
+  top: 0;
+  left: 0;
+  padding: 0 30px;
   overflow-x: hidden;
   text-align: right;
-  height: 100vh;
-  width: 100%;
-  background-color: white;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
   opacity: ${(props: any) => props.show};
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  z-index: 10;
 `;
 
 export const StButton: any = styled.button`
@@ -64,7 +75,7 @@ export const StButton: any = styled.button`
   width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 24px;
   font-weight: bold;
   color: ${(props: any) => (props.color === "light" ? stdBlue : "white")};
@@ -73,50 +84,60 @@ export const StButton: any = styled.button`
       ? "white"
       : props.color === "warn"
       ? "#ec6662"
+      : props.color
+      ? props.color
       : "lightgrey"};
-  transition: background-color 0.3s ease;
-  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.1));
+  transition: background-color 0.175s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   :active {
     background-color: grey;
   }
 `;
 
-export const StImageUploadField: any = styled.div`
-  button {
-    border: none;
-    height: 55vh;
+export const StUploadField: any = styled.div`
+  overflow: hidden;
+  border-radius: 20px;
+  height: fit-content;
+  max-height: 70vh;
+  background-color: lightgrey;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  #uButton {
     width: 100%;
-    border-radius: 20px;
+    height: 70vh;
+    border: none;
     padding: 30px;
     background-color: ${stdBlue};
     cursor: pointer;
-    filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
     transition: background-color ease-in-out 0.5;
+
     :active {
       background-color: grey;
     }
   }
+
   #file-input {
     display: none;
   }
-`;
 
-export const StImagePreview: any = styled.div`
-  width: 100%;
-  height: 55vh;
-  overflow: hidden;
-  border-radius: 20px;
-  background-color: lightgrey;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
-  filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.2));
-  //transition: opacity ease 1s;
-
-  img {
+  img,
+  canvas {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    max-width: 100%;
-    max-height: 100%;
+  }
+
+  #resultsButton {
+    background-color: ${stdBlue};
+    cursor: pointer;
+    transition: background-color linear 0.175s;
+    :disabled {
+      cursor: not-allowed;
+      background-color: darkgray;
+    }
+    :active {
+      background-color: grey;
+    }
   }
 `;
 
@@ -126,7 +147,7 @@ export const StFaceBox: any = styled.div`
 
   width: 18px;
   height: 18px;
-  left: ${(props: any) => `${props.left - 9}px`};
+  left: ${(props: any) => `${props.left}px`};
   top: ${(props: any) => `${props.top - 9}px`};
   cursor: pointer;
   position: absolute;
@@ -148,45 +169,62 @@ export const StDetailData = styled.div`
   justify-content: center;
 `;
 
-export const StIcon = styled.div`
+export const StIcon: any = styled.div`
   svg,
   path,
   line,
   polyline {
     color: ${(props: any) => (props.color ? props.color : "white")};
-    height: 48px;
-    width: 48px;
-    cursor: pointer;
+    height: ${(props: any) => (props.size ? props.size : "48px")};
+    width: ${(props: any) => (props.size ? props.size : "48px")};
+    //cursor: pointer;
   }
 `;
 
 export const override = css`
   display: block;
+  position: absolute;
+  top: 45%;
   margin: 0 auto;
   border-color: ${stdBlue};
 `;
 
 export const StPopIn: any = styled.div`
+  z-index: 18;
   position: fixed;
-  z-index: 20;
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
-  transform: ${(props: any) =>
-    props.show ? "translateY(0)" : "translateY(800px)"};
   width: 100vw;
   right: 0;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    visibility 0.3s;
-    top: 20vh;
-  #DetailPopIn {
-    height: 850px;
-    border-radius: 20px;
-    background-color: white;
-    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
 
+  #popinBackground {
+    z-index: 19;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: ${(props: any) => (props.show ? 1 : 0)};
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: pointer;
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  #DetailPopIn {
+    z-index: 20;
+    top: 20vh;
+    transform: ${(props: any) =>
+      props.show ? "translateY(0)" : "translateY(800px)"};
+    overflow: scroll;
+    height: 90vh;
+    padding: 0 45px !important;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .textField {
-    margin-top: 20px;
     padding-top: 10px;
     border-radius: 20px;
     border-style: solid;
@@ -198,18 +236,25 @@ export const StPopIn: any = styled.div`
   }
 
   .message {
+    overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 15px 30px;
-    max-width: 75%;
+    max-width: 90%;
     border-radius: 30px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 5px;
     background-color: ${stdBlue};
-    height: fit-content;
     color: white;
     margin: 0;
-    margin-right: 15px;
-    margin-left: 40%;
+    margin-right: 10px;
+    margin-left: 30%;
+    p {
+      margin: 0;
+    }
   }
+
   .littleText {
     margin: 10px 0;
     font-size: small;
@@ -219,5 +264,50 @@ export const StPopIn: any = styled.div`
     position: relative;
     color: lightgrey;
     width: max-content;
+  }
+`;
+
+export const StExplanaition: any = styled.div`
+  #arrowContainer {
+    width: 100%;
+  }
+  height: ${(props: any) => (props.open ? "500px" : "100px")};
+`;
+
+export const StInfoPopUp: any = styled.div`
+  width: calc(90% - 40px);
+  left: 5%;
+  //top: 20%;
+  bottom: 15%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
+  opacity: ${(props: any) => (props.show ? 1 : 0)};
+  transition: all 0.4s;
+  z-index: 25;
+`;
+
+export const StReloadInfo = styled.div`
+  top: calc(50% - 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  z-index: 30;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 150px;
+  background-color: white;
+  border-radius: 20px;
+  margin-left: calc(50% - 75px);
+  margin-top: calc(50% - 75px);
+  opacity: 0;
+  opacity: ${(props: any) => (props.show ? 1 : 0)};
+  p {
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 `;
