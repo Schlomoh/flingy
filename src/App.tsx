@@ -1,9 +1,11 @@
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Reply } from "./pages/overlays/reply";
-import { Starter } from "./pages/overlays/starter";
+import { Reply } from "./pages/reply";
+import { Starter } from "./pages/Starter";
 import { OL } from "./components/globalComponents";
+import pattern from "./assets/email-pattern.png";
+
 
 function App() {
   return (
@@ -11,7 +13,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/starter">
-            <OL el={<Starter />} />
+            <OL bg={pattern} el={<Starter />} />
           </Route>
           <Route path="/reply">
             <OL el={<Reply />} />
