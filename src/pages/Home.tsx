@@ -1,5 +1,5 @@
 import { Row, Col, Container } from "react-grid-system";
-import { StBasePage } from "../BaseStyle";
+import { StBasePage } from "../components/GlobalComponents";
 
 // blues illustrations as react component import
 import starter from "../assets/starter.png";
@@ -11,10 +11,10 @@ import {
   StImage,
   StTextWrapper,
   StButton,
-} from "../components/styledComps";
+} from "../components/StyledComps";
 
 import { Link } from "react-router-dom";
-import { FadeIn } from "../components/globalComponents";
+import { FadeIn } from "../components/GlobalComponents";
 
 // small props interface for the category selection card
 interface SelBoxProps {
