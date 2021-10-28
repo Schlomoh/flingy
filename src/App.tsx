@@ -1,9 +1,11 @@
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Reply } from "./pages/reply";
+import { Reply } from "./pages/Reply";
 import { Starter } from "./pages/Starter";
-import { OL } from "./components/globalComponents";
+
+import { OL } from "./components/GlobalComponents";
+
 import pattern from "./assets/email-pattern.png";
 
 
