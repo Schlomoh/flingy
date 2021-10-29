@@ -1,21 +1,23 @@
-import { Home } from "./pages/Home";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { Home } from "./pages/Home";
 import { Reply } from "./pages/Reply";
 import { Starter } from "./pages/Starter";
 
 import { OL } from "./components/GlobalComponents";
 
-import pattern from "./assets/email-pattern.png";
-
-
 function App() {
+  const [nsfw, setNsfw] = useState(false);
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route path="/starter">
-            <OL bg={pattern} el={<Starter />} />
+            <OL
+              nsfw={nsfw}
+              el={<Starter nsfw={{ get: nsfw, set: setNsfw }} />}
+            />
           </Route>
           <Route path="/reply">
             <OL el={<Reply />} />

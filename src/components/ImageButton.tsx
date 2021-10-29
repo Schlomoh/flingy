@@ -6,14 +6,14 @@ import {
   StIcon,
   override,
   stdBlue,
-} from "./styledComps";
+} from "./StyledComps";
 import { FiUploadCloud, FiTrash2 } from "react-icons/fi";
 import { BsPerson } from "react-icons/bs";
 
 import { analyseScreenshot } from "./tools/pictureScan";
 import { getStarter } from "./tools/get_starter";
 import { GridLoader } from "react-spinners";
-import { FadeIn } from "./globalComponents";
+import { FadeIn } from "./GlobalComponents";
 
 const roundButtonStyle: any = {
   borderRadius: "100%",
@@ -119,6 +119,7 @@ const ResultsButton = ({ setShowPopIn, select }: any) => {
   );
 };
 
+// Upload image
 const UImg = ({
   setImg,
   img,
@@ -127,6 +128,7 @@ const UImg = ({
   select,
   liners,
   setShowPopIn,
+  nsfw,
 }: any) => {
   async function getAIdata() {
     try {
@@ -147,7 +149,7 @@ const UImg = ({
     if (liners.values.message === "" && aiResult) {
       let l = [];
       for (let i = 0; i < aiResult.length; i++) {
-        l.push(getStarter("funny"));
+        l.push(getStarter("", nsfw));
       }
       liners.set(l);
     }
@@ -174,6 +176,7 @@ const UImg = ({
   );
 };
 
+// Upload button
 const UButton = ({ setImg }: any) => {
   const [inputElement, setInpEl]: any = useState();
 
@@ -221,6 +224,7 @@ export const UploadButton = (props: any) => {
           aiResult={props.aiResult}
           select={props.select}
           liners={props.liners}
+          nsfw={props.nsfw}
         />
       ) : (
         <UButton setImg={props.setImg} />

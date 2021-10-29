@@ -3,6 +3,38 @@ import { css } from "@emotion/react";
 
 export const stdBlue = "#2a7ef6";
 
+export const StBasePage = styled.div`
+  @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Raleway:wght@900&family=Unna:wght@700&display=swap");
+  font-family: "Mula", sans-serif;
+  text-align: left;
+  padding: 48px 30px;
+  background-color: #fefefe;
+
+  h1 {
+    font-family: "Raleway", sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #272727;
+  }
+
+  h2 {
+    line-height: 1.2;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  p {
+    line-height: 1.4;
+    font-size: 18px;
+    font-weight: 400;
+  }
+`;
+
 export const StBaseStruct: any = styled.div`
   background-image: ${(props: any) => `url(${props.bg})`};
   background-repeat: repeat;
@@ -50,7 +82,9 @@ export const StTextWrapper: any = styled.div`
 
 export const StOverlay: any = styled.div`
   position: fixed;
-  background-image: ${(props: any) => `url(${props.bg})`};
+  background-color: ${(props: any) => (props.nsfw ? "#222" : "fff")};
+  background-image: ${(props: any) => `url(${props.bgImgSrc})`};
+  /* background-blend-mode: multiply; */
   background-repeat: repeat;
   width: calc(100vw - 60px);
   height: 100vh;
@@ -61,7 +95,8 @@ export const StOverlay: any = styled.div`
   text-align: right;
   opacity: ${(props: any) => props.show};
   visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out,
+    background-color 1s;
   z-index: 10;
 `;
 
@@ -89,7 +124,8 @@ export const StButton: any = styled.button`
       : "lightgrey"};
   transition: background-color 0.175s ease;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  :active {
+  :active,
+  :hover {
     background-color: grey;
   }
 `;
@@ -98,13 +134,13 @@ export const StUploadField: any = styled.div`
   overflow: hidden;
   border-radius: 20px;
   height: fit-content;
-  max-height: 70vh;
+  max-height: 65vh;
   background-color: lightgrey;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
   #uButton {
     width: 100%;
-    height: 70vh;
+    height: 65vh;
     border: none;
     padding: 30px;
     background-color: ${stdBlue};
@@ -211,11 +247,11 @@ export const StPopIn: any = styled.div`
 
   #DetailPopIn {
     z-index: 20;
-    top: 20vh;
+    top: 15vh;
     transform: ${(props: any) =>
-      props.show ? "translateY(0)" : "translateY(800px)"};
+      props.show ? "translateY(0)" : "translateY(90vh)"};
     overflow: scroll;
-    height: 90vh;
+    height: 100vh;
     padding: 0 45px !important;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -241,26 +277,28 @@ export const StPopIn: any = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 15px 30px;
     max-width: 90%;
-    border-radius: 30px;
-    border-bottom-right-radius: 5px;
+    border-radius: 20px;
+    border-bottom-right-radius: 3px;
     background-color: ${stdBlue};
     color: white;
+
+    padding: 10px 15px;
+
     margin: 0;
     margin-right: 10px;
     margin-left: 30%;
+
     p {
       margin: 0;
     }
   }
 
   .littleText {
-    margin: 10px 0;
     font-size: small;
     font-weight: bold;
+    margin: 10px 0 40px 0;
     margin-left: calc(100% - 5rem);
-    margin-bottom: 40px;
     position: relative;
     color: lightgrey;
     width: max-content;
@@ -268,17 +306,27 @@ export const StPopIn: any = styled.div`
 `;
 
 export const StExplanaition: any = styled.div`
-  #arrowContainer {
-    width: 100%;
+  p {
+    margin: 0;
+    color: ${(props: any) => (props.nsfw ? "white" : "grey")};
+    transition: color 1s;
   }
-  height: ${(props: any) => (props.open ? "500px" : "100px")};
+  #infoTextContainer {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export const StInfoPopUp: any = styled.div`
   width: calc(90% - 40px);
-  left: 5%;
-  //top: 20%;
-  bottom: 15%;
+  left: calc(5% + 20px);
+  bottom: 20%;
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.2);
@@ -289,8 +337,8 @@ export const StInfoPopUp: any = styled.div`
   z-index: 25;
 `;
 
-export const StReloadInfo = styled.div`
-  top: calc(50% - 50px);
+export const StReloadInfo: any = styled.div`
+  top: calc(50vh - 75px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -303,7 +351,6 @@ export const StReloadInfo = styled.div`
   background-color: white;
   border-radius: 20px;
   margin-left: calc(50% - 75px);
-  margin-top: calc(50% - 75px);
   opacity: 0;
   opacity: ${(props: any) => (props.show ? 1 : 0)};
   p {

@@ -1,64 +1,44 @@
-import * as lines from "../../assets/all_lines.json";
+import * as starters from "../../assets/all_lines.json";
+import { xcluders, puctuation } from "./patterns";
 
-export const getStarter = (category: any) => {
-  const file: any = lines;
-  const selection = file.default[category.toString()];
-  let line = selection[Math.round(Math.random() * selection.length)];
+const isAppropriate = (message: string) => {
+  let appropriate = true;
+  puctuation.forEach((sign) => {
+    message = message.replaceAll(sign, " ");
+  });
+  let items = message.split(" ");
+  items.forEach((item) => {
+    xcluders.forEach((xcluder) => {
+      if (xcluder === item) appropriate = false;
+    });
+  });
+  return appropriate;
+};
+
+export const getStarter = (selection: string = "", nsfwAllowed: boolean) => {
+  const checkLines = (inpLines: any, nsfw: boolean) => {
+    let outLines: any = [];
+    inpLines.forEach((text: any) => {
+      if (nsfw && !isAppropriate(text)) outLines.push(text);
+      else if (!nsfw && isAppropriate(text)) outLines.push(text);
+    });
+    return outLines;
+  };
+
+  const file: any = starters;
+  let lines: any = [];
+  if (selection !== "")
+    lines = checkLines(file.default[selection], nsfwAllowed);
+  else
+    Object.keys(file.default).forEach((category: string) => {
+      lines = lines.concat(checkLines(file.default[category], nsfwAllowed));
+    });
+
+  let line = lines[Math.round(Math.random() * lines.length)];
+
   return {
     message: line,
     rValue: (55 + 40 * Math.random()).toFixed(1),
-    shown: false
+    shown: false,
   };
-};
-
-export const checkMessage = (message: string) => {
-  const xcluders = [
-    "butt",
-    "penis",
-    "dick",
-    "pussy",
-    "fuck",
-    "sex",
-    "ass",
-    "bang",
-    "sexual",
-    "hot",
-    "hotter",
-    "sexy",
-    "knees",
-    "love",
-    "erect",
-    "erected",
-    "nipple",
-    "nipples",
-    "boobs",
-    "tits",
-    "ram",
-    "babe",
-    "baby",
-    "d",
-    "naked",
-    "nude",
-    "nudes",
-    "hit",
-  ];
-
-  let appropriate = true;
-  const items = message
-    .toLowerCase()
-    .replaceAll("?", "")
-    .replaceAll(":", "")
-    .replaceAll(";", "")
-    .replaceAll('"', "")
-    .replaceAll(".", "")
-    .replaceAll(",", "")
-    .split(" ");
-  for (let i in items) {
-    for (let x in xcluders) {
-      if (x === i) {
-        appropriate = false;
-      }
-    }
-  }
-  return appropriate;
 };

@@ -1,5 +1,5 @@
 import { Row, Col, Container } from "react-grid-system";
-import { StBasePage } from "../components/GlobalComponents";
+import { StBasePage } from "../components/StyledComps";
 
 // blues illustrations as react component import
 import starter from "../assets/starter.png";
