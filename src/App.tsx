@@ -19,9 +19,9 @@ function App() {
               el={<Starter nsfw={{ get: nsfw, set: setNsfw }} />}
             />
           </Route>
-          <Route path="/reply">
+          {/* <Route path="/reply">
             <OL el={<Reply />} />
-          </Route>
+          </Route> */}
           <Route path="/" exact>
             <Home />
           </Route>

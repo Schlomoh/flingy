@@ -22,6 +22,7 @@ interface SelBoxProps {
   content: String;
   imgEl: any;
   version: string;
+  disable?: boolean;
 }
 
 // Home component and other smaller functional components
@@ -30,7 +31,7 @@ export function Home() {
   // category box card
   const SelectorBox: React.FC<SelBoxProps> = (props) => {
     return (
-      <StCard>
+      <StCard disabled={props.disable}>
         <StTextWrapper fat color="light">
           <Container>
             <Row>
@@ -45,7 +46,7 @@ export function Home() {
                 <h2>{props.title}</h2>
               </Col>
               <Col xs={8}>
-                <StImage>
+                <StImage disabled={props.disable}>
                   <img src={props.imgEl} alt="" />
                 </StImage>
               </Col>
@@ -57,8 +58,10 @@ export function Home() {
             </Row>
             <Row>
               <Col>
-                <Link to={props.version}>
-                  <StButton color="light">Open</StButton>
+                <Link to={props.disable ? "" : props.version}>
+                  <StButton color="light" disabled={props.disable}>
+                    Open
+                  </StButton>
                 </Link>
               </Col>
             </Row>
@@ -100,6 +103,7 @@ export function Home() {
                 </Col>
                 <Col md={6}>
                   <SelectorBox
+                    disable
                     title="Reply Generator"
                     version="reply"
                     imgEl={reply}

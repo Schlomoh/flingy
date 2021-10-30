@@ -41,8 +41,8 @@ export const StBaseStruct: any = styled.div`
   height: 100vh;
 `;
 
-export const StCard = styled.div`
-  background-color: ${stdBlue};
+export const StCard: any = styled.div`
+  background-color: ${(props: any) => (props.disabled ? "lightgrey" : stdBlue)};
   border-radius: 20px;
   padding: 30px;
   margin-top: 50px;
@@ -50,7 +50,7 @@ export const StCard = styled.div`
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 `;
 
-export const StImage = styled.div`
+export const StImage: any = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -59,6 +59,7 @@ export const StImage = styled.div`
     width: 100%;
     height: auto;
     border-radius: 20px;
+    filter: ${(props: any) => (props.disabled ? "saturate(0%)" : "unset")};
   }
 `;
 
@@ -127,6 +128,11 @@ export const StButton: any = styled.button`
   :active,
   :hover {
     background-color: grey;
+  }
+  :disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    color: white;
   }
 `;
 

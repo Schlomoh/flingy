@@ -46,7 +46,7 @@ export const Starter = (props: any) => {
 
   // info message
   let info = !img
-    ? "Upload an image to start " + emoji(0x1f4f7)
+    ? "Upload a picture of someone to start " + emoji(0x1f4f7)
     : !aiResult
     ? "Analysing image... " + emoji(0x1f52c)
     : select === undefined
