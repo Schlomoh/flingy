@@ -6,6 +6,7 @@ import {
   StIcon,
   override,
   stdBlue,
+  StButton,
 } from "./StyledComps";
 import { FiUploadCloud, FiTrash2 } from "react-icons/fi";
 import { BsPerson } from "react-icons/bs";
@@ -149,7 +150,7 @@ const UImg = ({
     if (liners.values.message === "" && aiResult) {
       let l = [];
       for (let i = 0; i < aiResult.length; i++) {
-        l.push(getStarter("", nsfw));
+        l.push(getStarter({ selection: "", nsfwAllowed: nsfw }));
       }
       liners.set(l);
     }
@@ -185,7 +186,7 @@ const UButton = ({ setImg }: any) => {
   }, [inputElement]);
 
   return (
-    <StTextWrapper style={{ height: "100%" }} fat color="light">
+    <StTextWrapper style={{ height: "100%" }} color="light">
       <input
         accept=".png, .jpg, .jpeg, .tiff"
         id="file-input"
@@ -197,7 +198,7 @@ const UButton = ({ setImg }: any) => {
         }}
       />
       <FadeIn>
-        <button
+        <StButton
           className="noSelect"
           id="uButton"
           onClick={() => inputElement.click()}
@@ -205,8 +206,8 @@ const UButton = ({ setImg }: any) => {
           <StIcon>
             <FiUploadCloud />
           </StIcon>
-          <h2 style={{ margin: 0 }}>Click here to upload</h2>
-        </button>
+          Click here to upload
+        </StButton>
       </FadeIn>
     </StTextWrapper>
   );

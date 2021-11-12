@@ -3,11 +3,9 @@ import { css } from "@emotion/react";
 
 export const stdBlue = "#2a7ef6";
 
-export const StBasePage = styled.div`
-  @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Raleway:wght@900&family=Unna:wght@700&display=swap");
-  font-family: "Mula", sans-serif;
+export const StBase: any = styled.div`
+  font-family: "Mulish", sans-serif;
   text-align: left;
-  padding: 48px 30px;
   background-color: #fefefe;
 
   h1 {
@@ -18,6 +16,7 @@ export const StBasePage = styled.div`
   }
 
   h2 {
+    font-family: "Raleway", sans-serif;
     line-height: 1.2;
     font-size: 28px;
     font-weight: 600;
@@ -25,13 +24,17 @@ export const StBasePage = styled.div`
 
   h3 {
     font-size: 22px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   p {
     line-height: 1.4;
     font-size: 18px;
     font-weight: 400;
+  }
+  button {
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
   }
 `;
 
@@ -55,9 +58,9 @@ export const StImage: any = styled.div`
   flex-direction: row;
   justify-content: center;
   img {
+    object-fit: contain;
     max-width: 50vw;
     width: 100%;
-    height: auto;
     border-radius: 20px;
     filter: ${(props: any) => (props.disabled ? "saturate(0%)" : "unset")};
   }
@@ -77,6 +80,11 @@ export const StTextWrapper: any = styled.div`
   h3 {
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
     opacity: ${(props) => (props.color === "light" ? 0.75 : 1)};
+    font-weight: ${(props: any) => (props.fat ? 'bolder' : 400)};
+    margin-bottom: 30px;
+  }
+  a {
+    color: ${(props) => (props.color === "light" ? "white" : props.color)};
     font-weight: ${(props: any) => (props.fat ? 600 : 400)};
   }
 `;
@@ -87,11 +95,10 @@ export const StOverlay: any = styled.div`
   background-image: ${(props: any) => `url(${props.bgImgSrc})`};
   /* background-blend-mode: multiply; */
   background-repeat: repeat;
-  width: calc(100vw - 60px);
+  width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
-  padding: 0 30px;
   overflow-x: hidden;
   text-align: right;
   opacity: ${(props: any) => props.show};
@@ -102,18 +109,17 @@ export const StOverlay: any = styled.div`
 `;
 
 export const StButton: any = styled.button`
+  font-weight: 600;
   cursor: pointer;
   right: 0;
   z-index: 11;
-  position: ${(props: any) => (props.fixed ? "fixed" : "relative")};
-  margin-top: 15px;
+  position: ${(props: any) => (props.fixed ? "absolute" : "relative")};
   min-width: 100px;
   width: ${(props: any) => (props.size === "small" ? "20%" : "100%")};
   padding: 10px;
   border: none;
   border-radius: 10px;
   font-size: 24px;
-  font-weight: bold;
   color: ${(props: any) => (props.color === "light" ? stdBlue : "white")};
   background-color: ${(props: any) =>
     props.color === "light"
@@ -127,12 +133,20 @@ export const StButton: any = styled.button`
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   :active,
   :hover {
+    color: lightgrey;
     background-color: grey;
+    svg,
+  path,
+  line,
+  polyline{
+    color: lightgrey;
+
+  }
   }
   :disabled {
-    background-color: gray;
+    background-color: #ebebeb;
     cursor: not-allowed;
-    color: white;
+    color: lightgrey;
   }
 `;
 
@@ -140,13 +154,13 @@ export const StUploadField: any = styled.div`
   overflow: hidden;
   border-radius: 20px;
   height: fit-content;
-  max-height: 65vh;
+  max-height: 60vh;
   background-color: lightgrey;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
   #uButton {
     width: 100%;
-    height: 65vh;
+    height: 60vh;
     border: none;
     padding: 30px;
     background-color: ${stdBlue};
@@ -241,7 +255,7 @@ export const StPopIn: any = styled.div`
   #popinBackground {
     z-index: 19;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
     opacity: ${(props: any) => (props.show ? 1 : 0)};
     left: 0;
     top: 0;
@@ -320,12 +334,10 @@ export const StExplanaition: any = styled.div`
   #infoTextContainer {
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.2);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   }
 `;
 

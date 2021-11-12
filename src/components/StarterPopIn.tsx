@@ -42,7 +42,7 @@ const MessageField = ({ children, loading, result, select }: any) => {
         ) : (
           <FadeIn fast grow>
             <div id="textMessage">
-              <p>{children}</p>
+              <p style={{fontFamily:'sans-serif'}}>{children}</p>
             </div>
           </FadeIn>
         )}
@@ -179,12 +179,13 @@ export const PopIn: React.FC<any> = ({
             <CenterPageRow>
               <CopyMessage select={select} result={result} />
               <StButton
+              style={{marginTop: '15px'}}
                 className="noSelect"
                 onClick={() => {
                   let p: any = [];
                   for (let i = 0; i < result.values.length; i++) {
                     result.values[i] === result.values[select.value]
-                      ? (p[i] = getStarter("", nsfw))
+                      ? (p[i] = getStarter({ selection: "", nsfwAllowed: nsfw }))
                       : (p[i] = result.values[i]);
                   }
                   setReloadInfo(true);

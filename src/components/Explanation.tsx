@@ -1,6 +1,6 @@
 import { StExplanaition, StTextWrapper } from "./StyledComps";
 
-export const StarterExplanation = (props: any) => {
+export function StarterExplanation(props: any): JSX.Element {
   return (
     <StExplanaition nsfw={props.nsfw}>
       <StTextWrapper align="center" color="grey">
@@ -10,4 +10,4 @@ export const StarterExplanation = (props: any) => {
       </StTextWrapper>
     </StExplanaition>
   );
-};
+}

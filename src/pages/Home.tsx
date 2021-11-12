@@ -1,5 +1,4 @@
 import { Row, Col, Container } from "react-grid-system";
-import { StBasePage } from "../components/StyledComps";
 
 // blues illustrations as react component import
 import starter from "../assets/starter.png";
@@ -14,7 +13,7 @@ import {
 } from "../components/StyledComps";
 
 import { Link } from "react-router-dom";
-import { FadeIn } from "../components/GlobalComponents";
+import { FadeIn, emoji, OL } from "../components/GlobalComponents";
 
 // small props interface for the category selection card
 interface SelBoxProps {
@@ -33,39 +32,17 @@ export function Home() {
     return (
       <StCard disabled={props.disable}>
         <StTextWrapper fat color="light">
-          <Container>
-            <Row>
-              <Col
-                xs={4}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <h2>{props.title}</h2>
-              </Col>
-              <Col xs={8}>
-                <StImage disabled={props.disable}>
-                  <img src={props.imgEl} alt="" />
-                </StImage>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <p>{props.content}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Link to={props.disable ? "" : props.version}>
-                  <StButton color="light" disabled={props.disable}>
-                    Open
-                  </StButton>
-                </Link>
-              </Col>
-            </Row>
-          </Container>
+          <StImage disabled={props.disable}>
+            <img src={props.imgEl} alt="" />
+          </StImage>
+          <h2>{props.title}</h2>
+          <p>{props.content}</p>
+
+          <Link to={props.disable ? "" : props.version}>
+            <StButton color="light" disabled={props.disable}>
+              Open
+            </StButton>
+          </Link>
         </StTextWrapper>
       </StCard>
     );
@@ -73,20 +50,22 @@ export function Home() {
 
   // Actual home component
   return (
-    <StBasePage>
-      <FadeIn slow>
-        <Container>
+    <FadeIn slow>
+      <OL noClose>
+        <Container fluid style={{ padding: "0 30px" }}>
           <Row>
-            <Col xl={2} />
+            <Col xl={2} md={1} sm={2} />
             <Col>
               <Row>
                 <Col>
                   <StTextWrapper color="#272727">
-                    <h1 style={{ margin: 0 }}>Boost your texting game</h1>
-                    <h2 style={{ margin: 0, marginTop: "10px" }}>
+                    <h1 style={{ margin: "50px 0 0 0" }}>
+                      Boost your texting game
+                    </h1>
+                    <h3 style={{ margin: 0, marginTop: "10px" }}>
                       with the help of AI.{"  "}
-                      {String.fromCodePoint(0x1f913)}
-                    </h2>
+                      {emoji(0x1f913)}
+                    </h3>
                   </StTextWrapper>
                 </Col>
               </Row>
@@ -128,10 +107,10 @@ export function Home() {
                 </Col>
               </Row>
             </Col>
-            <Col xl={2} />
+            <Col xl={2} md={1} sm={2} />
           </Row>
         </Container>
-      </FadeIn>
-    </StBasePage>
+      </OL>
+    </FadeIn>
   );
 }

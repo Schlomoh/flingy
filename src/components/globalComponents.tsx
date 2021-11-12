@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StTextWrapper, StOverlay, StButton, StBasePage } from "./StyledComps";
+import { StTextWrapper, StOverlay, StButton } from "./StyledComps";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-grid-system";
 import darkPattern from "../assets/email-pattern.png";
@@ -52,21 +52,19 @@ export const FadeIn = ({ children, slow, fast, grow }: any) => {
 export const OL: any = (props: any) => {
   const pattern = props.nsfw ? lightPattern : darkPattern;
   return (
-    <StBasePage>
       <StOverlay nsfw={props.nsfw} bgImgSrc={pattern} show={true}>
-        <Link to="/">
+        <Link to="/">{!props.noClose ?
           <StButton
             className="noSelect"
             fixed
-            style={{ margin: "20px" }}
+            style={{ margin: "10px 15px 0 0" }}
             size="small"
             color={props.nsfw ? "rgb(50,50,50)" : "lightgrey"}
           >
             Close
-          </StButton>
+          </StButton>: null}
         </Link>
-        <StTextWrapper>{props.el}</StTextWrapper>
+        <StTextWrapper>{props.children}</StTextWrapper>
       </StOverlay>
-    </StBasePage>
   );
 };

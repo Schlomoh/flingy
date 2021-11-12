@@ -12,7 +12,7 @@ import { PopIn } from "../components/StarterPopIn";
 // styles
 import { StButton } from "../components/StyledComps";
 
-const NsfwButton = (state: any) => {
+function NsfwButton(state: any): JSX.Element {
   let buttonText = state.get ? "Deactivate NSFW" : "Activate NSFW";
   return (
     <CenterPageRow>
@@ -20,17 +20,17 @@ const NsfwButton = (state: any) => {
         color={state.get ? "rgb(50,50,50)" : "lightgrey"}
         onClick={() => {
           state.set(!state.get);
-        }}
-        style={{ marginBottom: "10px" }}
+        } }
+        style={{ margin: "15px 0" }}
       >
         {buttonText}
       </StButton>
     </CenterPageRow>
   );
-};
+}
 
 // 'Starters' page
-export const Starter = (props: any) => {
+export function Starter(props: any): JSX.Element {
   //states
   const [aiResult, setAI]: any = useState();
   const [img, setImg] = useState();
@@ -48,10 +48,10 @@ export const Starter = (props: any) => {
   let info = !img
     ? "Upload a picture of someone to start " + emoji(0x1f4f7)
     : !aiResult
-    ? "Analysing image... " + emoji(0x1f52c)
-    : select === undefined
-    ? "Now select one of the faces " + emoji(0x1f3af)
-    : "Click the big blue button to see your result " + emoji(0x1f52e);
+      ? "Analysing image... " + emoji(0x1f52c)
+      : select === undefined
+        ? "Now select one of the faces " + emoji(0x1f3af)
+        : "Click the blue button to see your result " + emoji(0x1f52e);
 
   return (
     <FadeIn>
@@ -61,9 +61,8 @@ export const Starter = (props: any) => {
         text={<p>This is your recommended starter message:</p>}
         result={{ values: liners, set: setLiners }}
         select={{ value: select, set: setSelect }}
-        nsfw={nsfw}
-      />
-      <Container style={{ paddingTop: "100px" }}>
+        nsfw={nsfw} />
+      <Container style={{ paddingTop: "75px" }}>
         <CenterPageRow>
           <StarterExplanation nsfw={nsfw} info={info} />
         </CenterPageRow>
@@ -76,11 +75,10 @@ export const Starter = (props: any) => {
             setImg={setImg}
             setAI={setAI}
             setShowPopIn={setShowPopIn}
-            nsfw={nsfw}
-          />
+            nsfw={nsfw} />
         </CenterPageRow>
         <NsfwButton get={nsfw} set={setNsfw} />
       </Container>
     </FadeIn>
   );
-};
+}
