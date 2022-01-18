@@ -21,21 +21,17 @@ const StBasePage = styled.main`
   .centerContainer {
       // responsivenes
     padding: 60px 40px;
-    min-width: calc(100vw - 80px);
+    max-width: calc(100vw - 80px);
     @media screen and (min-width: ${bp.sm}) {
-      min-width: ${bp.xs};
+    
+      max-width: ${bp.sm};
     }
     @media screen and (min-width: ${bp.xl}) {
-      min-width: ${bp.md};
+      max-width: ${bp.md};
     }
     @media screen and (min-width: ${bp.xxl}) {
-      min-width: ${bp.lg};
+      max-width: ${bp.lg};
     }
-
-    h1,h2,h3,h4,p,a {
-        width: fit-content;
-    }
-
   }
 `;
 

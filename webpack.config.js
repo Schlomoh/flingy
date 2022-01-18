@@ -8,7 +8,8 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
-  devServer: {historyApiFallback : true},
+  devServer: {historyApiFallback : true,
+},
   module: {
     rules: [
       {
