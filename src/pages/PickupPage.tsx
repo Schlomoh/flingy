@@ -1,19 +1,20 @@
+// components
 import BasePage from "../components/baseComponents/basePage";
-import StBaseText from "../components/styleComponents/stBaseText";
+import UploadField from "../components/baseComponents/uploadField";
+import StBaseText from "../components/styleComponents/base/stBaseText";
+
+// content
+import text from "../content/text/pickupPageTexts.json";
 
 const PickupPage = () => {
   return (
     <BasePage>
       <StBaseText>
-        <h1>Big heading</h1>
-        <h2>Sub heading</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima
-          placeat nemo amet, sed dolore eos soluta sint facere assumenda
-          reiciendis qui praesentium doloremque! Incidunt, provident? Quas
-          pariatur aperiam rerum modi?
-        </p>
+        <h2>{text.title}</h2>
+        <h3>{text.subTitle}</h3>
+        <p>{text.desctiption}</p>
       </StBaseText>
+      <UploadField />
     </BasePage>
   );
 };
