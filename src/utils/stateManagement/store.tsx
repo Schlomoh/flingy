@@ -7,9 +7,9 @@ import routingSlice from "./slices/routingSlice";
 
 const store = configureStore({
   reducer: {
-    three: analysisSlice,
-    one: cookieSlice,
-    two: routingSlice,
+    analysis: analysisSlice,
+    cookies: cookieSlice,
+    rounting: routingSlice,
   },
 });
 

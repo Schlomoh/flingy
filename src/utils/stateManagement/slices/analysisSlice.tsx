@@ -4,7 +4,7 @@ import { WritableDraft } from "immer/dist/internal";
 const initialState = {
   img: undefined,
   aiResult: undefined,
-  messages: undefined,
+  output: undefined,
 } as IanalysisInitialState;
 
 const analysisSlice = createSlice({
@@ -17,8 +17,8 @@ const analysisSlice = createSlice({
     setAiResult(state, action: PayloadAction<TaiResult>) {
       state.aiResult = action.payload;
     },
-    setMessages(state, action: PayloadAction<Toutput>) {
-      state.messages = action.payload;
+    setOutput(state, action: PayloadAction<Toutput>) {
+      state.output = action.payload;
     },
   },
 });

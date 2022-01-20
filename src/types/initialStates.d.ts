@@ -1,7 +1,7 @@
 interface IanalysisInitialState {
-  img: HTMLImageElement | String | undefined;
+  img: string | undefined;
   aiResult: TaiResult | undefined;
-  messages: Toutput | undefined;
+  output: Toutput | undefined;
 }
 
 interface IcookieInitialState {
