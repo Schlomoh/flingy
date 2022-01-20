@@ -1,4 +1,4 @@
-import StBasePage from "../styleComponents/stBasePage";
+import StBasePage from "../styleComponents/base/stBasePage";
 
 const BasePage = ({ children }: IcomponentChildren) => {
   return (

@@ -5,15 +5,15 @@ const theme: Itheme = {
     },
     text: {
       fontSize: {
-        heading: "48px",
-        subHeading: "24px",
-        smallHeading: "28px",
+        heading: "52px",
+        smallHeading: "26px",
+        subHeading: "22px",
         paragraph: "18px",
       },
       color: {
         heading: "black",
-        subHeading: "black",
         smallHeading: "black",
+        subHeading: "#4e4e4e",
         paragraph: "grey",
       },
     },

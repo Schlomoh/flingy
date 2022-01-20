@@ -2,7 +2,7 @@ interface Itheme {
   base: {
     container: {
       borderRadius: String;
-    }
+    };
     text: {
       fontSize: {
         heading: String;
