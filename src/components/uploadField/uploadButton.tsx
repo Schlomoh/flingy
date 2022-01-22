@@ -4,14 +4,15 @@ import { ChangeEvent, MutableRefObject, useRef } from "react";
 // redux functionality
 import { useDispatch } from "react-redux"; // hook
 import { Dispatch } from "@reduxjs/toolkit"; // type
-import { setImage } from "../../../utils/stateManagement/slices/analysisSlice"; // action
-import store from "../../../utils/stateManagement/store"; // state tree
+import { setImage } from "../../utils/stateManagement/slices/analysisSlice"; // action
+import store from "../../utils/stateManagement/store"; // state tree
 
 //content
-import text from "../../../content/text/pickupPageTexts.json";
+import text from "../../content/text/pickupPageTexts.json";
+import plus from "../../content/assets/plus.png";
 
 //style
-import StUploadButton from "../../styleComponents/tailored/stUploadButton";
+import StUploadButton from "../styleComponents/tailored/stUploadButton";
 
 /**
  * Handles the input file
@@ -25,7 +26,7 @@ function handleInput(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch) {
   if (files !== null) {
     const fileUrl = URL.createObjectURL(files[0]);
     dispatch(setImage(fileUrl));
-    console.log('dispatch log', store.getState().analysis.img)
+    console.log("dispatch log", store.getState().analysis.img);
   }
 }
 
@@ -43,7 +44,7 @@ const UploadButton = (): JSX.Element => {
   return (
     <StUploadButton>
       <button id="uploadButton" onClick={() => ref.current.click()}>
-        {text.upload}
+          <img src={plus} alt="add image" />
       </button>
       <input
         id="imageInput"
