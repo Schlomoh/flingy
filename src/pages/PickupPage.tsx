@@ -18,14 +18,7 @@ const PickupPage = () => {
       <UploadField />
       <StBaseContainer>
         <StBaseText>
-          <h2>{text.title}</h2>
-          <h3>{text.subTitle}</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-            inventore sapiente cum modi? Incidunt quae esse aspernatur modi quas
-            mollitia consectetur nostrum aliquam molestias deleniti soluta iure
-            quaerat, id praesentium?
-          </p>
+         
         </StBaseText>
       </StBaseContainer>
     </BasePage>

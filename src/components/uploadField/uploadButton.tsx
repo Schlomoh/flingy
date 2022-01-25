@@ -8,7 +8,6 @@ import { setImage } from "../../utils/stateManagement/slices/analysisSlice"; // 
 import store from "../../utils/stateManagement/store"; // state tree
 
 //content
-import text from "../../content/text/pickupPageTexts.json";
 import plus from "../../content/assets/plus.png";
 
 //style

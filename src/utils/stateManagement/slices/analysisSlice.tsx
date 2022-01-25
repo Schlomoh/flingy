@@ -1,4 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
 
 const initialState = {
@@ -6,6 +9,7 @@ const initialState = {
   aiResult: undefined,
   output: undefined,
 } as IanalysisInitialState;
+
 
 const analysisSlice = createSlice({
   name: "analysis",
@@ -23,5 +27,5 @@ const analysisSlice = createSlice({
   },
 });
 
-export const { setImage } = analysisSlice.actions;
+export const { setImage, setAiResult, setOutput } = analysisSlice.actions;
 export default analysisSlice.reducer;

@@ -1,6 +1,5 @@
-import { useImageSelector } from "../../utils/stateManagement/selectorHooks/imageSelector";
+import { useImageSelector } from "../../utils/stateManagement/selectorHooks/analysisSelectors";
 
-import StBaseContainer from "../styleComponents/base/stBaseContainer";
 import StUploadContainer from "../styleComponents/tailored/stUploadContainer";
 import ImageField from "./imageField";
 import UploadButton from "./uploadButton";

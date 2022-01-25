@@ -1,15 +1,15 @@
 type TaiResult = [
   {
-    topLeft: Number[];
-    bottomRight: Number[];
-    probability: Number[];
+    topLeft: number[];
+    bottomRight: number[];
+    probability: number[];
     landmarks: [
-      Number[], // right eye
-      Number[], // left eye
-      Number[], // nose
-      Number[], // mouth
-      Number[], // right ear
-      Number[] // left ear
+      number[], // right eye
+      number[], // left eye
+      number[], // nose
+      number[], // mouth
+      number[], // right ear
+      number[] // left ear
     ];
   }
 ];
