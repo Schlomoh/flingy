@@ -1,34 +1,45 @@
+type Tcolorway = {
+  background: String;
+  color: String;
+  hover: {
+    background: String;
+    color: String;
+  };
+};
+
 interface Itheme {
-  base: {
-    container: {
-      borderRadius: String;
+  container: {
+    borderRadius: String;
+  };
+  text: {
+    fontSize: {
+      heading: String;
+      subHeading: String;
+      smallHeading: String;
+      paragraph: String;
+      lineHeight?: number;
     };
-    text: {
-      fontSize: {
-        heading: String;
-        subHeading: String;
-        smallHeading: String;
-        paragraph: String;
-        lineHeight?: number;
-      };
-      color: {
-        heading: String;
-        subHeading: String;
-        smallHeading: String;
-        paragraph: String;
-        lineHeight?: number;
-      };
+    color: {
+      heading: String;
+      subHeading: String;
+      smallHeading: String;
+      paragraph: String;
+      lineHeight?: number;
     };
-    button: {
-      borderRadius: String;
+  };
+  button: {
+    borderRadius: {
+      outer: String;
+      inner: String;
+      round: String;
+    };
+    primary: Tcolorway;
+    warn: Tcolorway;
+    disabled: {
       background: String;
       color: String;
-      hover: {
-        background: String;
-        color: String;
-      };
     };
-    background: String;
-    shadow: String;
   };
+  background: String;
+  shadow: String;
 }

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 // slices
-import analysisSlice from "./slices/analysisSlice";
-import cookieSlice from "./slices/cookieSlice";
-import routingSlice from "./slices/routingSlice";
+import analysisSlice from "./slicesNselectors/analysisSlice";
+import cookieSlice from "./slicesNselectors/cookieSlice";
+import routingSlice from "./slicesNselectors/routingSlice";
 
 const store = configureStore({
   reducer: {

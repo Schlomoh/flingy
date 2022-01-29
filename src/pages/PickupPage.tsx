@@ -6,8 +6,11 @@ import StBaseText from "../components/styleComponents/base/stBaseText";
 // content
 import text from "../content/text/pickupPageTexts.json";
 import StBaseContainer from "../components/styleComponents/base/stBaseContainer";
+import ResultInfoItems from "../components/resultInfoItems";
+import { useInitAi } from "../utils/analysis/useAiData";
 
 const PickupPage = () => {
+  const analyzer = useInitAi();
   return (
     <BasePage>
       <StBaseText>
@@ -15,11 +18,9 @@ const PickupPage = () => {
         <h3>{text.subTitle}</h3>
         <p>{text.desctiption}</p>
       </StBaseText>
-      <UploadField />
+      <UploadField analyzer={analyzer} />
       <StBaseContainer>
-        <StBaseText>
-         
-        </StBaseText>
+        <ResultInfoItems />
       </StBaseContainer>
     </BasePage>
   );

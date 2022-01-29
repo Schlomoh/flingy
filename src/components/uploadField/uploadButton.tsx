@@ -4,7 +4,7 @@ import { ChangeEvent, MutableRefObject, useRef } from "react";
 // redux functionality
 import { useDispatch } from "react-redux"; // hook
 import { Dispatch } from "@reduxjs/toolkit"; // type
-import { setImage } from "../../utils/stateManagement/slices/analysisSlice"; // action
+import { setImage } from "../../utils/stateManagement/slicesNselectors/analysisSlice"; // action
 import store from "../../utils/stateManagement/store"; // state tree
 
 //content
@@ -43,7 +43,7 @@ const UploadButton = (): JSX.Element => {
   return (
     <StUploadButton>
       <button id="uploadButton" onClick={() => ref.current.click()}>
-          <img src={plus} alt="add image" />
+        <img src={plus} alt="add image" />
       </button>
       <input
         id="imageInput"

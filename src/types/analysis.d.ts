@@ -1,4 +1,4 @@
-type TaiResult = [
+type TblazefaceResult = [
   {
     topLeft: number[];
     bottomRight: number[];
@@ -13,6 +13,11 @@ type TaiResult = [
     ];
   }
 ];
+
+type TaiResult = {
+  face: TblazefaceResult | undefined;
+  coco: any;
+};
 
 type Toutput = {
   tags: String[];
