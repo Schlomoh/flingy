@@ -30,6 +30,11 @@ module.exports = {
         test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
         use: ["file-loader"],
       },
+      {
+        test: /\.worker\.tsx$/,
+        exclude: /node_modules/,
+        use: ["worker-loader"]
+      }
     ],
   },
   plugins: [
