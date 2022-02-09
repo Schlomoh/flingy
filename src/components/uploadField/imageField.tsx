@@ -4,33 +4,41 @@ import FaceBox from "../faceBox";
 
 // hooks
 import { useImageSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
-import { useAiData } from "../../utils/analysis/useAiData";
+import { useAiWorker } from "../../utils/analysis/useAiData";
 
 //import for type
-import Analyzer from "../../utils/analysis";
-import { useState } from "react";
+import { useRef, useState, LegacyRef } from "react";
 
 /**
  * Displays the given image and calls the analyzer on it
  */
-const ImageField = ({ analyzer }: { analyzer: Analyzer }) => {
+const ImageField = ({ worker }: any) => {
+  let imageData;
   const [imgReady, setReady] = useState(false);
-  const img = useImageSelector();
+  const imgUrl = useImageSelector();
+  const image: LegacyRef<HTMLImageElement> = useRef(null);
 
-  // pass in the initialized analyzer class
-  console.log("reloaded");
-  useAiData(analyzer, imgReady);
+  if (image.current) {
+    const [width, height] = [image.current.width, image.current.height];
+    const canvas = new OffscreenCanvas(width, height);
+    const ctx = canvas.getContext("2d");
+    ctx?.drawImage(image.current, 0, 0);
+    imageData = ctx?.getImageData(0, 0, width, height);
+  }
+
+  useAiWorker(worker, "analyze", imgReady, imageData);
 
   return (
     <StUploadImage>
       <FaceBox />
+      <img id="imageBG" src={imgUrl} alt="Uploaded image background" />
       <img
-        id="imageBG"
+        ref={image}
         onLoad={() => setReady(true)}
-        src={img}
-        alt="Uploaded image background"
+        id="uploadImage"
+        src={imgUrl}
+        alt="Uploaded image"
       />
-      <img id="uploadImage" src={img} alt="Uploaded image" />
     </StUploadImage>
   );
 };

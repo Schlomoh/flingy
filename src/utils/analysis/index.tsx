@@ -12,52 +12,58 @@ class Analyzer {
     cocoSSD: any;
   };
 
-  _predictions: {
+  predictions: {
     face: TblazefaceResult | undefined;
     coco: any;
   };
 
   state: "idle" | "loading" | "loaded";
 
+  _base = { face: undefined, coco: undefined };
+
   // instanciating class vars
   constructor() {
     this._models = { blazeface: undefined, cocoSSD: undefined };
-    this._predictions = { face: undefined, coco: undefined };
+    this.predictions = this._base;
     this.state = "idle";
   }
   // loading models
-  async initialize() {
+  async initialize( bf?: any, ccssd? : any ) {
+    console.log("Starting loading of models");
     this.state = "loading";
-    const bf = await blazeface.load();
-    const coco = await cocoSsd.load();
-    this._models = { blazeface: bf, cocoSSD: coco };
+    if (!bf) bf = await blazeface.load();
+    if (!ccssd) ccssd = await cocoSsd.load();
+    const inits = { blazeface: bf, cocoSSD: ccssd };
+    this._models = inits;
     this.state = "loaded";
     console.log("Models initialized.");
+    return inits;
   }
 
   // analyzing image
-  async analyze() {
-    const image = document.getElementById("uploadImage");
-    console.log('img that the analyzer got', image)
-    if (image) {
-      try {
-        // Pass in `true` to get tensors back, rather than values.
-        const bfPred = await this._models.blazeface.estimateFaces(image, false);
-        if (bfPred.length > 0) {
-          this._predictions.face = bfPred;
-        }
-        this._predictions.coco = await this._models.cocoSSD.detect(image);
-        console.log("SUCCESS ANALYZING", this._predictions);
-      } catch (e) {
-        console.log("ERROR ANALYZING", e);
+  async analyze(image: ImageData) {
+    console.log("img that the analyzer got", image);
+    try {
+      // Pass in `true` to get tensors back, rather than values.
+      const bfPred = await this._models.blazeface.estimateFaces(image, false);
+      if (bfPred.length > 0) {
+        this.predictions.face = bfPred;
       }
-    } else console.log("No image defined... dork");
+      this.predictions.coco = await this._models.cocoSSD.detect(image);
+      console.log("SUCCESS ANALYZING", this.predictions);
+    } catch (e) {
+      console.log("ERROR ANALYZING", e);
+    }
+  }
+
+  clear() {
+    this.predictions = this._base;
   }
 
   // returning result
   get result() {
-    if (this._predictions.face) {
-      return this._predictions;
+    if (this.predictions.face) {
+      return this.predictions;
     }
   }
 }

@@ -7,10 +7,13 @@ import StBaseText from "../components/styleComponents/base/stBaseText";
 import text from "../content/text/pickupPageTexts.json";
 import StBaseContainer from "../components/styleComponents/base/stBaseContainer";
 import ResultInfoItems from "../components/resultInfoItems";
-import { useInitAi } from "../utils/analysis/useAiData";
+import { useAiData, useAiWorker, useInitAi } from "../utils/analysis/useAiData";
+import AnalysisWorker from "worker-loader!../utils/dedicated_worker/aiWorker";
 
 const PickupPage = () => {
-  const analyzer = useInitAi();
+  const worker = new AnalysisWorker();
+  useAiWorker(worker, "initialize");
+
   return (
     <BasePage>
       <StBaseText>
@@ -18,7 +21,7 @@ const PickupPage = () => {
         <h3>{text.subTitle}</h3>
         <p>{text.desctiption}</p>
       </StBaseText>
-      <UploadField analyzer={analyzer} />
+      <UploadField worker={worker} />
       <StBaseContainer>
         <ResultInfoItems />
       </StBaseContainer>

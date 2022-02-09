@@ -28,3 +28,5 @@ type Toutput = {
     }
   ];
 };
+
+type Taction = 'initialize' | 'analyze'
