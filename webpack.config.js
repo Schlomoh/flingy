@@ -3,13 +3,17 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: path.join(__dirname, "src", "index.tsx"),
-  output: { path: path.join(__dirname, "build"), filename: "index.bundle.js", publicPath: "/"},
+  output: {
+    path: path.join(__dirname, "build"),
+    filename: "index.bundle.js",
+    publicPath: "/",
+  },
   mode: process.env.NODE_ENV || "development",
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
-  devServer: {historyApiFallback : true,
-},
+  devServer: { historyApiFallback: true },
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -33,8 +37,8 @@ module.exports = {
       {
         test: /\.worker\.tsx$/,
         exclude: /node_modules/,
-        use: ["worker-loader"]
-      }
+        use: ["worker-loader"],
+      },
     ],
   },
   plugins: [
