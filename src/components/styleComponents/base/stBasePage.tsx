@@ -15,22 +15,29 @@ const StBasePage = styled.main`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
-  // colors
+`;
 
-  .centerContainer {
-    // responsivenes
-    padding: 60px 40px;
-    max-width: calc(100vw - 80px);
-    @media screen and (min-width: ${bp.sm}) {
-      max-width: ${bp.sm};
-    }
-    @media screen and (min-width: ${bp.xl}) {
-      max-width: ${bp.md};
-    }
-    @media screen and (min-width: ${bp.xxl}) {
-      max-width: ${bp.lg};
-    }
+export const StCenterContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  justify-content: space-between;
+
+  padding: 60px 40px;
+  max-width: calc(100vw - 80px);
+
+  // responsivenes
+  @media screen and (min-width: ${bp.sm}) {
+    max-width: ${bp.sm};
+  }
+  @media screen and (min-width: ${bp.xl}) {
+    max-width: ${bp.md};
+  }
+  @media screen and (min-width: ${bp.xxl}) {
+    max-width: ${bp.lg};
   }
 `;
 

@@ -1,18 +1,23 @@
-type TaiResult = [
+type TblazefaceResult = [
   {
-    topLeft: Number[];
-    bottomRight: Number[];
-    probability: Number[];
+    topLeft: number[];
+    bottomRight: number[];
+    probability: number[];
     landmarks: [
-      Number[], // right eye
-      Number[], // left eye
-      Number[], // nose
-      Number[], // mouth
-      Number[], // right ear
-      Number[] // left ear
+      number[], // right eye
+      number[], // left eye
+      number[], // nose
+      number[], // mouth
+      number[], // right ear
+      number[] // left ear
     ];
   }
 ];
+
+type TaiResult = {
+  face: TblazefaceResult | undefined;
+  coco: any;
+};
 
 type Toutput = {
   tags: String[];
@@ -23,3 +28,5 @@ type Toutput = {
     }
   ];
 };
+
+type Taction = 'initialize' | 'analyze'

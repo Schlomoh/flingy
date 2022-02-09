@@ -1,9 +1,11 @@
-import StBasePage from "../styleComponents/base/stBasePage";
+import StBasePage, {
+  StCenterContainer,
+} from "../styleComponents/base/stBasePage";
 
 const BasePage = ({ children }: IcomponentChildren) => {
   return (
     <StBasePage>
-      <div className="centerContainer">{children}</div>
+      <StCenterContainer>{children}</StCenterContainer>
     </StBasePage>
   );
 };

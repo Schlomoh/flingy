@@ -2,6 +2,7 @@ interface IanalysisInitialState {
   img: string | undefined;
   aiResult: TaiResult | undefined;
   output: Toutput | undefined;
+  init: boolean;
 }
 
 interface IcookieInitialState {
@@ -10,5 +11,5 @@ interface IcookieInitialState {
 }
 
 interface IroutingInitialState {
-    location: String;
+  location: String;
 }
