@@ -2,7 +2,7 @@ interface IanalysisInitialState {
   img: string | undefined;
   aiResult: TaiResult | undefined;
   output: Toutput | undefined;
-  init: boolean;
+  faces: Tfaces | undefined;
 }
 
 interface IcookieInitialState {

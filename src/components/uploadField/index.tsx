@@ -1,48 +1,26 @@
 // hooks
-import { useDispatch } from "react-redux";
+import { MutableRefObject, useRef } from "react";
 import { useImageSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
-
-//action
-import { reset } from "../../utils/stateManagement/slicesNselectors/analysisSlice";
-
-// type
-import Analyzer from "../../utils/analysis";
 
 // components
 import StUploadContainer from "../styleComponents/tailored/stUploadContainer";
-import StBaseButton from "../styleComponents/base/stBaseButton";
 import ImageField from "./imageField";
 import UploadButton from "./uploadButton";
 
-
-const RemoveButton = () => {
-  const dispatch = useDispatch();
-  const remove = () => {
-    dispatch(reset());
-  };
-  return (
-    <StBaseButton warn onClick={remove} inner>
-      Remove Image
-    </StBaseButton>
-  );
-};
-
-const ImageInput = ({worker}: any) => {
+const ImageInput = () => {
+  const worker: MutableRefObject<{
+    instance: Worker | undefined;
+    action: enumActions;
+    loaded: boolean;
+  }> = useRef({ instance: undefined, action: "load", loaded: false });
   const imageLoaded = useImageSelector() !== undefined;
-  return !imageLoaded ? (
-    <UploadButton />
-  ) : (
-    <>
-      <RemoveButton />
-      <ImageField worker={worker} />;
-    </>
-  );
+  return !imageLoaded ? <UploadButton /> : <ImageField worker={worker} />;
 };
 
-const UploadField = ({worker}: any) => {
+const UploadField = () => {
   return (
     <StUploadContainer>
-      <ImageInput worker={worker} />
+      <ImageInput />
     </StUploadContainer>
   );
 };

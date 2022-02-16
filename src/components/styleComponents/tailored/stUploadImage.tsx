@@ -4,7 +4,7 @@ const StUploadImage = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  top: -70px;
+
   #uploadImage {
     width: inherit;
     height: inherit;

@@ -1,4 +1,5 @@
 import Analyzer from "../analysis";
+
 async function load(a: Analyzer) {
   await a.initialize();
   postMessage({ ready: true });
@@ -6,7 +7,9 @@ async function load(a: Analyzer) {
 
 async function analyze(a: Analyzer, image: ImageData) {
   await a.analyze(image);
-  postMessage({ result: a.result });
+  const result = a.result;
+  a.clear();
+  postMessage({ result: result, finished: true });
 }
 
 {
@@ -14,16 +17,14 @@ async function analyze(a: Analyzer, image: ImageData) {
   let analyzer: Analyzer;
 
   ctx.onmessage = (event: MessageEvent) => {
-    console.log("called listener", event.data, "analyzer: ", analyzer);
-
-    const action = event.data.action;
-    const image = event.data.image;
+    const [action, image] = [event.data.action, event.data.image];
 
     if (!analyzer) analyzer = new Analyzer();
 
     switch (action) {
       case "initialize":
-        load(analyzer);
+        if (!(analyzer.state === "loading" || analyzer.state === "loaded"))
+          load(analyzer);
         break;
       case "analyze":
         if (image && analyzer.state === "loaded") analyze(analyzer, image);
