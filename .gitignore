@@ -1,6 +1,6 @@
 # node
 node_modules
-build 
+dist
 package-lock.json
 
 # OSX
