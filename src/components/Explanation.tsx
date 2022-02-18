@@ -1,4 +1,4 @@
-import { StExplanaition, StTextWrapper } from "./StyledComps";
+import { StExplanaition, StTextWrapper } from "./styledComps";
 
 export function StarterExplanation(props: any): JSX.Element {
   return (

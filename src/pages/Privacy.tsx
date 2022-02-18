@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-grid-system";
-import { OL } from "../components/GlobalComponents";
-import { StTextWrapper } from "../components/StyledComps";
+import { OL } from "../components/globalComponents";
+import { StTextWrapper } from "../components/styledComps";
 import { PrivacyText } from "../components/PrivacyText";
 
 export function Privacy(): JSX.Element {

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { StTextWrapper, StOverlay, StButton } from "./StyledComps";
+import {
+  StTextWrapper,
+  StOverlay,
+  StButton,
+  StCookieFloaty,
+} from "./styledComps";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-grid-system";
 import darkPattern from "../assets/email-pattern.png";
@@ -52,8 +57,9 @@ export const FadeIn = ({ children, slow, fast, grow }: any) => {
 export const OL: any = (props: any) => {
   const pattern = props.nsfw ? lightPattern : darkPattern;
   return (
-      <StOverlay nsfw={props.nsfw} bgImgSrc={pattern} show={true}>
-        <Link to="/">{!props.noClose ?
+    <StOverlay nsfw={props.nsfw} bgImgSrc={pattern} show={true}>
+      <Link to="/">
+        {!props.noClose ? (
           <StButton
             className="noSelect"
             fixed
@@ -62,9 +68,23 @@ export const OL: any = (props: any) => {
             color={props.nsfw ? "rgb(50,50,50)" : "lightgrey"}
           >
             Close
-          </StButton>: null}
-        </Link>
-        <StTextWrapper>{props.children}</StTextWrapper>
-      </StOverlay>
+          </StButton>
+        ) : null}
+      </Link>
+      <StTextWrapper>{props.children}</StTextWrapper>
+    </StOverlay>
   );
 };
+
+export function CookiesFloaty(props: any) {
+  const [show, setShow] = props.show;
+  return (
+    <StCookieFloaty
+      onClick={() => {
+        setShow(!show);
+      }}
+    >
+      {emoji(0x1f36a)}
+    </StCookieFloaty>
+  );
+}

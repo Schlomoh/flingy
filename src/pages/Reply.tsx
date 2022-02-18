@@ -1,4 +1,4 @@
-import { StTextWrapper } from "../components/StyledComps";
+import { StTextWrapper } from "../components/styledComps";
 
 export const Reply = () => {
   return (

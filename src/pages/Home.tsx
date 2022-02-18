@@ -10,10 +10,10 @@ import {
   StImage,
   StTextWrapper,
   StButton,
-} from "../components/StyledComps";
+} from "../components/styledComps";
 
 import { Link } from "react-router-dom";
-import { FadeIn, emoji, OL } from "../components/GlobalComponents";
+import { FadeIn, emoji, OL } from "../components/globalComponents";
 
 // small props interface for the category selection card
 interface SelBoxProps {
@@ -37,7 +37,6 @@ export function Home() {
           </StImage>
           <h2>{props.title}</h2>
           <p>{props.content}</p>
-
           <Link to={props.disable ? "" : props.version}>
             <StButton color="light" disabled={props.disable}>
               Open

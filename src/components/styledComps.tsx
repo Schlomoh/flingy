@@ -12,6 +12,7 @@ export const StBase: any = styled.div`
     font-family: "Raleway", sans-serif;
     font-size: 42px;
     font-weight: 900;
+    line-height: 0.8;
     color: #272727;
   }
 
@@ -81,7 +82,7 @@ export const StTextWrapper: any = styled.div`
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
     opacity: ${(props) => (props.color === "light" ? 0.75 : 1)};
     font-weight: ${(props: any) => (props.fat ? 'bolder' : 400)};
-    margin-bottom: 30px;
+    margin: 10px 0 30px 0;
   }
   a {
     color: ${(props) => (props.color === "light" ? "white" : props.color)};
@@ -376,3 +377,16 @@ export const StReloadInfo: any = styled.div`
     margin-bottom: 0;
   }
 `;
+
+export const StCookieFloaty = styled(StButton)`
+min-width: unset;
+padding: unset;
+width: 60px;
+height: 60px;
+background-color: white;
+border-radius: 20px;
+left: 0;
+bottom : 0;
+position: fixed;
+margin : 15px;
+`

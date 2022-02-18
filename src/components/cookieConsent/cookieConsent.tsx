@@ -1,33 +1,35 @@
-import { StCookieOverlay, StCookieBox } from "./style";
-import { emoji } from "../GlobalComponents";
-import { StButton, StTextWrapper } from "../StyledComps";
+import { StCookieOverlay, StCookieBox } from "./ccStyle";
+import { emoji } from "../globalComponents";
+import { StButton, StTextWrapper } from "../styledComps";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function CookieBox(props: any): JSX.Element {
   const [showConfig, setShowConfig] = useState(false);
   const [consent, setConsent] = props.consent;
+  const [show, setShow] = props.show;
 
-  const handleCookies = (selections: Array<string>) => {
-    let selection: any = {
-      show: true,
+  const createConsentObj = (selections: Array<string>) => {
+    const consentBase: any = {
       necessary: true,
       analytics: false,
       advertisement: false,
     };
+
+    let consentSelection = consentBase;
+
     selections.forEach((item: string) => {
       switch (item) {
         case "analytics":
-          selection.analytics = true;
+          consentSelection.analytics = true;
           break;
         case "advertisement":
-          selection.advertisement = true;
+          consentSelection.advertisement = true;
           break;
       }
     });
-    selection.show = false;
-    console.log(selection);
-    setConsent(selection);
+    setShow(false);
+    setConsent(consentSelection);
   };
 
   function MainCookieScreen(): JSX.Element {
@@ -43,7 +45,7 @@ function CookieBox(props: any): JSX.Element {
 
         <StButton
           onClick={() => {
-            handleCookies(["analytics", "advertisement"]);
+            createConsentObj(["analytics", "advertisement"]);
           }}
           color="light"
         >
@@ -87,7 +89,7 @@ function CookieBox(props: any): JSX.Element {
       }
 
       return (
-        <StTextWrapper style={{ margin: "15px 0", width: "max-content" }}>
+        <StTextWrapper style={{ margin: "15px 0"}}>
           <div
             style={{
               display: "flex",
@@ -146,7 +148,7 @@ function CookieBox(props: any): JSX.Element {
         <ConfigurationButton text="Advertisement" type="advertisement" />
         <StButton
           onClick={() => {
-            handleCookies(["advertisement", "analytics"]);
+            createConsentObj(["advertisement", "analytics"]);
           }}
           color="light"
           style={{ marginTop: "15px" }}
@@ -155,7 +157,7 @@ function CookieBox(props: any): JSX.Element {
         </StButton>
         <StButton
           onClick={() => {
-            handleCookies(selection);
+            createConsentObj(selection);
           }}
           style={{ marginTop: "30px" }}
         >
@@ -172,12 +174,12 @@ function CookieBox(props: any): JSX.Element {
   );
 }
 
-export function CookieConsentBox({ consent }: any): JSX.Element | null {
-  return consent[0].show ? (
+export function CookieConsentBox({ consent, show }: any): JSX.Element | null {
+  return show[0] ? (
     <StCookieOverlay>
       <div id="cookieBackground">
         <div id="centerAlign">
-          <CookieBox consent={consent} />
+          <CookieBox consent={consent} show={show} />
         </div>
       </div>
     </StCookieOverlay>

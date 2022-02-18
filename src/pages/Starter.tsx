@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container } from "react-grid-system";
 
 // global components
-import { emoji, FadeIn, CenterPageRow } from "../components/GlobalComponents";
+import { emoji, FadeIn, CenterPageRow } from "../components/globalComponents";
 
 // smaller components
 import { StarterExplanation } from "../components/Explanation";
@@ -10,7 +10,7 @@ import { UploadButton } from "../components/ImageButton";
 import { PopIn } from "../components/StarterPopIn";
 
 // styles
-import { StButton } from "../components/StyledComps";
+import { StButton } from "../components/styledComps";
 
 function NsfwButton(state: any): JSX.Element {
   let buttonText = state.get ? "Deactivate NSFW" : "Activate NSFW";

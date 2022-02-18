@@ -8,14 +8,13 @@ import { Starter } from "./pages/Starter";
 import { Privacy } from "./pages/Privacy";
 
 // Components
-import { OL } from "./components/GlobalComponents";
-import { StBase } from "./components/StyledComps";
+import { CookiesFloaty, OL } from "./components/globalComponents";
+import { StBase } from "./components/styledComps";
 import { CookieConsentBox } from "./components/cookieConsent/cookieConsent";
-import { getCookie, setCookie } from "./components/cookieConsent/manageCookies";
+import { handleCookies } from "./components/cookieConsent/manageCookies";
 
 export interface ICookiesObj {
   [index: string]: {
-    show: Boolean;
     necessary: Boolean;
     analytics: Boolean;
     advertisement: Boolean;
@@ -24,26 +23,24 @@ export interface ICookiesObj {
 
 function App(): JSX.Element {
   const [nsfw, setNsfw] = useState(false);
-  const [consent, setConsent]: any = useState({
-    show: true,
-    necessary: true,
-    analytics: false,
-    advertisement: false,
-  });
+  const [consent, setConsent]: any = useState();
+  const [show, setShow] = useState();
 
   useEffect(() => {
-    let inc = document.cookie.includes("selection");
-    if (consent.show && inc) setConsent(getCookie(consent));
-    else if (!consent.show && !inc) {
-      setCookie(consent);
-    }
-  }, [consent, setConsent]);
+    handleCookies(consent, setConsent, setShow);
+  }, [consent]);
 
   return (
     <div className="App">
       <StBase>
         <Router>
-          <CookieConsentBox consent={[consent, setConsent]} />
+          {consent !== undefined ? (
+            <CookiesFloaty show={[show, setShow]} />
+          ) : null}
+          <CookieConsentBox
+            show={[show, setShow]}
+            consent={[consent, setConsent]}
+          />
           <Switch>
             <Route path="/starter">
               <OL nsfw={nsfw}>

@@ -8,14 +8,14 @@ import {
   stdBlue,
   StInfoPopUp,
   StReloadInfo,
-} from "./StyledComps";
+} from "./styledComps";
 
 import { PulseLoader } from "react-spinners";
 import { Container, Row, Col } from "react-grid-system";
 import { FiCopy } from "react-icons/fi";
 import { FiRotateCw } from "react-icons/fi";
 import { getStarter } from "./tools/get_starter";
-import { CenterPageRow, FadeIn } from "./GlobalComponents";
+import { CenterPageRow, FadeIn } from "./globalComponents";
 
 const MessageField = ({ children, loading, result, select }: any) => {
   useEffect(() => {

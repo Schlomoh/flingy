@@ -7,14 +7,14 @@ import {
   override,
   stdBlue,
   StButton,
-} from "./StyledComps";
+} from "./styledComps";
 import { FiUploadCloud, FiTrash2 } from "react-icons/fi";
 import { BsPerson } from "react-icons/bs";
 
 import { analyseScreenshot } from "./tools/pictureScan";
 import { getStarter } from "./tools/get_starter";
 import { GridLoader } from "react-spinners";
-import { FadeIn } from "./GlobalComponents";
+import { FadeIn } from "./globalComponents";
 
 const roundButtonStyle: any = {
   borderRadius: "100%",
