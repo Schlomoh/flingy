@@ -31,8 +31,8 @@ const theme: Itheme = {
       },
     },
     warn: {
-      background: "#b14040",
-      color: "white",
+      background: "#fff",
+      color: "#b14040",
       hover: {
         background: "#d87272",
         color: "white",

@@ -1,38 +1,52 @@
 // dat back-end shiat
-import "@tensorflow/tfjs-backend-webgl";
-import "@tensorflow/tfjs-backend-cpu";
+import(/* webpackPrefetch: true */ "@tensorflow/tfjs-backend-cpu");
+import(/* webpackPrefetch: true */ "@tensorflow/tfjs-backend-webgl");
 
-import * as blazeface from "@tensorflow-models/blazeface";
-import * as cocoSsd from "@tensorflow-models/coco-ssd";
+// import * as blazeface from "@tensorflow-models/blazeface";
+// import * as cocoSsd from "@tensorflow-models/coco-ssd";
+
+async function dynImport() {
+  const blazeface = await import("@tensorflow-models/blazeface");
+  const cocoSsd = await import("@tensorflow-models/coco-ssd");
+  return [blazeface, cocoSsd];
+}
 
 class Analyzer {
   // sum types
+  // models
   _models: {
     blazeface: any;
     cocoSSD: any;
   };
 
   predictions: {
-    face: TblazefaceResult | undefined;
+    faces: TblazefaceResult | undefined;
     coco: any;
   };
 
   state: "idle" | "loading" | "loaded";
 
-  _base = { face: undefined, coco: undefined };
+  _base = { faces: undefined, coco: undefined };
 
-  // instanciating class vars
   constructor() {
     this._models = { blazeface: undefined, cocoSSD: undefined };
     this.predictions = this._base;
     this.state = "idle";
   }
+
   // loading models
-  async initialize( bf?: any, ccssd? : any ) {
-    console.log("Starting loading of models");
+  async initialize(bf?: any, ccssd?: any) {
+    console.log("Loading models...");
     this.state = "loading";
-    if (!bf) bf = await blazeface.load();
-    if (!ccssd) ccssd = await cocoSsd.load();
+
+    // lib import
+    const [libBf, libCoco] = await dynImport();
+
+    //loading
+    if (!bf) bf = await libBf.load()
+    if (!ccssd) ccssd = await libCoco.load();
+
+    // object of the initialized models
     const inits = { blazeface: bf, cocoSSD: ccssd };
     this._models = inits;
     this.state = "loaded";
@@ -42,12 +56,12 @@ class Analyzer {
 
   // analyzing image
   async analyze(image: ImageData) {
-    console.log("img that the analyzer got", image);
+    console.log("\nImage to analyze: ", image, "\n");
     try {
       // Pass in `true` to get tensors back, rather than values.
       const bfPred = await this._models.blazeface.estimateFaces(image, false);
       if (bfPred.length > 0) {
-        this.predictions.face = bfPred;
+        this.predictions.faces = bfPred;
       }
       this.predictions.coco = await this._models.cocoSSD.detect(image);
       console.log("SUCCESS ANALYZING", this.predictions);
@@ -62,7 +76,7 @@ class Analyzer {
 
   // returning result
   get result() {
-    if (this.predictions.face) {
+    if (this.predictions.faces) {
       return this.predictions;
     }
   }

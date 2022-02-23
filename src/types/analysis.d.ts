@@ -15,9 +15,12 @@ type TblazefaceResult = [
 ];
 
 type TaiResult = {
-  face: TblazefaceResult | undefined;
+  faces: TblazefaceResult | undefined;
   coco: any;
+  finished: boolean
 };
+
+type Tanalysis = { analysis: IanalysisInitialState };
 
 type Toutput = {
   tags: String[];
@@ -30,3 +33,7 @@ type Toutput = {
 };
 
 type Taction = 'initialize' | 'analyze'
+
+type Tbbox = { x: number, y: number, w: number, h: number }
+
+type Tfaces = [{bbox: Tbbox, imgUrl: string }]

@@ -1,30 +1,105 @@
 //hooks
-import { useAiDataSelector } from "../utils/stateManagement/slicesNselectors/analysisSelectors";
+import { useCallback } from "react";
+import { useBoundingBoxSelector } from "../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
 import StFaceBox from "./styleComponents/tailored/stFaceBox";
 
-function sizeCss(data: any) {
+function sizeCss(width: number, height: number) {
   return `
-    width: ${data.bottomRight[0] - data.topLeft[0]}px;
-    height: ${data.bottomRight[1] - data.topLeft[1] - 10}px;
+    width: ${width}px;
+    height: ${height}px;
     `;
 }
 
-function posCss(data: any) {
+function posCss(x: number, y: number) {
   return `
-     transform: translate(${data.topLeft[0]}px, ${data.topLeft[1]}px);
+     transform: translate(${x - 5}px, ${y - 5}px);
      `;
 }
 
-const FaceBox = () => {
-  const aiResults = useAiDataSelector();
-  function iterate(result: any, i: number) {
-    let size = sizeCss(result),
-      position = posCss(result);
-    return <StFaceBox key={i} faceBox={{ size: size, position: position }} />;
+/**
+ * Resize the facebox measurements since the result is based on the full scale image
+ *
+ * advantage being that the highRes pic has a higher probability of faces getting recognized
+ *
+ * This function calcs the ratio of original image (in offscreenCanvas)
+ * and scaled image (in User view) and recalculates the face bounding box accordingly
+ *
+ *
+ * @param result
+ * @param sizes
+ * @returns
+ */
+function resize(bboxes: number[], sizes: TimageSizes) {
+  let scalar,
+    ratioOriginal,
+    ratioElement,
+    offsetX,
+    offsetY,
+    actualImageW,
+    actualImageH,
+    x,
+    y,
+    w,
+    h;
+
+  offsetX = offsetY = 0;
+
+  // full scale bbox position and size
+  let [bboxX, bboxY, bboxW, bboxH]: number[] = bboxes;
+
+  [bboxX, bboxY, bboxX, bboxH] = [bboxX, bboxY, bboxX, bboxH].map((value) => {
+    return value > 0 ? value : 0;
+  });
+
+  const [elementWidth, elementHeight] = [sizes.scaled.w, sizes.scaled.h];
+  const [originalWidth, originalHeight] = [sizes.natural.w, sizes.natural.h];
+
+  ratioOriginal = originalWidth / originalHeight;
+  ratioElement = elementWidth / elementHeight;
+
+  if (ratioOriginal >= ratioElement) {
+    actualImageW = elementWidth;
+    actualImageH = elementWidth / ratioOriginal;
+    offsetY = (elementHeight - actualImageH) / 2;
+  } else {
+    actualImageW = elementHeight * ratioOriginal;
+    actualImageH = elementHeight;
+    offsetX = (elementWidth - actualImageW) / 2;
   }
-  const boxes = aiResults ? aiResults.face?.map(iterate) : null;
+
+  scalar = originalHeight / actualImageH;
+
+  [x, y, w, h] = [
+    bboxX / scalar + offsetX,
+    bboxY / scalar + offsetY,
+    bboxW / scalar,
+    bboxH / scalar,
+  ];
+
+  return {
+    size: sizeCss(w, h),
+    position: posCss(x, y),
+  };
+}
+
+const FaceBox = ({ sizes }: { sizes: TimageSizes | undefined }) => {
+  const memResize = useCallback(resize, []);
+
+  // iterator function for map method
+  function iterate(bboxes: number[], i: number) {
+    if (sizes) {
+      const { size, position } = memResize(bboxes, sizes);
+      return <StFaceBox key={i} faceBox={{ size: size, position: position }} />;
+    }
+  }
+
+  // get ai predictions
+  const boundingBoxes = useBoundingBoxSelector();
+
+  // when predictions are available create face boxes
+  const boxes = boundingBoxes ? boundingBoxes.map(iterate) : null;
   return <>{boxes}</>;
 };
 

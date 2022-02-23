@@ -5,16 +5,13 @@ const initialState = {
   img: undefined,
   aiResult: undefined,
   output: undefined,
-  init: false,
+  faces: undefined,
 } as IanalysisInitialState;
 
 const analysisSlice = createSlice({
   name: "analysis",
   initialState,
   reducers: {
-    setInit(state, action) {
-      state.init = action.payload;
-    },
     setImage(state, action: PayloadAction<string | undefined>) {
       state.img = action.payload as WritableDraft<IanalysisInitialState["img"]>;
     },
@@ -24,12 +21,15 @@ const analysisSlice = createSlice({
     setOutput(state, action: PayloadAction<Toutput>) {
       state.output = action.payload;
     },
+    setFaces(state, action: PayloadAction<Tfaces>) {
+      state.faces = action.payload
+    },
     reset(state) {
-      state.output = state.aiResult = state.img = undefined;
+      state.output = state.aiResult = state.faces = state.img = undefined;
     },
   },
 });
 
-export const { setImage, setInit, setAiResult, setOutput, reset } =
+export const { setImage, setAiResult, setFaces, setOutput, reset } =
   analysisSlice.actions;
 export default analysisSlice.reducer;

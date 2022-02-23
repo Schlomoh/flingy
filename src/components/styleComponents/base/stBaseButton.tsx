@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
 const StBaseButton: any = styled.button`
-  position: relative;
+  position: ${(props: any) => props.position};
   z-index: 3;
   border: none;
   padding: 10px;
-  margin: 10px;
+  margin: 20px;
   height: 50px;
   width: calc(100% - 20px);
   box-shadow: ${(props) => props.theme.shadow};
   cursor: pointer;
   font-weight: bold;
+  ${(props: any) => (props.bottom ? "bottom: 0;" : "")}
   ${(props: any) =>
     props.inner
       ? `border-radius: ${props.theme.button.borderRadius.inner}`
       : props.round
       ? `border-radius: ${props.theme.button.borderRadius.round}; 
-          width: ${props.round}; height: ${props.round};`
+          width: ${props.round}px; height: ${props.round}px;`
       : `border-radius: ${props.theme.button.borderRadius.outer}`};
 
   // colorway of button defined by the theme

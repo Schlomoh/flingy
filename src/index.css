@@ -7,7 +7,8 @@ h2 {
 
 h3,
 p,
-a {
+a,
+img{
   font-family: "Mulish", sans-serif;
 }
 
@@ -24,7 +25,8 @@ h3 {
 }
 
 p,
-a {
+a, 
+img {
   font-weight: 400;
 }
 

@@ -1,9 +1,7 @@
 // types & react hooks
-import { ChangeEvent, MutableRefObject, useRef } from "react";
+import { ChangeEvent, LegacyRef, useRef } from "react";
 
 // redux functionality
-import { useDispatch } from "react-redux"; // hook
-import { Dispatch } from "@reduxjs/toolkit"; // type
 import { setImage } from "../../utils/stateManagement/slicesNselectors/analysisSlice"; // action
 import store from "../../utils/stateManagement/store"; // state tree
 
@@ -20,11 +18,11 @@ import StUploadButton from "../styleComponents/tailored/stUploadButton";
  *
  * @param e - input event‚
  */
-function handleInput(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch) {
+function handleInput(e: ChangeEvent<HTMLInputElement>) {
   const files = e.target.files;
   if (files !== null) {
     const fileUrl = URL.createObjectURL(files[0]);
-    dispatch(setImage(fileUrl));
+    store.dispatch(setImage(fileUrl));
     console.log("dispatch log", store.getState().analysis.img);
   }
 }
@@ -37,19 +35,18 @@ function handleInput(e: ChangeEvent<HTMLInputElement>, dispatch: Dispatch) {
  * Calls the 'handle' input function on input
  */
 const UploadButton = (): JSX.Element => {
-  const ref = useRef() as MutableRefObject<HTMLInputElement>;
-  const dispatch = useDispatch();
+  const ref: LegacyRef<HTMLInputElement> = useRef(null);
 
   return (
     <StUploadButton>
-      <button id="uploadButton" onClick={() => ref.current.click()}>
+      <button id="uploadButton" onClick={() => ref.current?.click()}>
         <img src={plus} alt="add image" />
       </button>
       <input
         id="imageInput"
         accept="image/*"
         type="file"
-        onInput={(e: ChangeEvent<HTMLInputElement>) => handleInput(e, dispatch)}
+        onInput={(e: ChangeEvent<HTMLInputElement>) => handleInput(e)}
         ref={ref}
       />
     </StUploadButton>

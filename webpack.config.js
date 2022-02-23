@@ -1,19 +1,61 @@
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+
+const port = process.env.PORT || 3000;
 
 module.exports = {
-  entry: path.join(__dirname, "src", "index.tsx"),
-  output: {
-    path: path.join(__dirname, "build"),
-    filename: "index.bundle.js",
-    publicPath: "/",
-  },
   mode: process.env.NODE_ENV || "development",
+  entry: {
+    app: path.join(__dirname, "src", "index.tsx"),
+  },
+  output: {
+    filename: "[name].[contenthash].bundle.js",
+    // filename: "index.bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
+    clean: true,
+  },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
-  devServer: { historyApiFallback: true },
+  devServer: {
+    host: "localhost",
+    port: port,
+    //  open: true,
+    historyApiFallback: true,
+  },
   devtool: "inline-source-map",
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //     minSize: 80000,
+  //     maxSize: 200000,
+  //     cacheGroups: {
+  //       styles: {
+  //         name: "styles",
+  //         test: /\.css$/,
+  //         chunks: "all",
+  //         enforce: true,
+  //       },
+  //       defaultVendors: {
+  //         enforce: true,
+  //         filename: "v.[name].[contenthash].bundle.js",
+  //       },
+  //     },
+  //   },
+  //   minimize: true,
+  //   minimizer: [
+  //     //  default is actually smaller in resultin bundle sizes
+  //     //  than swc and doesnt wipe all the license comments
+  //     //  this lil rust compiler is only a bit faster :(
+  //     new TerserPlugin({
+  //       minify: TerserPlugin.swcMinify,
+  //       terserOptions: {},
+  //     }),
+  //   ],
+  // },
   module: {
     rules: [
       {
@@ -43,7 +85,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "index.html"),
+      template: path.join(__dirname, "public", "index.html"),
+      favicon: path.join(__dirname, "public", "favicon.ico"),
     }),
+  //  new CompressionWebpackPlugin(),
   ],
 };
