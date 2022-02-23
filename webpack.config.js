@@ -1,6 +1,7 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 const port = process.env.PORT || 3000;
 
@@ -26,35 +27,35 @@ module.exports = {
     historyApiFallback: true,
   },
   devtool: "inline-source-map",
-//   optimization: {
-//     splitChunks: {
-//       chunks: "all",
-//       minSize: 80000,
-//       maxSize: 200000,
-//       cacheGroups: {
-//         styles: {
-//           name: "styles",
-//           test: /\.css$/,
-//           chunks: "all",
-//           enforce: true,
-//         },
-//         defaultVendors: {
-//           enforce: true,
-//           filename: "v.[name].[contenthash].bundle.js",
-//         },
-//       },
-//     },
-//   minimize: true,
-//     minimizer: [
-//       //  default is actually smaller in resultin bundle sizes
-//       //  than swc and doesnt wipe all the license comments
-//       //  this lil rust compiler is only a bit faster :(
-//       new TerserPlugin({
-//          minify: TerserPlugin.swcMinify,
-//          terserOptions: {},
-//       }),
-//     ],
-//  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //     minSize: 80000,
+  //     maxSize: 200000,
+  //     cacheGroups: {
+  //       styles: {
+  //         name: "styles",
+  //         test: /\.css$/,
+  //         chunks: "all",
+  //         enforce: true,
+  //       },
+  //       defaultVendors: {
+  //         enforce: true,
+  //         filename: "v.[name].[contenthash].bundle.js",
+  //       },
+  //     },
+  //   },
+  //   minimize: true,
+  //   minimizer: [
+  //     //  default is actually smaller in resultin bundle sizes
+  //     //  than swc and doesnt wipe all the license comments
+  //     //  this lil rust compiler is only a bit faster :(
+  //     new TerserPlugin({
+  //       minify: TerserPlugin.swcMinify,
+  //       terserOptions: {},
+  //     }),
+  //   ],
+  // },
   module: {
     rules: [
       {
@@ -87,5 +88,6 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
       favicon: path.join(__dirname, "public", "favicon.ico"),
     }),
+  //  new CompressionWebpackPlugin(),
   ],
 };

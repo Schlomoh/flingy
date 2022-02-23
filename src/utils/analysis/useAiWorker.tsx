@@ -1,62 +1,34 @@
-import { useState, useEffect, useRef, MutableRefObject } from "react";
-import { useDispatch } from "react-redux";
+// react
+import { useEffect, MutableRefObject } from "react";
+// type
+import { Dispatch } from "@reduxjs/toolkit";
+// state management
 import { setAiResult } from "../stateManagement/slicesNselectors/analysisSlice";
-import AnalysisWorker from "worker-loader!../dedicated_worker/aiWorker";
 import { useAiDataSelector } from "../stateManagement/slicesNselectors/analysisSelectors";
+//worker
+import AnalysisWorker from "worker-loader!../dedicated_worker/aiWorker";
 
-// using webworker
-export function useAiWorker(
-  worker: {
-    instance: Worker | undefined;
-    action: enumActions;
-    loaded: boolean;
-  },
-  image: null | string | ImageData | undefined
-) {
-  // aidata is the ai result redux state (to differentiate between the return value)
-
-  const [response, setResponse]: any = useState();
-  const [loaded, setLoaded] = useState(false);
+export const useAnalyzer = (
+  worker: MutableRefObject<Worker | undefined>,
+  image: null | string | ImageData | undefined,
+  dispatch: Dispatch
+) => {
   const aiData = useAiDataSelector();
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    if (!worker.instance && worker.action === "load") {
-      console.log('called with action "load"');
-      worker.instance = new AnalysisWorker();
-      worker.instance.postMessage({ action: "initialize" });
-    }
-    if (!response && worker.action === "analyze") {
-      console.log('called with action "analyze"');
-      worker.instance?.postMessage({ action: "analyze", image: image });
-    }
-    if (response && !aiData) {
-      let result = response.result;
-      dispatch(setAiResult({ ...result, finished: true }));
+    if (!worker.current) {
+      worker.current = new AnalysisWorker();
     }
 
-    if (worker.action === "clear") {
-      worker.instance?.terminate();
+    if (!aiData && image) {
+      worker.current.postMessage([{ image: image }]);
     }
-
-    if (worker.instance)
-      worker.instance.onmessage = (e: MessageEvent) => {
-        const [result, finished, ready] = [
-          e.data.result,
-          e.data.finished,
-          e.data.ready,
-        ];
-
-        if (ready && !loaded) {
-          setLoaded(true);
-        }
-        if (finished && !response)
-          setResponse({
-            result: result as TaiResult,
-            finished: finished,
-          });
+    if (worker.current) {
+      worker.current.onmessage = (e: MessageEvent) => {
+        let result = e.data.result;
+        if (result) dispatch(setAiResult({ ...result, finished: true }));
+        result = undefined;
       };
+    }
   });
-  return loaded
-}
+};

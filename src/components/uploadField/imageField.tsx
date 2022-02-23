@@ -5,109 +5,86 @@ import FaceBox from "../faceBox";
 // hooks
 import {
   useAiDataSelector,
+  useBoundingBoxSelector,
   useImageSelector,
 } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
-import { useAiWorker } from "../../utils/analysis/useAiWorker";
+import { useAnalyzer } from "../../utils/analysis/useAiWorker";
 
 import {
   useRef,
   LegacyRef,
   MutableRefObject,
-  useEffect,
   useState,
-  SetStateAction,
-  Dispatch,
+  useEffect,
 } from "react";
 import Loader from "../loader";
 import RemoveButton from "../removeButton";
 import { NoResultsImage } from "../noResults";
+import { Dispatch } from "@reduxjs/toolkit";
 
 /**
  * Displays the given image and calls the analyzer on it
  */
-
 const ImageField = ({
   worker,
+  dispatch,
 }: {
-  worker: MutableRefObject<{
-    instance: Worker | undefined;
-    action: enumActions;
-    loaded: boolean;
-  }>;
+  worker: MutableRefObject<Worker | undefined>;
+  dispatch: Dispatch;
 }) => {
-  // img shiat
-  type TimageDataState = [
-    ImageData | undefined,
-    Dispatch<SetStateAction<ImageData | undefined>>
-  ];
-
+  //selectors
   const aiPredictions = useAiDataSelector();
   const imgUrl = useImageSelector();
+  const boundingBoxes = useBoundingBoxSelector();
+  // upload image reference
   const image: LegacyRef<HTMLImageElement> = useRef(null);
-  const [imageData, setImageData]: TimageDataState = useState();
+  // states
+  const [imageSizes, setImageSizes] = useState<TimageSizes | undefined>();
+  const [imageData, setImageData] = useState<ImageData | undefined>();
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
-  let imageSizes: TimageSizes;
+  let canvas: OffscreenCanvas | undefined;
 
-  console.log("In image effect", image.current);
+  if (imageSizes) {
+    canvas = new OffscreenCanvas(imageSizes.natural.w, imageSizes.natural.h);
+  }
+// create imageData for the analyzer
   useEffect(() => {
-    if (image.current) {
-      console.log("Image.current: ", image.current);
-      // get bot image sizes to calculate new bbox from full scale image
+    if (image.current && !imageSizes && imageLoaded) {
       const [width, height, scaledWidth, scaledHeight] = [
         image.current.naturalWidth,
         image.current.naturalHeight,
-        image.current.width,
-        image.current.height,
+        image.current?.width,
+        image.current?.height,
       ];
 
-      imageSizes = {
+      setImageSizes({
         natural: { w: width, h: height },
         scaled: { w: scaledWidth, h: scaledHeight },
-      };
+      });
     }
-  });
-  // create offscreen canvas to get imagedata
-  //
-  // worker has no access to dom or window so
-  // either fetch image again or pass in the right type of data
-  if (image.current) {
-    let canvas = new OffscreenCanvas(
-      image.current.naturalWidth,
-      image.current.naturalHeight
-    );
-    let ctx = canvas.getContext("2d");
-    if (!imageData && ctx) {
-      console.log("not image Data. ctx is present");
-      ctx.drawImage(image.current, 0, 0);
-      console.log(ctx);
-      setImageData(
-        ctx.getImageData(
-          0,
-          0,
-          image.current.naturalWidth,
-          image.current.naturalHeight
-        )
+    if (canvas && imageSizes && !imageData && image.current) {
+      // canvas.width = imageSizes?.natural.w;
+      // canvas.width = imageSizes?.natural.h;
+      let ctx = canvas.getContext("2d");
+      ctx?.drawImage(image.current, 0, 0);
+      let imgData = ctx?.getImageData(
+        0,
+        0,
+        imageSizes.natural.w,
+        imageSizes.natural.h
       );
-    }
-  }
-
-  useEffect(() => {
-    if (worker.current.loaded) {
-      worker.current.action = "analyze";
+      setImageData(imgData);
     }
   });
 
-  worker.current.loaded = useAiWorker(worker.current, imageData);
-
-  function clear() {
-    setImageData(undefined);
-    worker.current.action = "clear";
-  }
+  // call analyzer hook with worker instance
+  useAnalyzer(worker, imageData, dispatch);
 
   const Overlay = () => {
     return !aiPredictions?.finished ? (
       <Loader />
-    ) : aiPredictions.coco && aiPredictions.faces ? (
+    ) : boundingBoxes && boundingBoxes.length > 0 ? (
       <FaceBox sizes={imageSizes} />
     ) : (
       <NoResultsImage />
@@ -117,9 +94,17 @@ const ImageField = ({
   return (
     <StUploadImage>
       <Overlay />
-      <RemoveButton onRemove={clear} />
+      <RemoveButton onRemove={() => {}} dispatch={dispatch} />
       <img id="imageBG" src={imgUrl} alt="Uploaded image background" />
-      <img ref={image} id="uploadImage" src={imgUrl} alt="Uploaded image" />
+      <img
+        ref={image}
+        onLoad={() => {
+          setImageLoaded(true);
+        }}
+        id="uploadImage"
+        src={imgUrl}
+        alt="Uploaded image"
+      />
     </StUploadImage>
   );
 };

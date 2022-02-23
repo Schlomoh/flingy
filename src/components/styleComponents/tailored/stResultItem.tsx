@@ -6,7 +6,7 @@ const StResultItem = styled.div`
   background-color: white;
   min-height: 50px;
   padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   h3 {

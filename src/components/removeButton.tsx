@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { FiTrash } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { useEffect } from "react";
+import { Dispatch } from "@reduxjs/toolkit";
 
-const RemoveButton = ({ onRemove }: { onRemove: CallableFunction }) => {
-  const dispatch = useDispatch();
+const RemoveButton = ({ onRemove, dispatch }: { onRemove: CallableFunction, dispatch: Dispatch}) => {
   const remove = () => {
     onRemove();
     dispatch(reset());

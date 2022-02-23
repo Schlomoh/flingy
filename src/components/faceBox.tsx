@@ -1,11 +1,6 @@
 //hooks
-import { useCallback, useEffect } from "react";
-import {
-  useAiDataSelector,
-  useBoundingBoxSelector,
-} from "../utils/stateManagement/slicesNselectors/analysisSelectors";
-import { setFaces } from "../utils/stateManagement/slicesNselectors/analysisSlice";
-import store from "../utils/stateManagement/store";
+import { useCallback } from "react";
+import { useBoundingBoxSelector } from "../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
 import StFaceBox from "./styleComponents/tailored/stFaceBox";
@@ -92,7 +87,7 @@ function resize(bboxes: number[], sizes: TimageSizes) {
 const FaceBox = ({ sizes }: { sizes: TimageSizes | undefined }) => {
   const memResize = useCallback(resize, []);
 
-  // iterator functoin for map method
+  // iterator function for map method
   function iterate(bboxes: number[], i: number) {
     if (sizes) {
       const { size, position } = memResize(bboxes, sizes);

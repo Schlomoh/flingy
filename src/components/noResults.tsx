@@ -1,7 +1,8 @@
-import { IconContext } from "react-icons";
-import { FaRegFrownOpen } from "react-icons/fa";
 import styled from "styled-components";
 import StBaseText from "./styleComponents/base/stBaseText";
+// icons
+import { IconContext } from "react-icons";
+import { FaRegFrownOpen } from "react-icons/fa";
 
 const CenterColumn = styled.div`
   text-align: center;
@@ -12,10 +13,10 @@ const CenterColumn = styled.div`
 
 const StNoResultsArea = styled(CenterColumn)`
   height: 20%;
-  width: calc(100% - 6px);
+  padding: 30px;
+  margin: auto;
   border: 3px dotted lightgrey;
   border-radius: 20px;
-  margin: auto;
 `;
 
 const StNoResultsImage = styled(CenterColumn)`
@@ -43,7 +44,8 @@ export const NoResultsImage = () => {
         <IconContext.Provider value={{ size: "32px", color: "white" }}>
           <FaRegFrownOpen />
         </IconContext.Provider>
-        <p>That didn't work...</p>
+        <h3>That didn't work...</h3>
+        <p>Maybe try cropping the image a bit to help the face detection AI</p>
       </StBaseText>
     </StNoResultsImage>
   );

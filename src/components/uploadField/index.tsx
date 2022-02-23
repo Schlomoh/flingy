@@ -1,5 +1,6 @@
 // hooks
 import { MutableRefObject, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useImageSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
@@ -8,13 +9,17 @@ import ImageField from "./imageField";
 import UploadButton from "./uploadButton";
 
 const ImageInput = () => {
-  const worker: MutableRefObject<{
-    instance: Worker | undefined;
-    action: enumActions;
-    loaded: boolean;
-  }> = useRef({ instance: undefined, action: "load", loaded: false });
+  const worker: MutableRefObject< Worker | undefined
+  > = useRef(undefined);
+
+  const dispatch = useDispatch();
+
   const imageLoaded = useImageSelector() !== undefined;
-  return !imageLoaded ? <UploadButton /> : <ImageField worker={worker} />;
+  return !imageLoaded ? (
+    <UploadButton />
+  ) : (
+    <ImageField dispatch={dispatch} worker={worker} />
+  );
 };
 
 const UploadField = () => {

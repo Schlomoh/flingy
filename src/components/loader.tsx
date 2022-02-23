@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import text from "../content/text/pickupPageTexts.json";
+import StBaseText from "./styleComponents/base/stBaseText";
 
 const StLoader = styled.div`
   position: absolute;
@@ -39,11 +40,13 @@ const StLoader = styled.div`
 
 const Loader = () => (
   <StLoader>
-    <svg viewBox="0 0 50 50">
-      <circle className="ring" cx="25" cy="25" r="20"></circle>
-      <circle className="ball" cx="25" cy="5" r="3.5"></circle>
-    </svg>
-    <p>{text.loadingText}</p>
+    <StBaseText color="white">
+      <svg viewBox="0 0 50 50">
+        <circle className="ring" cx="25" cy="25" r="20"></circle>
+        <circle className="ball" cx="25" cy="5" r="3.5"></circle>
+      </svg>
+      <p>{text.loadingText}</p>
+    </StBaseText>
   </StLoader>
 );
 

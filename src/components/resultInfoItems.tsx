@@ -19,11 +19,15 @@ const ResultItem = (props: {
   const { img, i, bbox } = props;
   const canvasRef: LegacyRef<HTMLCanvasElement> = useRef(null);
   const [bbx, bby, bbw, bbh, probability] = bbox;
+  // to get a square image using bounding box with unknkown aspoect ratio
+  //let = square side length
+  // dif x / y (the offset) = 0 or the larger side minus the shorter side by half
   const [len, difX, difY] =
     bbw >= bbh
-      ? [bbw + 20, 0, (bbw - bbh) / 2 - 10]
-      : [bbh + 20, (bbh - bbw) / 2 - 10, 0];
+      ? [bbw + 20, 0, (bbw - bbh) / 2]
+      : [bbh + 20, (bbh - bbw) / 2, 0];
 
+  // creating new image element for the face previvew displayed inside the canvas
   const imgElement = new Image();
   if (img) imgElement.src = img;
   imgElement.onload = () => {
@@ -44,7 +48,7 @@ const ResultItem = (props: {
   return (
     <StResultItem>
       <div id="imgWrapper">
-        {renderDelay(<CircleChart percentage={probability} />, 500)}
+        {renderDelay(<CircleChart percentage={probability} />, 700)}
         <canvas height={60} width={60} ref={canvasRef} />
       </div>
       <div>
@@ -61,7 +65,7 @@ const ResultInfoItems = () => {
   const bboxes = useBoundingBoxSelector();
 
   let items;
-  if (bboxes && img) {
+  if (bboxes && bboxes.length > 0 && img) {
     items = bboxes.map((bbox: any, i: number) => (
       <ResultItem img={img} key={i} i={i} bbox={bbox} />
     ));
