@@ -25,7 +25,11 @@ export async function analyzeImage(imageData: ImageData) {
 
   if (faces.length == 0 && objects.length == 0) {
     faces = objects = undefined as any;
-  } else return { faces: faces, coco: objects };
+  } else
+    return {
+      faces: faces,
+      coco: objects,
+    };
   /*
       `predictions` is an array of objects describing each detected face, for example:
   

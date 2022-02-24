@@ -1,6 +1,6 @@
 // components
 import StUploadImage from "../styleComponents/tailored/stUploadImage";
-import FaceBox from "../faceBox";
+import FaceBox from "./faceBox";
 
 // hooks
 import {
@@ -17,8 +17,8 @@ import {
   useState,
   useEffect,
 } from "react";
-import Loader from "../loader";
-import RemoveButton from "../removeButton";
+import Loader from "./loader";
+import RemoveButton from "./removeButton";
 import { NoResultsImage } from "../noResults";
 import { Dispatch } from "@reduxjs/toolkit";
 

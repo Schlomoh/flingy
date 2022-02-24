@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import text from "../content/text/pickupPageTexts.json";
-import StBaseText from "./styleComponents/base/stBaseText";
+import text from "../../content/text/pickupPageTexts.json";
+import StBaseText from "../styleComponents/base/stBaseText";
 
 const StLoader = styled.div`
   position: absolute;

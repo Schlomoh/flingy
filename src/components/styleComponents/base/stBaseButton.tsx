@@ -5,9 +5,9 @@ const StBaseButton: any = styled.button`
   z-index: 3;
   border: none;
   padding: 10px;
-  margin: 20px;
+  margin: ${(props: any)=> props.margin ? `${props.margin}`: '20px'};
   height: 50px;
-  width: calc(100% - 20px);
+  width: calc(100%);
   box-shadow: ${(props) => props.theme.shadow};
   cursor: pointer;
   font-weight: bold;
