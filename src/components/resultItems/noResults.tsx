@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StBaseText from "./styleComponents/base/stBaseText";
+import StBaseText from "../styleComponents/base/stBaseText";
 // icons
 import { IconContext } from "react-icons";
 import { FaRegFrownOpen } from "react-icons/fa";
