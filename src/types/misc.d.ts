@@ -11,6 +11,7 @@ declare module "worker-loader!*" {
 }
 interface IcomponentChildren {
   children: never[] | ReactChild | ReactChild[];
+  show? : boolean;
 }
 
 type TimageSizes = {

@@ -1,16 +1,20 @@
+import { IconContext } from "react-icons";
+import { RiArrowRightUpLine } from "react-icons/ri";
 // hooks
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import {
   useAiDataSelector,
   useBoundingBoxSelector,
   useImageSelector,
-} from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
+} from "../../../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
-import StBaseText from "../styleComponents/base/stBaseText";
-import StResultItem from "../styleComponents/tailored/stResultItem";
+import StBaseText from "../../styleComponents/base/stBaseText";
+import StResultItem from "../../styleComponents/tailored/stResultItem";
 import CircleChart from "./circleGraph";
 import { NoResultsArea } from "./noResults";
+import { useDispatch } from "react-redux";
+import { setShowResult } from "../../../utils/stateManagement/slicesNselectors/analysisSlice";
 
 const ResultItem = (props: {
   img: string | undefined;
@@ -24,7 +28,7 @@ const ResultItem = (props: {
 
   const FaceCanvas = () => {
     // to get a square image using bounding box with unknkown aspoect ratio
-    //let = square side length
+    //len = square side length
     // dif x / y (the offset) = 0 or the larger side minus the shorter side by half
     const [len, difX, difY] =
       bbw >= bbh
@@ -76,12 +80,31 @@ const ResultItem = (props: {
     });
   };
 
+  const OpenButton = () => {
+    const dispatch = useDispatch();
+    function showResult() {
+      dispatch(setShowResult(true));
+    }
+    return (
+      <div onClick={showResult} className ='openResults'>
+        <IconContext.Provider
+          value={{
+            size: "20px",
+            color: 'grey'
+          }}
+        >
+          <RiArrowRightUpLine />
+        </IconContext.Provider>
+      </div>
+    );
+  };
+
   return (
     <StResultItem>
       <FaceCanvas />
       <div style={{ maxWidth: "75%" }}>
         <StBaseText>
-          <h3>Person {i + 1}</h3>
+          <h3>Face {i + 1}</h3>
           <strong>
             <p>Certainty: {Math.floor(probability * 100)}%</p>
           </strong>
@@ -90,6 +113,7 @@ const ResultItem = (props: {
           <Chips />
         </div>
       </div>
+      <OpenButton />
     </StResultItem>
   );
 };

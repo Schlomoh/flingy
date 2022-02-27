@@ -8,26 +8,18 @@ import StUploadContainer from "../styleComponents/tailored/stUploadContainer";
 import ImageField from "./imageField";
 import UploadButton from "./uploadButton";
 
-const ImageInput = () => {
-  const worker: MutableRefObject< Worker | undefined
-  > = useRef(undefined);
+const UploadField = () => {
+  const worker: MutableRefObject<Worker | undefined> = useRef(undefined);
 
   const dispatch = useDispatch();
 
   const imageLoaded = useImageSelector() !== undefined;
-  return !imageLoaded ? (
+  const element = !imageLoaded ? (
     <UploadButton />
   ) : (
     <ImageField dispatch={dispatch} worker={worker} />
   );
-};
-
-const UploadField = () => {
-  return (
-    <StUploadContainer>
-      <ImageInput />
-    </StUploadContainer>
-  );
+  return <StUploadContainer>{element}</StUploadContainer>;
 };
 
 export default UploadField;

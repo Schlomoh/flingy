@@ -26,7 +26,7 @@ type Toutput = {
   tags: String[];
   messages: [
     {
-      text: String;
+      text: String[];
       probability: number;
     }
   ];

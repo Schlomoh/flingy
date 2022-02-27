@@ -6,11 +6,13 @@ import StBaseText from "../components/styleComponents/base/stBaseText";
 // content
 import text from "../content/text/pickupPageTexts.json";
 import StBaseContainer from "../components/styleComponents/base/stBaseContainer";
-import ResultInfoItems from "../components/resultItems";
+import ResultInfoItems from "../components/uploadField/resultItems";
 import Expander from "../components/baseComponents/baseExpander";
+import ResultModal from "../components/uploadField/resultModal";
 
 const PickupPage = () => {
-  return (
+  return (<>
+    <ResultModal/>
     <BasePage>
       <Expander>
         <StBaseText>
@@ -25,6 +27,7 @@ const PickupPage = () => {
         <ResultInfoItems />
       </StBaseContainer>
     </BasePage>
+    </>
   );
 };
 

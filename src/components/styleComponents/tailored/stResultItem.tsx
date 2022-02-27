@@ -10,6 +10,7 @@ const StResultItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   h3 {
     margin: 0;
   }
@@ -52,6 +53,10 @@ const StResultItem = styled.div`
     justify-content: start;
     flex-wrap: wrap;
   }
+.openResults{
+  cursor: pointer;
+  align-self: flex-start;
+}
 `;
 
 export default StResultItem;

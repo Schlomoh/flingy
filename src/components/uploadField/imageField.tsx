@@ -19,7 +19,7 @@ import {
 } from "react";
 import Loader from "./loader";
 import RemoveButton from "./removeButton";
-import { NoResultsImage } from "../resultItems/noResults";
+import { NoResultsImage } from "./resultItems/noResults";
 import { Dispatch } from "@reduxjs/toolkit";
 
 /**
