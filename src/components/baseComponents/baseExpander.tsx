@@ -16,7 +16,6 @@ const StExpander: any = styled.div`
     transition: height cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
   }
   button {
-    padding: 5px 10px;
     height: unset;
     border-radius: 20px;
     width: fit-content;
@@ -51,7 +50,7 @@ const Expander = ({ children }: { children: ReactChild }) => {
       if (show) {
         element.style.height = `${content.clientHeight}px`;
       } else {
-        element.style.height = "135px";
+        element.style.height = "0px";
       }
     }
   });
@@ -64,6 +63,8 @@ const Expander = ({ children }: { children: ReactChild }) => {
 
         <StBaseButton
           round={40}
+          padding="5px 10px"
+          margin="0"
           onClick={(e: MouseEvent) => {
             setShow(!show);
           }}

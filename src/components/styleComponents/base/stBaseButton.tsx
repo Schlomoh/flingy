@@ -4,8 +4,8 @@ const StBaseButton: any = styled.button`
   position: ${(props: any) => props.position};
   z-index: 3;
   border: none;
-  padding: 10px;
-  margin: ${(props: any)=> props.margin ? `${props.margin}`: '20px'};
+  padding: ${(props: any) => (props.padding ? props.padding : "10px")};
+  margin: ${(props: any) => (props.margin ? props.margin : "20px")};
   height: 50px;
   width: calc(100%);
   box-shadow: ${(props) => props.theme.shadow};
@@ -16,8 +16,10 @@ const StBaseButton: any = styled.button`
     props.inner
       ? `border-radius: ${props.theme.button.borderRadius.inner}`
       : props.round
-      ? `border-radius: ${props.theme.button.borderRadius.round}; 
+      ? `border-radius: 100%; 
           width: ${props.round}px; height: ${props.round}px;`
+      : props.small
+      ? `border-radius : 100%; width: 30px; height: 30px; box-shadow: unset; color: grey`
       : `border-radius: ${props.theme.button.borderRadius.outer}`};
 
   // colorway of button defined by the theme

@@ -26,7 +26,7 @@ export const StCenterContainer = styled.div`
 
   justify-content: space-between;
 
-  padding: 60px 40px;
+  padding: 60px 40px 30px 40px;
   max-width: calc(100vw - 80px);
 
   // responsivenes
