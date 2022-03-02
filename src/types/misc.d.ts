@@ -12,6 +12,7 @@ declare module "worker-loader!*" {
 interface IcomponentChildren {
   children: never[] | ReactChild | ReactChild[];
   show? : boolean;
+  className? : string;
 }
 
 type TimageSizes = {
@@ -22,3 +23,6 @@ type TimageSizes = {
 type Tworker = { instance: Worker; init: boolean };
 
 type enumActions = "load" | "analyze" | "clear";
+
+type importedJson = { default: { [key: string]: string[] } };
+

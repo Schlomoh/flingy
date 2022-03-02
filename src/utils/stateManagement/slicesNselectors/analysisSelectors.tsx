@@ -8,8 +8,8 @@ export const useAiDataSelector = () => {
   return useSelector((state: Tanalysis) => state.analysis.aiResult);
 };
 
-export const useShowResultSelector = () => {
-  return useSelector((state: Tanalysis) => state.analysis.showResult);
+export const useOutputSelector = () => {
+  return useSelector((state: Tanalysis) => state.analysis.output);
 };
 
 export const useBoundingBoxSelector = () => {
