@@ -15,8 +15,8 @@ const StNoResultsArea = styled(CenterColumn)`
   height: 20%;
   margin: auto;
   border: 3px dotted lightgrey;
-  border-radius: 20px;
-  `;
+  border-radius: ${(props) => props.theme.container.borderRadius};
+`;
 
 const StNoResultsImage = styled(CenterColumn)`
   height: 100%;

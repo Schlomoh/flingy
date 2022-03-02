@@ -1,11 +1,12 @@
 import { IconContext } from "react-icons";
 import { RiArrowRightUpLine } from "react-icons/ri";
 // hooks
-import { LegacyRef, useEffect, useRef, useState } from "react";
+import { LegacyRef, useRef } from "react";
 import {
   useAiDataSelector,
   useBoundingBoxSelector,
   useImageSelector,
+  useOutputSelector,
 } from "../../../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
@@ -14,15 +15,43 @@ import StResultItem from "../../styleComponents/tailored/stResultItem";
 import CircleChart from "./circleGraph";
 import { NoResultsArea } from "./noResults";
 import { useDispatch } from "react-redux";
-import { setShowResult } from "../../../utils/stateManagement/slicesNselectors/analysisSlice";
+import { setShowResult } from "../../../utils/stateManagement/slicesNselectors/modalSlice";
+import ResultModal from "../resultModal";
+import StBaseButton from "../../styleComponents/base/stBaseButton";
+
+const OpenButton = ({ i }: { i: number }) => {
+  const dispatch = useDispatch();
+  function showResult() {
+    dispatch(setShowResult({ show: true, id: i }));
+  }
+
+  return (
+    <StBaseButton
+      small
+      margin="0px"
+      padding="5px 0px"
+      onClick={showResult}
+      className="openResults"
+    >
+      <IconContext.Provider
+        value={{
+          size: "20px",
+          color: "grey",
+        }}
+      >
+        <RiArrowRightUpLine />
+      </IconContext.Provider>
+    </StBaseButton>
+  );
+};
 
 const ResultItem = (props: {
   img: string | undefined;
   i: number;
   bbox: number[];
-  coco: any;
+  tagTexts: string[];
 }) => {
-  const { img, i, bbox, coco } = props;
+  const { img, i, bbox, tagTexts } = props;
   const canvasRef: LegacyRef<HTMLCanvasElement> = useRef(null);
   const [bbx, bby, bbw, bbh, probability] = bbox;
 
@@ -53,67 +82,45 @@ const ResultItem = (props: {
       );
     };
 
-    const renderDelay = (element: JSX.Element, delay: number) => {
-      const [show, setShow] = useState(false);
-      useEffect(() => {
-        setTimeout(() => {
-          setShow(true);
-        }, delay);
-      });
-      return show ? element : null;
-    };
     return (
       <div className="imgWrapper">
-        {renderDelay(<CircleChart percentage={probability} />, 700)}
+        <CircleChart percentage={probability} />
         <canvas height={60} width={60} ref={canvasRef} />
       </div>
     );
   };
 
-  const Chips = () => {
-    return coco.map((element: any, i: number) => {
-      return (
-        <div key={i} className="chip">
-          <p>{element.class}</p>
-        </div>
-      );
-    });
-  };
-
-  const OpenButton = () => {
-    const dispatch = useDispatch();
-    function showResult() {
-      dispatch(setShowResult(true));
-    }
-    return (
-      <div onClick={showResult} className ='openResults'>
-        <IconContext.Provider
-          value={{
-            size: "20px",
-            color: 'grey'
-          }}
-        >
-          <RiArrowRightUpLine />
-        </IconContext.Provider>
-      </div>
-    );
-  };
+  const Chips = () => (
+    <>
+      {tagTexts.map((element: any, i: number) => {
+        return (
+          <div key={i} className="chip">
+            <strong>
+              <p>{element}</p>
+            </strong>
+          </div>
+        );
+      })}
+    </>
+  );
 
   return (
     <StResultItem>
-      <FaceCanvas />
-      <div style={{ maxWidth: "75%" }}>
-        <StBaseText>
-          <h3>Face {i + 1}</h3>
-          <strong>
-            <p>Certainty: {Math.floor(probability * 100)}%</p>
-          </strong>
-        </StBaseText>
-        <div className="chipContainer">
-          <Chips />
+      <span id="wrap">
+        <FaceCanvas />
+        <div style={{ maxWidth: "75%" }}>
+          <StBaseText>
+            <h3>Face {i + 1}</h3>
+            <strong>
+              <p>Certainty: {Math.floor(probability * 100)}%</p>
+            </strong>
+          </StBaseText>
+          <div className="chipContainer">
+            <Chips />
+          </div>
         </div>
-      </div>
-      <OpenButton />
+      </span>
+      <OpenButton i={i} />
     </StResultItem>
   );
 };
@@ -125,15 +132,30 @@ const ResultInfoItems = () => {
   const img = useImageSelector();
   const bboxes = useBoundingBoxSelector();
   const aiData = useAiDataSelector();
+  const output = useOutputSelector();
 
-  let items;
-  if (bboxes && bboxes.length > 0 && img) {
-    items = bboxes.map((bbox: any, i: number) => (
-      <ResultItem coco={aiData?.coco} img={img} key={i} i={i} bbox={bbox} />
+  const items = useRef<JSX.Element[] | null>();
+
+  if (bboxes && bboxes.length > 0 && img && !items.current && output) {
+    items.current = bboxes.map((bbox: any, i: number) => (
+      <ResultItem
+        tagTexts={output[0].tags}
+        img={img}
+        key={i}
+        i={i}
+        bbox={bbox}
+      />
     ));
-  }
+  } else if (!aiData) items.current = null;
 
-  return items ? <>{items}</> : <NoResultsArea />;
+  return items.current ? (
+    <>
+      <ResultModal />
+      {items.current}
+    </>
+  ) : (
+    <NoResultsArea />
+  );
 };
 
 export default ResultInfoItems;

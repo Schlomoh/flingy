@@ -7,6 +7,7 @@ import { setAiResult } from "../stateManagement/slicesNselectors/analysisSlice";
 import { useAiDataSelector } from "../stateManagement/slicesNselectors/analysisSelectors";
 //worker
 import AnalysisWorker from "worker-loader!../dedicated_worker/aiWorker";
+import useCreateOutput from "./createOutput";
 
 export const useAnalyzer = (
   worker: MutableRefObject<Worker | undefined>,
@@ -14,6 +15,7 @@ export const useAnalyzer = (
   dispatch: Dispatch
 ) => {
   const aiData = useAiDataSelector();
+  useCreateOutput()
 
   useEffect(() => {
     if (!worker.current) {
@@ -26,6 +28,7 @@ export const useAnalyzer = (
     if (worker.current) {
       worker.current.onmessage = (e: MessageEvent) => {
         let result = e.data.result;
+        console.log(result)
         if (result) dispatch(setAiResult({ ...result, finished: true }));
         result = undefined;
       };

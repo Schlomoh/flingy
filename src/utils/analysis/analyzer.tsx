@@ -1,9 +1,3 @@
-// import blazeface from "@tensorflow-models/blazeface";
-// import cocoSsd from "@tensorflow-models/coco-ssd";
-// import * as tf from "@tensorflow/tfjs";
-
-// tf.getBackend();
-
 export async function analyzeImage(imageData: ImageData) {
   const blazeface = await import("@tensorflow-models/blazeface");
   const cocoSsd = await import("@tensorflow-models/coco-ssd");

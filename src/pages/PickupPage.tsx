@@ -8,25 +8,24 @@ import text from "../content/text/pickupPageTexts.json";
 import StBaseContainer from "../components/styleComponents/base/stBaseContainer";
 import ResultInfoItems from "../components/uploadField/resultItems";
 import Expander from "../components/baseComponents/baseExpander";
-import ResultModal from "../components/uploadField/resultModal";
 
 const PickupPage = () => {
-  return (<>
-    <ResultModal/>
-    <BasePage>
-      <Expander>
+  return (
+    <>
+      <BasePage>
         <StBaseText>
           <h2>{text.title}</h2>
           <h3>{text.subTitle}</h3>
-          <p>{text.desctiption}</p>
+          <Expander>
+            <p style={{margin: 0}}>{text.desctiption}</p>
+          </Expander>
         </StBaseText>
-      </Expander>
 
-      <UploadField />
-      <StBaseContainer reduced>
-        <ResultInfoItems />
-      </StBaseContainer>
-    </BasePage>
+        <UploadField />
+        <StBaseContainer reduced>
+          <ResultInfoItems />
+        </StBaseContainer>
+      </BasePage>
     </>
   );
 };

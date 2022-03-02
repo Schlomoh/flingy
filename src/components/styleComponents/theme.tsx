@@ -1,6 +1,10 @@
 const theme: Itheme = {
   container: {
-    borderRadius: "30px",
+    borderRadius: "25px",
+  },
+  colors: {
+    lightGrey: "#ebebeb",
+    accent: "#8353e3",
   },
   text: {
     fontSize: {
@@ -44,7 +48,7 @@ const theme: Itheme = {
     },
   },
   background: "white",
-  shadow: "0 10px 20px rgba(0,0,0,0.25)",
+  shadow: "0 5px 15px rgba(0,0,0,0.2)",
 };
 
 export default theme;

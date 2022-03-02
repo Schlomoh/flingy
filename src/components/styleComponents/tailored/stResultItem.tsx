@@ -9,8 +9,13 @@ const StResultItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+
+  #wrap {
+    display: flex;
+    align-items: center;
+  }
+
   h3 {
     margin: 0;
   }
@@ -41,7 +46,7 @@ const StResultItem = styled.div`
     margin-bottom: 5px;
     border-radius: 40px;
     color: white;
-    background-color: #8353e3;
+    background-color: ${props => props.theme.colors.accent};;
     p {
       margin: 0;
       text-align: center;
@@ -53,10 +58,10 @@ const StResultItem = styled.div`
     justify-content: start;
     flex-wrap: wrap;
   }
-.openResults{
-  cursor: pointer;
-  align-self: flex-start;
-}
+
+  .openResults {
+    align-self: flex-start;
+  }
 `;
 
 export default StResultItem;
