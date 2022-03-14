@@ -1,11 +1,15 @@
+// react & redux
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+// react icons
 import { IconContext } from "react-icons";
 import { IoClose } from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
+// selectors & state management
 import { useOutputSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
 import { useShowResultSelector } from "../../utils/stateManagement/slicesNselectors/modalSelectors";
 import { setShowResult } from "../../utils/stateManagement/slicesNselectors/modalSlice";
+// components & style
+import styled from "styled-components";
 import BaseModal from "../baseComponents/baseModal";
 import StBaseButton from "../styleComponents/base/stBaseButton";
 import StBaseText from "../styleComponents/base/stBaseText";
@@ -47,14 +51,16 @@ const StTextsView: any = styled.div`
   }
 
   button {
-    min-width: 25%;
-    max-width: 33%;
-    width: fit-content;
     height: unset;
-    border: none;
+    width: fit-content;
+    color: ${(props) => props.theme.colors.accent};
+    border-color: ${(props) => props.theme.colors.accent};
     border-radius: 50px;
-    color: white;
-    background-color: ${(props) => props.theme.colors.accent};
+    border: solid 2px;
+    :hover {
+      background-color: ${(props) => props.theme.colors.accent};
+      color: white;
+    }
   }
 `;
 
@@ -95,7 +101,7 @@ const TextField = ({
 }) => {
   let message: JSX.Element | null = null;
 
-  if (output) {
+  if (output && output.length > 0) {
     message = (
       <Message showModal={show} text={output[id].messages[messageIndex].text} />
     );
@@ -104,13 +110,13 @@ const TextField = ({
   return <div id="textField">{message}</div>;
 };
 
-const ButtonRow = (props: { categories: string[]; setIndex: any }) => {
-  const { categories, setIndex } = props;
+const ButtonRow = (props: { categories: string[]; index: any }) => {
+  const { categories, index } = props;
   const buttons = categories.map((category, i) => (
     <StBaseButton
       padding="10px 15px"
       margin="0 15px 0 0"
-      onClick={() => setIndex(i)}
+      onClick={() => index.set(i)}
       key={i}
     >
       <strong>{category}</strong>
@@ -125,7 +131,8 @@ const TextsViewer = ({ id, show }: { id: number; show: boolean }) => {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    if (output) setCategories(output[id].messages.map((e) => e.reason));
+    if (output && output.length > 0)
+      setCategories(output[id].messages.map((e) => e.reason));
     return () => setMessageIndex(0);
   }, [output, show]);
 
@@ -134,11 +141,14 @@ const TextsViewer = ({ id, show }: { id: number; show: boolean }) => {
       <StBaseText>
         <p>You can select a category:</p>
       </StBaseText>
-      <ButtonRow categories={categories} setIndex={setMessageIndex} />
+      <ButtonRow
+        categories={categories}
+        index={{ get: messageIndex, set: setMessageIndex }}
+      />
       <StBaseText>
         <p>
           Probability:{" "}
-          {output
+          {output && output.length > 0
             ? Math.floor(output[id].messages[messageIndex].probability)
             : null}
           %
@@ -161,7 +171,7 @@ const ResultModal = () => {
   return (
     <BaseModal show={show}>
       <div style={{ display: "flex", justifyContent: "end" }}>
-        <StBaseButton small margin="0px" padding="5px 0px" onClick={setShow}>
+        <StBaseButton small margin="0px" padding="1px 5x" onClick={setShow}>
           <IconContext.Provider value={{ color: "grey", size: "20px" }}>
             <IoClose />
           </IconContext.Provider>

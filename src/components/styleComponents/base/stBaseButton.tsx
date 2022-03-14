@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+function insertHover(css: string) {
+  return `
+  @media (hover: hover) {
+    :hover{
+      ${css}
+    }
+  }`;
+}
+
 const StBaseButton: any = styled.button`
   position: ${(props: any) => props.position};
   z-index: 3;
@@ -10,8 +19,16 @@ const StBaseButton: any = styled.button`
   width: calc(100%);
   box-shadow: ${(props) => props.theme.shadow};
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+  /* ${insertHover(`transform: scale(0.95);`)} */
+  :active {
+    transform: scale(0.95);
+  }
+
   ${(props: any) => (props.bottom ? "bottom: 0;" : "")}
+  ${(props: any) => (props.right ? "right: 0;" : "")}
   ${(props: any) =>
     props.inner
       ? `border-radius: ${props.theme.button.borderRadius.inner}`
@@ -19,7 +36,7 @@ const StBaseButton: any = styled.button`
       ? `border-radius: 100%; 
           width: ${props.round}px; height: ${props.round}px;`
       : props.small
-      ? `border-radius : 100%; width: 30px; height: 30px; box-shadow: unset; color: grey`
+      ? `border-radius : 100%; width: 30px; height: 30px; box-shadow: unset; color: grey; padding-top: 5px`
       : `border-radius: ${props.theme.button.borderRadius.outer}`};
 
   // colorway of button defined by the theme
@@ -29,23 +46,28 @@ const StBaseButton: any = styled.button`
       ? `
     background-color: ${props.theme.button.warn.background};
     color: ${props.theme.button.warn.color};
-        :hover{
-            background-color: ${props.theme.button.warn.hover.background};
-            color: ${props.theme.button.warn.hover.color};
-        };`
+       ${insertHover(
+         `background-color: ${props.theme.button.warn.hover.background};
+          color: ${props.theme.button.warn.hover.color};`
+       )}
+        ;`
       : props.disabled
       ? `
       cursor: not-allowed;
-    background-color: ${props.theme.button.disabled.background};
-    color: ${props.theme.button.disabled.color};
+      background-color: ${props.theme.button.disabled.background};
+      color: ${props.theme.button.disabled.color};
+      :active{
+        transform: unset;
+      }
         `
       : `
         background-color: ${props.theme.button.primary.background};
         color: ${props.theme.button.primary.color};
-            :hover{
-                background-color: ${props.theme.button.primary.hover.background};
-                color: ${props.theme.button.primary.hover.color};
-            };
+        ${insertHover(
+          `box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+          background-color: ${props.theme.button.primary.hover.background};
+          color: ${props.theme.button.primary.hover.color};`
+        )}
       `}
 `;
 

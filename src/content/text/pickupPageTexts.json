@@ -3,5 +3,6 @@
   "subTitle": "Let the AI analyze a picture of any person's profile to get a pick-up line for that special someone.",
   "desctiption": "Incididunt officia reprehenderit reprehenderit mollit id minim elit ullamco excepteur ut fugiat enim ut eu in non laborum ullamco culpa fugiat do duis commodo minim officia et consequat officia nostrud adipisicing tempor elit aute minim sint ut occaecat amet Lorem et commodo.",
   "upload": "Tap here to upload",
-  "loadingText": "This may take up to 30 seconds"
+  "firstLoadingText": "Analyzing image...",
+  "secondLoadingText": "This may take up to 30 seconds"
 }

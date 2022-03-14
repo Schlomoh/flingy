@@ -26,13 +26,10 @@ const StBaseModal: any = styled.div`
     box-shadow: ${(props) => props.theme.shadow};
 
     @media screen and (min-width: ${bp.sm}) {
-      max-width: ${bp.sm};
+      width: 480px;
     }
     @media screen and (min-width: ${bp.xl}) {
-      width: ${bp.xl};
-    }
-    @media screen and (min-width: ${bp.xxl}) {
-      max-width: ${bp.lg};
+      width: ${bp.md};
     }
   }
 

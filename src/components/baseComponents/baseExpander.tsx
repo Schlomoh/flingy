@@ -28,6 +28,7 @@ const StExpander: any = styled.div`
       color: gray;
     }
   }
+
   svg {
     transition: transform ease-out 0.25s;
   }
@@ -48,7 +49,7 @@ const Expander = ({ children }: { children: ReactChild }) => {
 
     if (element && content) {
       if (show) {
-        element.style.height = `${content.clientHeight}px`;
+        element.style.height = `${content.clientHeight + 30}px`;
       } else {
         element.style.height = "0px";
       }
@@ -64,8 +65,8 @@ const Expander = ({ children }: { children: ReactChild }) => {
         <StBaseButton
           round={40}
           padding="5px 10px"
-          margin="0"
-          onClick={(e: MouseEvent) => {
+          margin="0 0"
+          onClick={() => {
             setShow(!show);
           }}
         >

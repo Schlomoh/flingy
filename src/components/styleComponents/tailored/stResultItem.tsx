@@ -40,7 +40,6 @@ const StResultItem = styled.div`
   }
 
   .chip {
-    min-width: 50px;
     padding: 5px 10px;
     margin-right: 5px;
     margin-bottom: 5px;

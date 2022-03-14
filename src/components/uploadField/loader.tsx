@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-import text from "../../content/text/pickupPageTexts.json";
 import StBaseText from "../styleComponents/base/stBaseText";
+import text from '../../content/text/pickupPageTexts.json'
 
 const StLoader = styled.div`
   position: absolute;
@@ -38,6 +38,17 @@ const StLoader = styled.div`
   }
 `;
 
+const Text = () => {
+  const firstText = <p>{text.firstLoadingText}</p>;
+  const secondText = <p>{text.secondLoadingText}</p>;
+  let [showText, setShowText] = useState(firstText);
+  useEffect(() => {
+    const to = setTimeout(() => setShowText(secondText), 6000);
+    return () => clearTimeout(to);
+  });
+  return <>{showText}</>;
+};
+
 const Loader = () => (
   <StLoader>
     <StBaseText color="white">
@@ -45,7 +56,7 @@ const Loader = () => (
         <circle className="ring" cx="25" cy="25" r="20"></circle>
         <circle className="ball" cx="25" cy="5" r="3.5"></circle>
       </svg>
-      <p>{text.loadingText}</p>
+      <Text />
     </StBaseText>
   </StLoader>
 );

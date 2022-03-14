@@ -16,7 +16,6 @@ import CircleChart from "./circleGraph";
 import { NoResultsArea } from "./noResults";
 import { useDispatch } from "react-redux";
 import { setShowResult } from "../../../utils/stateManagement/slicesNselectors/modalSlice";
-import ResultModal from "../resultModal";
 import StBaseButton from "../../styleComponents/base/stBaseButton";
 
 const OpenButton = ({ i }: { i: number }) => {
@@ -29,7 +28,7 @@ const OpenButton = ({ i }: { i: number }) => {
     <StBaseButton
       small
       margin="0px"
-      padding="5px 0px"
+      padding="1px 5px"
       onClick={showResult}
       className="openResults"
     >
@@ -148,14 +147,7 @@ const ResultInfoItems = () => {
     ));
   } else if (!aiData) items.current = null;
 
-  return items.current ? (
-    <>
-      <ResultModal />
-      {items.current}
-    </>
-  ) : (
-    <NoResultsArea />
-  );
+  return items.current ? <>{items.current}</> : <NoResultsArea />;
 };
 
 export default ResultInfoItems;

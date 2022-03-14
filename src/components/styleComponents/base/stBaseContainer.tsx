@@ -7,7 +7,7 @@ const StBaseContainer: any = styled.div`
   margin-bottom: ${(props: any) => (props.reduced ? 0 : "30px")};
   width: 100%;
   max-width: calc(50% - 15px);
-  @media screen and (max-width: ${bp.xl}) {
+  @media screen and (max-width: ${(props: any) => props.bp ? props.bp : bp.xl}) {
     max-width: 100%;
   }
 `;

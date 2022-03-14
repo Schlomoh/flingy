@@ -1,12 +1,13 @@
 {
     "powermode.enabled": true,
-    "powermode.enableShake": false,
     "powermode.presets": "particles",
-    "powermode.gifMode": "continue",
-    "powermode.enableStatusBarComboCounter": true,
-    "powermode.comboTimeout": 5,
-    "powermode.enableExplosions": true ,
-    "powermode.backgroundMode": "mask",
-   // "powermode.explosionDuration": 200
-   "powermode.explosionSize": 20
+    "powermode.enableExplosions": true,
+"powermode.combo.timeout": 5,
+"powermode.combo.location": "statusbar",
+"powermode.combo.counterEnabled": "show",
+"powermode.combo.timerEnabled": "default",
+"powermode.shake.enabled": false,
+"powermode.explosions.size": 20,
+"powermode.explosions.backgroundMode": "mask",
+"powermode.explosions.gifMode": "continue"
 }
