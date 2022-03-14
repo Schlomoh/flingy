@@ -20,10 +20,10 @@ import StUploadButton from "../styleComponents/tailored/stUploadButton";
  */
 function handleInput(e: ChangeEvent<HTMLInputElement>) {
   const files = e.target.files;
+
   if (files !== null) {
     const fileUrl = URL.createObjectURL(files[0]);
     store.dispatch(setImage(fileUrl));
-    console.log("dispatch log", store.getState().analysis.img);
   }
 }
 
@@ -38,18 +38,20 @@ const UploadButton = (): JSX.Element => {
   const ref: LegacyRef<HTMLInputElement> = useRef(null);
 
   return (
-    <StUploadButton>
-      <button id="uploadButton" onClick={() => ref.current?.click()}>
-        <img src={plus} alt="add image" />
-      </button>
-      <input
-        id="imageInput"
-        accept="image/*"
-        type="file"
-        onInput={(e: ChangeEvent<HTMLInputElement>) => handleInput(e)}
-        ref={ref}
-      />
-    </StUploadButton>
+    <>
+      <StUploadButton>
+        <button id="uploadButton" onClick={() => ref.current?.click()}>
+          <img src={plus} alt="add image" />
+        </button>
+        <input
+          id="imageInput"
+          accept="image/*"
+          type="file"
+          onInput={(e: ChangeEvent<HTMLInputElement>) => handleInput(e)}
+          ref={ref}
+        />
+      </StUploadButton>
+    </>
   );
 };
 export default UploadButton;

@@ -75,7 +75,6 @@ function useCreateOutput() {
     const output = faces.map(createOutput);
 
     store.dispatch(setOutput(output));
-    console.log(output);
   }
 
   const aiData = useAiDataSelector();
