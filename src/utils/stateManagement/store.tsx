@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // slices
 import analysisSlice from "./slicesNselectors/analysisSlice";
 import cookieSlice from "./slicesNselectors/cookieSlice";
+import modalSlice from "./slicesNselectors/modalSlice";
 import routingSlice from "./slicesNselectors/routingSlice";
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
     analysis: analysisSlice,
     cookies: cookieSlice,
     rounting: routingSlice,
+    modal: modalSlice,
   },
 });
 

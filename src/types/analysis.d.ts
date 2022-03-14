@@ -14,26 +14,33 @@ type TblazefaceResult = [
   }
 ];
 
+type TcocoResult = [
+  {
+    bbox: [number, number, number, number];
+    class: string;
+    score: number;
+  }
+];
+
 type TaiResult = {
-  faces: TblazefaceResult | undefined;
-  coco: any;
-  finished: boolean
+  faces: TblazefaceResult;
+  coco: TcocoResult;
+  finished: boolean;
 };
 
 type Tanalysis = { analysis: IanalysisInitialState };
 
 type Toutput = {
-  tags: String[];
-  messages: [
-    {
-      text: String;
-      probability: number;
-    }
-  ];
-};
+  tags: string[];
+  messages: {
+    text: string;
+    probability: number;
+    reason: string;
+  }[];
+}[];
 
-type Taction = 'initialize' | 'analyze'
+type Taction = "initialize" | "analyze";
 
-type Tbbox = { x: number, y: number, w: number, h: number }
+type Tbbox = { x: number; y: number; w: number; h: number };
 
-type Tfaces = [{bbox: Tbbox, imgUrl: string }]
+type Tfaces = [{ bbox: Tbbox; imgUrl: string }];

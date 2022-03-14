@@ -11,6 +11,10 @@ interface Itheme {
   container: {
     borderRadius: String;
   };
+  colors: {
+    lightGrey: string;
+    accent: string;
+  }
   text: {
     fontSize: {
       heading: String;

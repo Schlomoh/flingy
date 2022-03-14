@@ -1,9 +1,9 @@
 //hooks
 import { useCallback } from "react";
-import { useBoundingBoxSelector } from "../utils/stateManagement/slicesNselectors/analysisSelectors";
+import { useBoundingBoxSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components
-import StFaceBox from "./styleComponents/tailored/stFaceBox";
+import StFaceBox from "../styleComponents/tailored/stFaceBox";
 
 function sizeCss(width: number, height: number) {
   return `
@@ -32,7 +32,9 @@ function posCss(x: number, y: number) {
  * @returns
  */
 function resize(bboxes: number[], sizes: TimageSizes) {
-  let scalar,
+  let 
+  scalarH,
+  scalarW,
     ratioOriginal,
     ratioElement,
     offsetX,
@@ -69,13 +71,14 @@ function resize(bboxes: number[], sizes: TimageSizes) {
     offsetX = (elementWidth - actualImageW) / 2;
   }
 
-  scalar = originalHeight / actualImageH;
+  scalarH = originalHeight / actualImageH;
+  scalarW = originalWidth / actualImageW;
 
   [x, y, w, h] = [
-    bboxX / scalar + offsetX,
-    bboxY / scalar + offsetY,
-    bboxW / scalar,
-    bboxH / scalar,
+    bboxX / scalarH + offsetX,
+    bboxY / scalarH + offsetY,
+    bboxW / scalarH,
+    bboxH / scalarW,
   ];
 
   return {

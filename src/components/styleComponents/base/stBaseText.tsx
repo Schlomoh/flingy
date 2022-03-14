@@ -28,7 +28,7 @@ const StBaseText = styled.span`
     color: ${(props) =>
       props.color ? props.color : props.theme.text.color.paragraph};
     text-decoration: none;
-    margin: 30px 0;
+    margin: 15px 0 30px;
     line-height: 1.3;
   }
 

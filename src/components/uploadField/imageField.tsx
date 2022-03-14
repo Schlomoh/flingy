@@ -1,6 +1,6 @@
 // components
 import StUploadImage from "../styleComponents/tailored/stUploadImage";
-import FaceBox from "../faceBox";
+import FaceBox from "./faceBox";
 
 // hooks
 import {
@@ -17,20 +17,17 @@ import {
   useState,
   useEffect,
 } from "react";
-import Loader from "../loader";
-import RemoveButton from "../removeButton";
-import { NoResultsImage } from "../noResults";
-import { Dispatch } from "@reduxjs/toolkit";
+import Loader from "./loader";
+import RemoveButton from "./removeButton";
+import { NoResultsImage } from "./resultItems/noResults";
 
 /**
  * Displays the given image and calls the analyzer on it
  */
 const ImageField = ({
   worker,
-  dispatch,
 }: {
   worker: MutableRefObject<Worker | undefined>;
-  dispatch: Dispatch;
 }) => {
   //selectors
   const aiPredictions = useAiDataSelector();
@@ -48,7 +45,7 @@ const ImageField = ({
   if (imageSizes) {
     canvas = new OffscreenCanvas(imageSizes.natural.w, imageSizes.natural.h);
   }
-// create imageData for the analyzer
+  // create imageData for the analyzer
   useEffect(() => {
     if (image.current && !imageSizes && imageLoaded) {
       const [width, height, scaledWidth, scaledHeight] = [
@@ -79,7 +76,7 @@ const ImageField = ({
   });
 
   // call analyzer hook with worker instance
-  useAnalyzer(worker, imageData, dispatch);
+  useAnalyzer(worker, imageData);
 
   const Overlay = () => {
     return !aiPredictions?.finished ? (
@@ -94,7 +91,7 @@ const ImageField = ({
   return (
     <StUploadImage>
       <Overlay />
-      <RemoveButton onRemove={() => {}} dispatch={dispatch} />
+      <RemoveButton onRemove={() => {}} />
       <img id="imageBG" src={imgUrl} alt="Uploaded image background" />
       <img
         ref={image}

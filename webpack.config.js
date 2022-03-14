@@ -51,8 +51,8 @@ module.exports = {
   //     //  than swc and doesnt wipe all the license comments
   //     //  this lil rust compiler is only a bit faster :(
   //     new TerserPlugin({
-  //       minify: TerserPlugin.swcMinify,
-  //       terserOptions: {},
+  //       // minify: TerserPlugin.swcMinify,
+  //       // terserOptions: {},
   //     }),
   //   ],
   // },
@@ -79,7 +79,21 @@ module.exports = {
       {
         test: /\.worker\.tsx$/,
         exclude: /node_modules/,
-        use: ["worker-loader"],
+        use: [
+          {
+            loader: "worker-loader",
+            options: {
+              filename: "[name].[contenthash].worker.js",
+              chunkFilename: "[id].[contenthash].worker.js",
+            },
+          },
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
+        ],
       },
     ],
   },
@@ -88,6 +102,6 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
       favicon: path.join(__dirname, "public", "favicon.ico"),
     }),
-  //  new CompressionWebpackPlugin(),
+    //  new CompressionWebpackPlugin(),
   ],
 };

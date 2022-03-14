@@ -9,8 +9,19 @@ const StResultItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+
+  #wrap {
+    display: flex;
+    align-items: center;
+  }
+
   h3 {
     margin: 0;
+  }
+  p {
+    margin: 0;
+    margin-bottom: 10px;
   }
   img,
   canvas {
@@ -22,10 +33,33 @@ const StResultItem = styled.div`
     box-sizing: border-box;
     margin: 8px;
   }
-  #imgWrapper {
+  .imgWrapper {
     width: 76px;
     height: 76px;
     margin-right: 20px;
+  }
+
+  .chip {
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 40px;
+    color: white;
+    background-color: ${props => props.theme.colors.accent};;
+    p {
+      margin: 0;
+      text-align: center;
+    }
+  }
+  .chipContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-wrap: wrap;
+  }
+
+  .openResults {
+    align-self: flex-start;
   }
 `;
 

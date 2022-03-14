@@ -5,7 +5,6 @@ const initialState = {
   img: undefined,
   aiResult: undefined,
   output: undefined,
-  faces: undefined,
 } as IanalysisInitialState;
 
 const analysisSlice = createSlice({
@@ -21,15 +20,12 @@ const analysisSlice = createSlice({
     setOutput(state, action: PayloadAction<Toutput>) {
       state.output = action.payload;
     },
-    setFaces(state, action: PayloadAction<Tfaces>) {
-      state.faces = action.payload
-    },
     reset(state) {
-      state.output = state.aiResult = state.faces = state.img = undefined;
+      state.output = state.aiResult = state.img = undefined;
     },
   },
 });
 
-export const { setImage, setAiResult, setFaces, setOutput, reset } =
+export const { setImage, setAiResult, setOutput, reset } =
   analysisSlice.actions;
 export default analysisSlice.reducer;

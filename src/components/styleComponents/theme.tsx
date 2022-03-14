@@ -1,6 +1,10 @@
 const theme: Itheme = {
   container: {
-    borderRadius: "30px",
+    borderRadius: "25px",
+  },
+  colors: {
+    lightGrey: "#ebebeb",
+    accent: "#8353e3",
   },
   text: {
     fontSize: {
@@ -24,27 +28,27 @@ const theme: Itheme = {
     },
     primary: {
       background: "white",
-      color: "black",
+      color: "grey",
       hover: {
         background: "lightgrey",
-        color: "black",
+        color: "grey",
       },
     },
     warn: {
       background: "#fff",
-      color: "#b14040",
+      color: "#d33c3c",
       hover: {
         background: "#d87272",
         color: "white",
       },
     },
     disabled: {
-      background: "lightgrey",
-      color: "#646464",
+      background: 'lightgrey',
+      color: "#b6b6b6",
     },
   },
   background: "white",
-  shadow: "0 10px 20px rgba(0,0,0,0.25)",
+  shadow: "0 5px 15px rgba(0,0,0,0.2)",
 };
 
 export default theme;

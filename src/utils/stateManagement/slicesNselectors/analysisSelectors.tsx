@@ -8,6 +8,10 @@ export const useAiDataSelector = () => {
   return useSelector((state: Tanalysis) => state.analysis.aiResult);
 };
 
+export const useOutputSelector = () => {
+  return useSelector((state: Tanalysis) => state.analysis.output);
+};
+
 export const useBoundingBoxSelector = () => {
   return useSelector((state: Tanalysis) => {
     return state.analysis.aiResult?.faces?.map((face) => {

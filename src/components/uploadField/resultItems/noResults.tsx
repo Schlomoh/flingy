@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StBaseText from "./styleComponents/base/stBaseText";
+import StBaseText from "../../styleComponents/base/stBaseText";
 // icons
 import { IconContext } from "react-icons";
 import { FaRegFrownOpen } from "react-icons/fa";
@@ -13,15 +13,14 @@ const CenterColumn = styled.div`
 
 const StNoResultsArea = styled(CenterColumn)`
   height: 20%;
-  padding: 30px;
   margin: auto;
   border: 3px dotted lightgrey;
-  border-radius: 20px;
+  border-radius: ${(props) => props.theme.container.borderRadius};
 `;
 
 const StNoResultsImage = styled(CenterColumn)`
   height: 100%;
-  width: 100%;
+  padding: 30px;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
