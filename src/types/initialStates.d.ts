@@ -4,10 +4,16 @@ interface IanalysisInitialState {
   output: Toutput | undefined;
 }
 
+interface ICookieSelection {
+  [key: string];
+  analysis: boolean;
+  advertisement: boolean;
+}
+
 interface IcookieInitialState {
-  analysisCookies: boolean;
-  advertisementCookies: boolean;
+  selection: ICookieSelection;
   showManageView: boolean;
+  showModal: boolean
 }
 
 interface IroutingInitialState {

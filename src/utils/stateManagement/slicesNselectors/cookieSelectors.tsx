@@ -1,19 +1,19 @@
 import { useSelector } from "react-redux";
 
 export const useCookieSelector = () => {
-  return {
-    analysisCookie: useSelector(
-      (state: { cookies: IcookieInitialState }) => state.cookies.analysisCookies
-    ),
-    advertisementCookie: useSelector(
-      (state: { cookies: IcookieInitialState }) =>
-        state.cookies.advertisementCookies
-    ),
-  };
+  return useSelector(
+    (state: { cookies: IcookieInitialState }) => state.cookies.selection
+  );
 };
 
 export const useCookieViewSelector = () => {
   return useSelector(
     (state: { cookies: IcookieInitialState }) => state.cookies.showManageView
+  );
+};
+
+export const useShowCookieModalSelector = () => {
+  return useSelector(
+    (state: { cookies: IcookieInitialState }) => state.cookies.showModal
   );
 };
