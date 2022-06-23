@@ -6,19 +6,20 @@ const StBaseText = styled.span`
     font-size: ${(props) => props.theme.text.fontSize.heading};
     color: ${(props) => props.theme.text.color.heading};
     line-height: 1;
+    margin: 0 0 15px 0;
   }
 
   h2 {
     font-size: ${(props) => props.theme.text.fontSize.smallHeading};
     color: ${(props) => props.theme.text.color.smallHeading};
-    margin: 0 0 25px 0;
+    margin: 0 0 10px 0;
   }
 
   h3 {
     font-size: ${(props) => props.theme.text.fontSize.subHeading};
     color: ${(props) =>
       props.color ? props.color : props.theme.text.color.subHeading};
-    margin-top: 25px;
+    margin: 0 0 20px 0;
   }
 
   p,
@@ -28,7 +29,7 @@ const StBaseText = styled.span`
     color: ${(props) =>
       props.color ? props.color : props.theme.text.color.paragraph};
     text-decoration: none;
-    margin: 15px 0 30px;
+    margin: 15px 0;
     line-height: 1.3;
   }
 

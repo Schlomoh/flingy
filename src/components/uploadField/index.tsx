@@ -1,6 +1,5 @@
 // hooks
-import { MutableRefObject, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { MutableRefObject } from "react";
 import { useImageSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
 
 // components

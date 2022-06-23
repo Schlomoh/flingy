@@ -29,7 +29,7 @@ const StNoResultsImage = styled(CenterColumn)`
 export const NoResultsArea = () => {
   return (
     <StNoResultsArea>
-      <StBaseText>
+      <StBaseText >
         <p>Your results will appear here.</p>
       </StBaseText>
     </StNoResultsArea>

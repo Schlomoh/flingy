@@ -6,7 +6,7 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const port = process.env.PORT || 3000;
 
 module.exports = {
-  mode: process.env.NODE_ENV || "development",
+  mode: "development", 
   entry: {
     app: path.join(__dirname, "src", "index.tsx"),
   },
@@ -26,47 +26,43 @@ module.exports = {
     //  open: true,
     historyApiFallback: true,
   },
-  devtool: "inline-source-map",
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: "all",
-  //     minSize: 80000,
-  //     maxSize: 200000,
-  //     cacheGroups: {
-  //       styles: {
-  //         name: "styles",
-  //         test: /\.css$/,
-  //         chunks: "all",
-  //         enforce: true,
-  //       },
-  //       defaultVendors: {
-  //         enforce: true,
-  //         filename: "v.[name].[contenthash].bundle.js",
-  //       },
-  //     },
-  //   },
-  //   minimize: true,
-  //   minimizer: [
-  //     //  default is actually smaller in resultin bundle sizes
-  //     //  than swc and doesnt wipe all the license comments
-  //     //  this lil rust compiler is only a bit faster :(
-  //     new TerserPlugin({
-  //       // minify: TerserPlugin.swcMinify,
-  //       // terserOptions: {},
-  //     }),
-  //   ],
-  // },
+  devtool: "source-map",
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 80000,
+      maxSize: 240000,
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true,
+        },
+        defaultVendors: {
+          enforce: true,
+          filename: "v.[name].[contenthash].bundle.js",
+        },
+      },
+    },
+    minimize: true,
+    minimizer: [
+      //  default is actually smaller in resultin bundle sizes
+      //  than swc and doesnt wipe all the license comments
+      //  this lil rust compiler is only a bit faster :(
+      new TerserPlugin({
+        // minify: TerserPlugin.swcMinify,
+        // terserOptions: {},
+      }),
+    ],
+  },
+  // externals: { react: "react", ReactDOM: "react-dom" },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: ["ts-loader"],
       },
       {
         test: /\.(css|scss)$/,
@@ -89,9 +85,6 @@ module.exports = {
           },
           {
             loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
-            },
           },
         ],
       },
@@ -102,6 +95,6 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
       favicon: path.join(__dirname, "public", "favicon.ico"),
     }),
-    //  new CompressionWebpackPlugin(),
+    new CompressionWebpackPlugin(),
   ],
 };

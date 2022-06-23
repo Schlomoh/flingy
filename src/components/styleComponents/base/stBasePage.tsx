@@ -15,6 +15,7 @@ const StBasePage = styled.main`
   flex-direction: row;
   justify-content: center;
   transition: opacity 0.5s, transform 0.25s;
+  min-height: 100vh;
 `;
 
 export const StCenterContainer = styled.div`

@@ -4,12 +4,16 @@ import UploadField from "../components/uploadField";
 import StBaseText from "../components/styleComponents/base/stBaseText";
 
 // content
-import text from "../content/text/pickupPageTexts.json";
+import {
+  Heading,
+  SubHeading,
+  Description,
+} from "../content/text/pickupPageTexts";
 import StBaseContainer from "../components/styleComponents/base/stBaseContainer";
 import ResultInfoItems from "../components/uploadField/resultItems";
 import Expander from "../components/baseComponents/baseExpander";
 import LoadedIndicator from "../components/accessories/loadedIndicator";
-import { MutableRefObject, useEffect, useLayoutEffect, useState } from "react";
+import { MutableRefObject } from "react";
 import UploadWarning from "../components/accessories/uploadWarning";
 import ResultModal from "../components/uploadField/resultModal";
 
@@ -25,10 +29,10 @@ const PickupPage = ({
       <BasePage>
         <div>
           <StBaseText>
-            <h2>{text.title}</h2>
-            <h3>{text.subTitle}</h3>
+            <Heading />
+            <SubHeading />
             <Expander>
-              <p style={{ margin: 0 }}>{text.desctiption}</p>
+              <Description />
             </Expander>
           </StBaseText>
           <LoadedIndicator worker={worker} />

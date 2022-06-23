@@ -10,6 +10,8 @@ import plus from "../../content/assets/plus.png";
 
 //style
 import StUploadButton from "../styleComponents/tailored/stUploadButton";
+import { uploadText } from "../../content/text/pickupPageTexts";
+import StBaseText from "../styleComponents/base/stBaseText";
 
 /**
  * Handles the input file
@@ -42,6 +44,9 @@ const UploadButton = (): JSX.Element => {
       <StUploadButton>
         <button id="uploadButton" onClick={() => ref.current?.click()}>
           <img src={plus} alt="add image" />
+          <StBaseText>
+            <p>{uploadText}</p>
+          </StBaseText>
         </button>
         <input
           id="imageInput"

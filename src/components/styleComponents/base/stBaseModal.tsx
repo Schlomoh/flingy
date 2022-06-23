@@ -12,11 +12,11 @@ const StBaseModal: any = styled.div`
 
   // fade in/out
   opacity: ${(props: any) => (props.show ? 1 : 0)};
-  visibility: ${(props: any) => (props.show ? "visiible" : "hidden")};
+  visibility: ${(props: any) => (props.show ? "visible" : "hidden")};
   transition: opacity 0.35s, visibility 0.35s;
 
   .modal {
-    position: absolute;
+    position: fixed;
     max-height: 80vh;
     overflow: scroll;
     margin: 20px;

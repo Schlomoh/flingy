@@ -8,6 +8,7 @@ import rocket from "../content/assets/rocket.png";
 import StBaseText from "../components/styleComponents/base/stBaseText";
 import styled from "styled-components";
 import { bp } from "../components/styleComponents/base/stBasePage";
+import React from "react";
 
 const StWrapper: any = styled.div`
   display: flex;
@@ -16,32 +17,30 @@ const StWrapper: any = styled.div`
   justify-content: space-between;
 `;
 
-const Container: any = styled(StBaseContainer)`
-  margin:${(props: any) => props.space ? '50px 0' : '0'};
-`
+const Container = styled(StBaseContainer)<{
+  space?: boolean;
+  flexDirection?: React.CSSProperties["flexDirection"];
+  justifyContent?: React.CSSProperties["justifyContent"];
+}>`
+  margin: ${(props) => (props.space ? "50px 0" : "0")};
+  display: flex;
+  flex-direction: ${(props) =>
+    props.flexDirection ? props.flexDirection : "column"};
+  justify-content: ${(props) =>
+    props.justifyContent ? props.justifyContent : "initial"};
+`;
 
 const Home = () => {
   return (
     <BasePage>
       <StBaseText>
         <h1>Piqups</h1>
+        <h3>
+          Boost your texting game with the help of artificial intelligence.
+        </h3>
         <StWrapper wrapReverse>
-          <Container bp={bp.sm} reduced>
-            <h2>
-              Boost your texting game with the help of artificial intelligence.
-            </h2>
-          </Container>
-          <Container bp={bp.sm} reduced>
-            <img
-              src={rocket}
-              alt=""
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          </Container>
-        </StWrapper>
-        <StWrapper>
           <Container space bp={bp.sm} reduced>
-            <h3>Analyze an image</h3>
+            <h2>Analyze an image</h2>
             <p>
               An AI will analyze the image and tries to propose messages
               depending on the faces identified.
@@ -52,14 +51,17 @@ const Home = () => {
               </StBaseButton>
             </Link>
           </Container>
-          <Container space bp={bp.sm} reduced>
-            <h3>Random pick-up lines</h3>
-            <p>Get a randomly picked line (and maybe make a little game out of it with a couple of friends at a bar ;) ) </p>
-            <Link to="analyzer">
-              <StBaseButton disabled margin="0" inner>
-                Open
-              </StBaseButton>
-            </Link>
+          <Container
+            bp={bp.sm}
+            flexDirection="row"
+            justifyContent="center"
+            reduced
+          >
+            <img
+              src={rocket}
+              alt=""
+              style={{ width: "75%", height: "75%", objectFit: "contain" }}
+            />
           </Container>
         </StWrapper>
       </StBaseText>

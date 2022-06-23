@@ -6,10 +6,13 @@ const StUploadButton = styled.span`
     min-height: 100%;
     background-color: white;
     border: none;
+    padding: 30px;
     cursor: pointer;
+
     img {
       width: 200px;
       height: 200px;
+      margin: 0 0 20px 10px;
     }
   }
   #imageInput {

@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
-import { useAiDataSelector } from "../../utils/stateManagement/slicesNselectors/analysisSelectors";
 import BaseModal from "../baseComponents/baseModal";
 import StBaseButton from "../styleComponents/base/stBaseButton";
 import StBaseText from "../styleComponents/base/stBaseText";
@@ -25,7 +24,7 @@ const UploadWarning = ({active} :{active: boolean}) => {
           </h3>
           <p>
             Upon uploading an image the site will load up to{" "}
-            <strong>30MB </strong>
+            <strong>20MB </strong>
             of data for the ai models. Make sure you are either using wifi or
             have enough data left.
           </p>

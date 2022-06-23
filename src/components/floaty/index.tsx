@@ -8,15 +8,19 @@ import { Link } from "react-router-dom";
 import store from "../../utils/stateManagement/store";
 import { setShowCookieModal } from "../../utils/stateManagement/slicesNselectors/cookieSlice";
 
-const StFloaty: any = styled.div`
+interface StFloatyProps {
+  height: string;
+}
+
+const StFloaty = styled.div<StFloatyProps>`
   position: fixed;
-  z-index: 100;
+  z-index: 500;
   bottom: 0;
   background-color: white;
   box-shadow: ${(props) => props.theme.shadow};
   margin: 15px;
   border-radius: 30px;
-  height: ${(props: any) => props.height};
+  height: ${(props) => props.height};
   overflow: hidden;
   transition: height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 
@@ -41,7 +45,7 @@ const StFloaty: any = styled.div`
     background-color: white;
     transition: border 0.5s ease-in;
     :disabled {
-        cursor: not-allowed;
+      cursor: not-allowed;
     }
   }
 `;
@@ -74,6 +78,10 @@ const Floaty = () => {
 
   const toggle = () => setShowMore(!showMore);
   const showCookies = () => store.dispatch(setShowCookieModal(true));
+  const buttonClick = (callback?: () => void) => {
+    toggle();
+    if (callback) callback();
+  };
 
   const height = showMore ? "250px" : "60px";
 
@@ -89,25 +97,30 @@ const Floaty = () => {
   return (
     <StFloaty height={height}>
       <div id="buttonWrapper">
-        <button onClick={toggle} className="floatButton">
+        <button onClick={() => buttonClick()} className="floatButton">
           <IconContext.Provider value={moreStyle}>
             <FiMoreHorizontal />
           </IconContext.Provider>
         </button>
         <Link to="/">
-          <button className="floatButton">
+          <button className="floatButton" onClick={() => buttonClick()}>
             <IconContext.Provider value={iconStyle}>
               <BiHomeAlt />
             </IconContext.Provider>
           </button>
         </Link>
-        <button onClick={showCookies} className="floatButton">
+        <button
+          onClick={() => buttonClick(showCookies)}
+          className="floatButton"
+        >
           <IconContext.Provider value={iconStyle}>
             <BiCookie />
           </IconContext.Provider>
         </button>
         <button disabled className="floatButton">
-          <IconContext.Provider value={iconStyle}>
+          <IconContext.Provider
+            value={{ ...iconStyle, style: { color: "#cecece" } }}
+          >
             <RiHandHeartLine />
           </IconContext.Provider>
         </button>

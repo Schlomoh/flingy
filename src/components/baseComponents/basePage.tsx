@@ -26,6 +26,7 @@ const BasePage = ({ children, className }: IcomponentChildren) => {
       }
     };
   });
+  
   return (
     <StBasePage ref={ref}>
       <StCenterContainer>

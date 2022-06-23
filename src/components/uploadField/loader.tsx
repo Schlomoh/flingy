@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import StBaseText from "../styleComponents/base/stBaseText";
-import text from '../../content/text/pickupPageTexts.json'
+import {
+  firstLoadingText,
+  secondLoadingText,
+} from "../../content/text/pickupPageTexts";
 
 const StLoader = styled.div`
   position: absolute;
@@ -39,8 +42,8 @@ const StLoader = styled.div`
 `;
 
 const Text = () => {
-  const firstText = <p>{text.firstLoadingText}</p>;
-  const secondText = <p>{text.secondLoadingText}</p>;
+  const firstText = <p>{firstLoadingText}</p>;
+  const secondText = <p>{secondLoadingText}</p>;
   let [showText, setShowText] = useState(firstText);
   useEffect(() => {
     const to = setTimeout(() => setShowText(secondText), 6000);
